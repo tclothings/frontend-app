@@ -5,7 +5,7 @@ import type {
   CartItem,
   Product,
   ProductVariant
-} from 'lib/shopify/types';
+} from 'app/lib/types';
 import React, {
   createContext,
   use,
@@ -121,7 +121,7 @@ function createEmptyCart(): Cart {
     id: undefined,
     checkoutUrl: '',
     totalQuantity: 0,
-    lines: [],
+    // lines: [],
     cost: {
       subtotalAmount: { amount: '0', currencyCode: 'USD' },
       totalAmount: { amount: '0', currencyCode: 'USD' },
@@ -136,18 +136,19 @@ function cartReducer(state: Cart | undefined, action: CartAction): Cart {
   switch (action.type) {
     case 'UPDATE_ITEM': {
       const { merchandiseId, updateType } = action.payload;
-      const updatedLines = currentCart.lines
-        .map((item) =>
-          item.merchandise.id === merchandiseId
-            ? updateCartItem(item, updateType)
-            : item
-        )
-        .filter(Boolean) as CartItem[];
+      const updatedLines = []
+      // const updatedLines = currentCart.lines
+      //   .map((item) =>
+      //     item.merchandise.id === merchandiseId
+      //       ? updateCartItem(item, updateType)
+      //       : item
+      //   )
+      //   .filter(Boolean) as CartItem[];
 
       if (updatedLines.length === 0) {
         return {
           ...currentCart,
-          lines: [],
+          // lines: [],
           totalQuantity: 0,
           cost: {
             ...currentCart.cost,
@@ -158,31 +159,31 @@ function cartReducer(state: Cart | undefined, action: CartAction): Cart {
 
       return {
         ...currentCart,
-        ...updateCartTotals(updatedLines),
-        lines: updatedLines
+        // ...updateCartTotals(updatedLines),
+        // lines: updatedLines
       };
     }
     case 'ADD_ITEM': {
       const { variant, product } = action.payload;
-      const existingItem = currentCart.lines.find(
-        (item) => item.merchandise.id === variant.id
-      );
-      const updatedItem = createOrUpdateCartItem(
-        existingItem,
-        variant,
-        product
-      );
+      // const existingItem = currentCart.lines.find(
+      //   (item) => item.merchandise.id === variant.id
+      // );
+      // const updatedItem = createOrUpdateCartItem(
+      //   existingItem,
+      //   variant,
+      //   product
+      // );
 
-      const updatedLines = existingItem
-        ? currentCart.lines.map((item) =>
-            item.merchandise.id === variant.id ? updatedItem : item
-          )
-        : [...currentCart.lines, updatedItem];
+      // const updatedLines = existingItem
+      //   ? currentCart.lines.map((item) =>
+      //       item.merchandise.id === variant.id ? updatedItem : item
+      //     )
+      //   : [...currentCart.lines, updatedItem];
 
       return {
         ...currentCart,
-        ...updateCartTotals(updatedLines),
-        lines: updatedLines
+        // ...updateCartTotals(updatedLines),
+        // lines: updatedLines
       };
     }
     default:

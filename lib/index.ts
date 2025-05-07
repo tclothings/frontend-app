@@ -69,7 +69,10 @@ const productsData = [
       width: 1000,
       height: 1000,
     },
-    descriptionHtml: "Product",
+    descriptionHtml:
+      "Add a little zing to your winter wardrobe with this vibrant Winter-breaker Jacket. With a brushed fleece inside, and a relaxed unisex fit, this jacket is just the stuff of the dreams, so be quick to grab yourself one! Long sleeve ripstop jacket colorblocked in black. Rough pattern in obsidian black and brown printed throughout. Printed graphic in white throughout. Logo-woven webbing trim in white and black throughout. Bungee-style drawstring at hood featuring rubberized logo hardware. Zip closure at front. Rubberized logo appliqué at chest. Welt pockets and textile logo patch in orange at waist. Elasticized cuffs. Partially lined. Black hardware.",
+    description:
+      "Logo-woven webbing trim in white and black throughout. Bungee-style drawstring at hood featuring rubberized logo hardware. Zip closure at front. Rubberized logo appliqué at chest. Welt pockets and textile logo patch in orange at waist. Elasticized cuffs. Partially lined. Black hardware.",
     options: [
       { id: "color", name: "COLOR", values: ["WHITE", "BLACK"] },
       { id: "size", name: "SIZE", values: ["S", "M", "L"] },
@@ -112,6 +115,8 @@ const productsData = [
         height: 400,
       },
     ],
+    totalQuantity: 20,
+    price: 5000,
   },
   {
     id: "2",
@@ -123,7 +128,10 @@ const productsData = [
       width: 300,
       height: 300,
     },
-    descriptionHtml: "Product",
+    descriptionHtml:
+      "Add a little zing to your winter wardrobe with this vibrant Winter-breaker Jacket. With a brushed fleece inside, and a relaxed unisex fit, this jacket is just the stuff of the dreams, so be quick to grab yourself one! Long sleeve ripstop jacket colorblocked in black. Rough pattern in obsidian black and brown printed throughout. Printed graphic in white throughout. Logo-woven webbing trim in white and black throughout. Bungee-style drawstring at hood featuring rubberized logo hardware. Zip closure at front. Rubberized logo appliqué at chest. Welt pockets and textile logo patch in orange at waist. Elasticized cuffs. Partially lined. Black hardware.",
+    description:
+      "Logo-woven webbing trim in white and black throughout. Bungee-style drawstring at hood featuring rubberized logo hardware. Zip closure at front. Rubberized logo appliqué at chest. Welt pockets and textile logo patch in orange at waist. Elasticized cuffs. Partially lined. Black hardware.",
     options: [
       { id: "color", name: "COLOR", values: ["WHITE", "BLACK"] },
       // { id: "size", name: "SIZE", values: ["S", "M", "L"] },
@@ -166,6 +174,8 @@ const productsData = [
         height: 400,
       },
     ],
+    totalQuantity: 10,
+    price: 3000,
   },
   {
     id: "3",
@@ -177,7 +187,10 @@ const productsData = [
       width: 300,
       height: 300,
     },
-    descriptionHtml: "Product",
+    descriptionHtml:
+      "Add a little zing to your winter wardrobe with this vibrant Winter-breaker Jacket. With a brushed fleece inside, and a relaxed unisex fit, this jacket is just the stuff of the dreams, so be quick to grab yourself one! Long sleeve ripstop jacket colorblocked in black. Rough pattern in obsidian black and brown printed throughout. Printed graphic in white throughout. Logo-woven webbing trim in white and black throughout. Bungee-style drawstring at hood featuring rubberized logo hardware. Zip closure at front. Rubberized logo appliqué at chest. Welt pockets and textile logo patch in orange at waist. Elasticized cuffs. Partially lined. Black hardware.",
+    description:
+      "Logo-woven webbing trim in white and black throughout. Bungee-style drawstring at hood featuring rubberized logo hardware. Zip closure at front. Rubberized logo appliqué at chest. Welt pockets and textile logo patch in orange at waist. Elasticized cuffs. Partially lined. Black hardware.",
     options: [
       { id: "color", name: "COLOR", values: ["WHITE", "BLACK"] },
       { id: "size", name: "SIZE", values: ["S", "M", "L"] },
@@ -220,6 +233,8 @@ const productsData = [
         height: 400,
       },
     ],
+    totalQuantity: 5,
+    price: 10000,
   },
 ];
 

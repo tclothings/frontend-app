@@ -43,3 +43,17 @@ export const sorting: SortFilterItemType[] = [
     reverse: true,
   },
 ];
+
+export const accountNavMenu = [
+  { title: "Profile", path: "/my-account/profile" },
+  { title: "Address", path: "/my-account/address" },
+  { title: "Payment methods", path: "/my-account/payment-methods" },
+  { title: "Orders", path: "/my-account/orders" },
+];
+  export const navMenu = [
+    { title: "Home", path: "/" },
+    { title: "Categories", path: "/category" },
+    { title: "My Account", path: "/my-account/profile" },
+];
+  
+export const companyName = "T CLOTHINGS"

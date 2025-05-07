@@ -8,7 +8,7 @@ export const metadata = {
   description: 'Search for products in the store.'
 };
 
-export default async function CategoryPage(props: {
+export default async function SearchPage(props: {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const searchParams = await props.searchParams;

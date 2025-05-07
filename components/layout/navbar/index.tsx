@@ -6,21 +6,17 @@ import Search, { SearchSkeleton } from './search';
 import { Menu } from 'app/lib/types';
 import LogoSquare from 'app/components/logo-square';
 import CartModal from 'app/components/cart/modal';
+import { navMenu } from 'app/lib/constants';
 
 const { SITE_NAME } = process.env;
 
 export async function Navbar() {
-  const menu = [
-    { title: "Home", path: "/" },
-    { title: "Categories", path: "/category" },
-    { title: "My Account", path: "/category" },
-  ];
 
   return (
     <nav className="relative sticky top-0 z-50 bg-[var(--background)] flex items-center justify-between p-4 lg:px-6">
       <div className="block flex-none md:hidden">
         <Suspense fallback={null}>
-          <MobileMenu menu={menu} />
+          <MobileMenu menu={navMenu} />
         </Suspense>
       </div>
       <div className="flex w-full items-center">
@@ -35,9 +31,9 @@ export async function Navbar() {
               {SITE_NAME}
             </div>
           </Link>
-          {menu.length ? (
+          {navMenu.length ? (
             <ul className="hidden gap-6 text-sm md:flex md:items-center">
-              {menu.map((item: Menu) => (
+              {navMenu.map((item: Menu) => (
                 <li key={item.title}>
                   <Link
                     href={item.path}

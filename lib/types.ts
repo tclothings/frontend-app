@@ -89,6 +89,8 @@ export type Product = {
   description: string;
   descriptionHtml: string;
   options: ProductOption[];
+  totalQuantity: number;
+  price: number;
   // priceRange: {
   //   maxVariantPrice: Money;
   //   minVariantPrice: Money;
