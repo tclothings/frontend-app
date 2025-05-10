@@ -1,6 +1,7 @@
 import { GridTileImage } from 'app/components/grid/tile';
 import { getCollectionProducts } from 'app/lib';
 import type { Product } from 'app/lib/types';
+import clsx from 'clsx';
 import Link from 'next/link';
 
 function ThreeItemGridItem({
@@ -14,11 +15,11 @@ function ThreeItemGridItem({
 }) {
   return (
     <div
-      className={
+      className={clsx("shadow-md hover:shadow-lg transition-shadow",
         size === "full"
           ? "md:col-span-4 md:row-span-2"
           : "md:col-span-2 md:row-span-1"
-      }
+  )}
     >
       <Link
         className="relative block aspect-square h-full w-full"
