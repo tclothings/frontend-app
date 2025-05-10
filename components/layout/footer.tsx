@@ -1,19 +1,19 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-import FooterMenu from 'app/components/layout/footer-menu';
-import LogoSquare from 'app/components/logo-square';
-import { Suspense } from 'react';
-import { companyName, navMenu } from 'app/lib/constants';
-import { MapPinIcon, ChatBubbleBottomCenterIcon } from "@heroicons/react/24/outline";
-
+import FooterMenu from "app/components/layout/footer-menu";
+import LogoSquare from "app/components/logo-square";
+import { Suspense } from "react";
+import { companyName, navMenu } from "app/lib/constants";
+import { FaInstagram, FaWhatsapp, FaMapMarkerAlt } from "react-icons/fa";
 
 export default async function Footer() {
   const currentYear = new Date().getFullYear();
   // const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : '');
-  const skeleton = 'w-full h-6 animate-pulse rounded-sm bg-neutral-200 dark:bg-neutral-700';
+  const skeleton =
+    "w-full h-6 animate-pulse rounded-sm bg-neutral-200 dark:bg-neutral-700";
 
   return (
-    <footer className="text-sm text-neutral-500 dark:text-neutral-400">
+    <footer className="text-neutral-500 dark:text-neutral-400">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 border-t border-neutral-200 px-6 py-12 text-sm md:flex-row md:gap-12 md:px-4 min-[1320px]:px-0 dark:border-neutral-700">
         <div>
           <Link
@@ -40,18 +40,41 @@ export default async function Footer() {
         </Suspense>
         <div className="flex flex-col gap-6 md:ml-auto bg-white text-black dark:bg-transparent dark:text-white">
           <h2 className="text-2xl font-bold">Store Information</h2>
+
           <div className="flex items-center gap-2 font-medium">
-            <MapPinIcon width={48} />
+            <FaMapMarkerAlt size={40} />
             <span>
-              Shop 28 sallyman plaza, 1 Felly akuruwa street ago palace way,
+              Shop 28 sallyman plaza, 1 Felly akuruwa street,<br /> Ago palace way,
               Okota, Lagos.
             </span>
           </div>
-          <div className="flex items-center gap-2">
-            <div>
-              <ChatBubbleBottomCenterIcon width={48} />
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center justify-between gap-2">
+              <a
+                href="https://wa.me/2347075081687"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaWhatsapp size={40} />
+              </a>
+              <a href="tel:+2347075081687">07075081687</a>
             </div>
-            <span>080333</span>
+            <div className="flex items-center justify-between gap-2">
+              <a
+                href="https://www.instagram.com/thriftz_nation/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaInstagram size={40} />
+              </a>
+              <a
+                href="https://www.instagram.com/thriftz_nation/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span>Thriftz_nation</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>

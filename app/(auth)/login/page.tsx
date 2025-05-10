@@ -5,11 +5,15 @@ import Input from "app/components/form/Input";
 import PasswordInput from "app/components/form/passwordInput";
 import SubmitButton from "app/components/form/submitButton";
 import { loginSchema } from "app/lib/schemas/auth";
+import useAuth from "app/store/authStore";
 import clsx from "clsx";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 export default function Page() {
+  const router = useRouter()
+  const { login } = useAuth((state) => state);
   const methods = useForm({
     resolver: yupResolver(loginSchema),
   });
@@ -17,6 +21,8 @@ export default function Page() {
   const { handleSubmit } = methods;
 
   const onLogin = async (data: any) => {
+    login("134", "admin");
+    router.push("/my-account/profile")
     console.log(data);
   };
   return (

@@ -332,8 +332,9 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
   //     handle,
   //   },
   // });
+  const product = productsData.find((item) => item.handle === handle)
 
-  return productsData[0];
+  return product;
 }
 
 export async function getProductRecommendations(

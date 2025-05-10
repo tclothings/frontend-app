@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { getCart } from "app/lib";
-import { CartProvider } from "app/components/cart/cart-context";
+// import { CartProvider } from "app/components/cart/cart-context";
 import { Navbar } from "app/components/layout/navbar";
 import { Toaster } from "sonner";
 import Footer from "app/components/layout/footer";
@@ -40,13 +40,14 @@ export default function RootLayout({
     // </html>
     <html lang="en">
       <body className="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
-        <CartProvider cartPromise={cart}>
+        {/* <CartProvider cartPromise={cart}> */}
+
           <Navbar />
           <main>{children}</main>
           <Toaster closeButton />
 
           <Footer />
-        </CartProvider>
+        {/* </CartProvider> */}
       </body>
     </html>
   );

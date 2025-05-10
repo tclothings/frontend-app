@@ -1,15 +1,15 @@
 import { GridTileImage } from 'app/components/grid/tile';
 import { getCollectionProducts } from 'app/lib';
-import type { Product, ShopifyProduct } from 'app/lib/types';
+import type { Product } from 'app/lib/types';
 import Link from 'next/link';
 
 function ThreeItemGridItem({
   item,
   size,
-  priority
+  priority,
 }: {
-  item: ShopifyProduct;
-  size: 'full' | 'half';
+  item: Product;
+  size: "full" | "half";
   priority?: boolean;
 }) {
   return (
@@ -39,7 +39,7 @@ function ThreeItemGridItem({
             position: size === "full" ? "center" : "bottom",
             title: item.title as string,
             amount: "100",
-            currencyCode: "USD"
+            currencyCode: "USD",
             // amount: item.priceRange.maxVariantPrice.amount,
             // currencyCode: item.priceRange.maxVariantPrice.currencyCode
           }}
