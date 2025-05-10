@@ -1,0 +1,59 @@
+import { capitalizeWord } from "app/lib/utils";
+import clsx from "clsx";
+import CardStyle from "../icons/cardStyle";
+
+export default function StatusCard({ status }: { status: string }) {
+    let className;
+    let listClass;
+    let classObj;
+    let cardStatus = status.toLowerCase()
+
+    switch (cardStatus) {
+      case "pending":
+        classObj = {
+          className: "bg-grey-100 text-grey-700",
+          circleColor: "#667185",
+        };
+        break;
+      case "cancelled":
+        classObj = {
+          className: "bg-error-50 text-error-700",
+          circleColor: "#F73502",
+        };
+        break;
+      case "initiated":
+        classObj = {
+          className: "bg-primary-50 text-primary-700",
+          circleColor: "#096B9C",
+        };
+        break;
+      case "dispute":
+        classObj = {
+          className: "bg-warning-50 text-warning-700",
+          circleColor: "#F7B302",
+        };
+        break;
+      case "completed":
+        classObj = {
+          className: "bg-success-50 text-success-700",
+          circleColor: "#02B04E",
+        };
+        break;
+      default:
+        classObj = {
+          className: "bg-grey-100 text-grey-700",
+          listClass: "#667185",
+        };
+    }
+    return (
+      <span
+        className={clsx(
+          "inline-flex gap-2 items-center py-[2px] px-2 rounded-2xl text-xs font-medium whitespace-nowrap ",
+          classObj.className
+        )}
+      >
+        <CardStyle color={classObj.circleColor} />
+        {capitalizeWord(cardStatus)}
+      </span>
+    );
+}

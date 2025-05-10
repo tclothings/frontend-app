@@ -14,7 +14,7 @@ export default function AccountLayout({
         <div className="z-40 bg-[var(--background)] order-first w-full flex-none md:max-w-[150px] sticky top-20 self-start">
           <NavList />
         </div>
-        <div className="order-last min-h-screen w-full md:order-none">
+        <div className="order-last min-h-screen w-full md:order-none md:pt-[72px]">
             {children}
         </div>
         <div className="z-30 bg-[var(--background)]  order-none flex-none md:order-last md:w-[125px] sticky top-[145px] md:sticky md:top-20 self-start">

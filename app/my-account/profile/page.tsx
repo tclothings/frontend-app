@@ -1,14 +1,15 @@
 export const metadata = {
-  title: 'Orders',
-  description: 'View orders list.'
+  title: "Orders",
+  description: "View orders list.",
 };
 
 export default async function ProfilePage() {
-
-
   return (
     <>
-<div>Profile</div>
+      <div>Profile</div>
+      <form>
+        
+      </form>
     </>
   );
 }

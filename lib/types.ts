@@ -125,3 +125,26 @@ export type ProductsCollection = {
 export type Collection = ProductsCollection & {
   path: string;
 };
+
+
+// tables
+export interface TableHeaderProps {
+  headers: { label: string; icon?: string }[];
+}
+export interface TableBodyProps {
+  isLoading?: boolean;
+  children: React.ReactNode;
+  length: number;
+  className?: string;
+  img?: string;
+  title?: string;
+  text?: string;
+}
+export interface TableProps extends TableBodyProps, TableHeaderProps { }4
+
+export interface FormatOptions {
+  locale?: string;
+  currency?: string;
+  minimumFractionDigits?: number;
+  maximumFractionDigits?: number;
+}

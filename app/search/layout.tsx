@@ -1,4 +1,3 @@
-import Footer from 'app/components/layout/footer';
 import Collections from 'app/components/layout/search/collections';
 import FilterList from 'app/components/layout/search/filter';
 import { sorting } from 'app/lib/constants';
@@ -13,7 +12,7 @@ export default function SearchLayout({
   return (
     <>
       <div className="mx-auto flex max-w-(--breakpoint-2xl) flex-col gap-8 px-4 pb-4 text-black md:flex-row dark:text-white">
-        <div className="z-40 bg-[var(--background)]  order-first w-full flex-none md:max-w-[125px] sticky top-20 self-start">
+        <div className="z-40 bg-[var(--background)] order-first w-full flex-none md:max-w-[125px] sticky top-20 self-start">
           <Collections />
         </div>
         <div className="order-last min-h-screen w-full md:order-none">

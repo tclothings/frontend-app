@@ -2,11 +2,9 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { GridTileImage } from 'app/components/grid/tile';
-import Footer from 'app/components/layout/footer';
 import { Gallery } from 'app/components/product/gallery';
 import { ProductProvider } from 'app/components/product/product-context';
 import { ProductDescription } from 'app/components/product/product-description';
-import { HIDDEN_PRODUCT_TAG } from 'app/lib/constants';
 import { getProduct, getProductRecommendations } from 'app/lib/';
 import { Image } from 'app/lib/types';
 import Link from 'next/link';
