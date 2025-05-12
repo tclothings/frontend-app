@@ -6,7 +6,7 @@ import { getCart } from "app/lib";
 import { Navbar } from "app/components/layout/navbar";
 import { Toaster } from "sonner";
 import Footer from "app/components/layout/footer";
-
+import { QueryProvider } from "app/components/providers/query-provider";
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
 //   subsets: ["latin"],
@@ -41,12 +41,14 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
         {/* <CartProvider cartPromise={cart}> */}
-
-          <Navbar />
-          <main>{children}</main>
-          <Toaster closeButton />
-
-          <Footer />
+        <QueryProvider>
+          <>
+            <Navbar />
+            <main>{children}</main>
+            <Toaster position="top-right" duration={5000}  closeButton />
+            <Footer />
+          </>
+        </QueryProvider>
         {/* </CartProvider> */}
       </body>
     </html>

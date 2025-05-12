@@ -1,20 +1,42 @@
 "use client";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAuth } from "app/api/auth";
 import Input from "app/components/form/Input";
 import SubmitButton from "app/components/form/submitButton";
-import { loginSchema } from "app/lib/schemas/auth";
+import { emailSchema } from "app/lib/schemas/auth";
 import clsx from "clsx";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export default function Page() {
+  const router = useRouter();
+  const { forgotPassword } = useAuth();
+
   const methods = useForm({
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(emailSchema),
   });
   const { handleSubmit } = methods;
 
+  useEffect(() => {
+    if (forgotPassword.isSuccess) {
+      forgotPassword.reset()
+      toast.success(forgotPassword.data?.message);
+      router.push("/login");
+    }
+  }, [forgotPassword.isSuccess]);
+
+    useEffect(() => {
+      if (forgotPassword.isError) {
+        forgotPassword.reset();
+     }
+    }, [forgotPassword.isError]);
+
   const onSubmit = async (data: any) => {
+    forgotPassword.mutate(data);
     console.log(data);
   };
   return (
@@ -40,11 +62,11 @@ export default function Page() {
           type="email"
           placeholder="Email"
           methods={methods}
-          schema={loginSchema}
+          schema={emailSchema}
         />
         <SubmitButton
           handleSubmit={handleSubmit(onSubmit)}
-          isLoading={false}
+          isLoading={forgotPassword.isPending}
           name="Reset Password"
         />
         <div className="flex justify-center">

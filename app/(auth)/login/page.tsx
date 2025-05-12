@@ -1,28 +1,57 @@
 "use client";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAuth } from "app/api/auth";
 import Input from "app/components/form/Input";
 import PasswordInput from "app/components/form/passwordInput";
 import SubmitButton from "app/components/form/submitButton";
 import { loginSchema } from "app/lib/schemas/auth";
-import useAuth from "app/store/authStore";
+import axios from "axios";
+// import useAuth from "app/store/authStore";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Page() {
-  const router = useRouter()
-  const { login } = useAuth((state) => state);
+  const { login } = useAuth();
+  const router = useRouter();
+  // const { login } = useAuth((state) => state);
   const methods = useForm({
     resolver: yupResolver(loginSchema),
   });
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, setValue } = methods;
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("savedEmail");
+    if (savedEmail) {
+      setValue("email", savedEmail);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (login.isSuccess) {
+      login.reset();
+      console.log(login.data, "data");
+    }
+  }, [login.isSuccess]);
+
+  useEffect(() => {
+    if (login.error) {
+      console.log(login.error, "login.error", login.data);
+      if (axios.isAxiosError(login.error) && login.error?.status === 400) {
+        // setValue("password", "");
+      }
+      login.reset();
+    }
+  }, [login.error]);
 
   const onLogin = async (data: any) => {
-    login("134", "admin");
-    router.push("/my-account/profile")
+    login.mutate(data);
+    // login("134", "admin");
+    // router.push("/my-account/profile")
     console.log(data);
   };
   return (
@@ -63,7 +92,7 @@ export default function Page() {
         </div>
         <SubmitButton
           handleSubmit={handleSubmit(onLogin)}
-          isLoading={false}
+          isLoading={login.isPending}
           name="Login"
         />
       </div>

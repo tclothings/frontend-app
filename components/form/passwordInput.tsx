@@ -68,7 +68,11 @@ export default function PasswordInput({ methods, name, placeholder, schema }: IP
             className="btn btn-outline-primary p-3"
             onClick={togglePassword}
           >
-            {inputType === "password" ? <EyeSlashIcon/> : <EyeIcon />}
+            {inputType === "password" ? (
+              <EyeSlashIcon width={24} />
+            ) : (
+              <EyeIcon width={24} />
+            )}
           </button>
         </div>
       </div>
