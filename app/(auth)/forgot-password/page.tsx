@@ -37,7 +37,6 @@ export default function Page() {
 
   const onSubmit = async (data: any) => {
     forgotPassword.mutate(data);
-    console.log(data);
   };
   return (
     <section className="pb-8 md:pb-6 flex flex-col gap-10">

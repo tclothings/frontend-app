@@ -6,17 +6,24 @@ import Input from "app/components/form/Input";
 import PasswordInput from "app/components/form/passwordInput";
 import SubmitButton from "app/components/form/submitButton";
 import { loginSchema } from "app/lib/schemas/auth";
+import useAuthStore from "app/store/authStore";
 import axios from "axios";
 // import useAuth from "app/store/authStore";
 import clsx from "clsx";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import Cookies from "js-cookie";
 
 export default function Page() {
-  const { login } = useAuth();
+  const { login: setLoginData } = useAuthStore();
+  const { login, verifyEmail } = useAuth();
   const router = useRouter();
+  const params = useSearchParams();
+  const verifyLink = params.get("response");
+
   // const { login } = useAuth((state) => state);
   const methods = useForm({
     resolver: yupResolver(loginSchema),
@@ -32,15 +39,43 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
+    if (verifyLink) {
+      verifyEmail.mutate(verifyLink);
+    }
+  }, [verifyLink]);
+
+  useEffect(() => {
+    if (verifyEmail.isSuccess) {
+      verifyEmail.reset();
+      toast.success(verifyEmail.data?.message);
+      router.replace("/login");
+    }
+    if (verifyEmail.isError) {
+      verifyEmail.reset();
+      router.replace("/login");
+    }
+  }, [verifyEmail.isSuccess, verifyEmail.isError]);
+
+  useEffect(() => {
     if (login.isSuccess) {
+      const { data } = login;
       login.reset();
-      console.log(login.data, "data");
+      const user = JSON.stringify({
+        user: data?.data?.user!,
+        access_token: data?.data?.access_token!,
+      });
+      Cookies.set("user", user, {
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        expires: data?.data?.exires_in, // 1 day
+      });
+      router.replace("/my-account/orders");
+      toast.success(data?.message);
     }
   }, [login.isSuccess]);
 
   useEffect(() => {
     if (login.error) {
-      console.log(login.error, "login.error", login.data);
       if (axios.isAxiosError(login.error) && login.error?.status === 400) {
         // setValue("password", "");
       }
@@ -52,7 +87,6 @@ export default function Page() {
     login.mutate(data);
     // login("134", "admin");
     // router.push("/my-account/profile")
-    console.log(data);
   };
   return (
     <section className="pb-8 md:pb-6">
@@ -86,13 +120,13 @@ export default function Page() {
           schema={loginSchema}
         />
         <div className="flex justify-end">
-          <Link shallow={true} href="/forgot_password" className="text-sm">
+          <Link shallow={true} href="/forgot-password" className="text-sm">
             Forgot Password?
           </Link>
         </div>
         <SubmitButton
           handleSubmit={handleSubmit(onLogin)}
-          isLoading={login.isPending}
+          isLoading={login.isPending || verifyEmail.isPending}
           name="Login"
         />
       </div>

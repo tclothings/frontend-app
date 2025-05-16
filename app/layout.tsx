@@ -42,12 +42,24 @@ export default function RootLayout({
       <body className="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
         {/* <CartProvider cartPromise={cart}> */}
         <QueryProvider>
-          <>
             <Navbar />
             <main>{children}</main>
-            <Toaster position="top-right" duration={5000}  closeButton />
+            <Toaster
+              richColors
+              position="top-right"
+              duration={5000}
+              closeButton
+              // toastOptions={{
+              //   // unstyled: true,
+              //   classNames: {
+              //     error: "bg-red-400",
+              //     success: "text-green-400",
+              //     warning: "text-yellow-400",
+              //     info: "bg-blue-400",
+              //   },
+              // }}
+            />
             <Footer />
-          </>
         </QueryProvider>
         {/* </CartProvider> */}
       </body>

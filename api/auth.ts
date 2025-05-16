@@ -30,10 +30,26 @@ export const useAuth = (args?: any) => {
     },
   });
 
+  const verifyEmail = useMutation({
+    mutationFn: async (token: string) => {
+      const result = await http.post("auth/verify-email", {token})
+      return result?.data
+    }
+  })
+  const logout = useMutation({
+    mutationFn: async () => {
+      const result = await http.post("auth/logout", {})
+      console.log(result, "res")
+      return result?.data
+    }
+  })
+
   return {
     register,
     login,
     forgotPassword,
     resetPassword,
+    verifyEmail,
+    logout,
   };
 };

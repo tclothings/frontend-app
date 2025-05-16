@@ -44,7 +44,7 @@ export default function PasswordInput({ methods, name, placeholder, schema }: IP
   const isClick = isFocused || isFieldRegistered;
 
   return (
-    <div className={`w-full mb-6 ${"input-container"} ${isClick && "focused"}`}>
+    <div className={`w-full mb-7 ${"input-container"} ${isClick && "focused"}`}>
       <div className="relative mt-2 rounded-md shadow-sm">
         <input
           {...methods.register(name)}

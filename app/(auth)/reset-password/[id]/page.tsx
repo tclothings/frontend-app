@@ -33,9 +33,7 @@ export default function Page() {
     if (resetPassword.isSuccess) {
       resetPassword.reset();
       toast.success(resetPassword.data?.message);
-      setTimeout(() => {
-        router.push("/login");
-      }, 10000);
+      router.push("/login");
     }
   }, [resetPassword.isSuccess]);
 
@@ -44,7 +42,6 @@ export default function Page() {
     delete payload.confirmNewPassword;
     payload.resetToken = token;
     resetPassword.mutate(payload);
-    console.log(data, payload);
     // resetToken;
   };
 

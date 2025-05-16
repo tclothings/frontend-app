@@ -18,7 +18,7 @@ export default function Page() {
     resolver: yupResolver(registerSchema),
   });
 
-  const { handleSubmit, setValue } = methods;
+  const { handleSubmit, setValue, reset } = methods;
 
   // useEffect(() => {
   //   if (register.error) {
@@ -39,11 +39,8 @@ export default function Page() {
         localStorage.setItem("savedEmail", savedEmail);
       }
       register.reset();
-      setValue("email", "");
-      setValue("password", "");
-      setTimeout(() => {
-        window.location.href = "/login";
-      }, 5000);
+      reset();
+      window.location.href = "/login";
     }
   }, [register.isSuccess]);
 

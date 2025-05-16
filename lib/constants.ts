@@ -174,3 +174,10 @@ export const recentOrders = [
     transactionType: "credit",
   },
 ];
+
+export const publicAuthRoutes = [
+  "/login",
+  "/signup",
+  "/forgot-password",
+  "/reset-password",
+];
