@@ -29,7 +29,6 @@ export const useAuth = (args?: any) => {
       return result?.data;
     },
   });
-
   const verifyEmail = useMutation({
     mutationFn: async (token: string) => {
       const result = await http.post("auth/verify-email", {token})

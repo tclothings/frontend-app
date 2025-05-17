@@ -6,11 +6,10 @@ import { Menu } from 'app/lib/types';
 import LogoSquare from 'app/components/logo-square';
 import { navMenu } from 'app/lib/constants';
 import CartModal from 'app/components/cart/modal';
-import useAuthStore from 'app/store/authStore';
 
 const { SITE_NAME } = process.env;
 
-export function Navbar() {
+export async function Navbar() {
 
   return (
     // <nav className="relative sticky top-0 z-50 bg-[var(--background)] flex items-center justify-between p-4 lg:px-6 shadow-lg">
