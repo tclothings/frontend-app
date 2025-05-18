@@ -21,8 +21,8 @@ const addressSchema = Yup.object().shape({
 const userInfoSchema = Yup.object().shape({
   firstName: Yup.string().required("First name is required"),
   lastName: Yup.string().required("Last name is required"),
-  phoneNumber: Yup.string().required("Phone number is required"),
-  dateOfBirth: Yup.string().required("Date of Birth"),
+  // phoneNumber: Yup.string().required("Phone number is required"),
+  // dateOfBirth: Yup.string().required("Date of Birth"),
 });
 
 const changePasswordSchema = Yup.object().shape({

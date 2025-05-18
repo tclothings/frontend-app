@@ -5,6 +5,7 @@ import { useProfile } from "app/api/client/profile";
 import PasswordInput from "app/components/form/passwordInput";
 import SubmitButton from "app/components/form/submitButton";
 import { changePasswordSchema } from "app/lib/schemas/biodata";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 export default function PasswordChange() {
@@ -13,7 +14,14 @@ export default function PasswordChange() {
     resolver: yupResolver(changePasswordSchema),
   });
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, reset } = methods;
+  useEffect(() => {
+    if (changePassword.isSuccess) {
+      changePassword.reset();
+      reset();
+    }
+  }, [changePassword.isSuccess]);
+  
   const onPasswordChange = (data: any) => {
     const cleanedData = { ...data };
     delete cleanedData.confirmNewPassword;
