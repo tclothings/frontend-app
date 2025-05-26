@@ -2,14 +2,15 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "app/lib/http";
 
 export const useAddresses = (args?: any) => {
-  const { id } = args ?? {};
+  const { id, enabled } = args ?? {};
 const queryClient = useQueryClient()
   const addresses = useQuery({
     queryKey: ["addresses"],
     queryFn: async () => {
       const result = await http.get("users/me/addresses");
-      return result?.data;
+      return result?.data?.data;
     },
+    enabled,
   });
   const address = useQuery({
     queryKey: ["addresses", id],
@@ -19,10 +20,21 @@ const queryClient = useQueryClient()
     },
       enabled: !!id
   });
+  const addAddress = useMutation({
+    mutationFn: async (data) => {
+      const result = await http.post(`users/me/address`, data);
+      return result?.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["addresses"],
+      });
+    },
+  });
 
   const updateAddress = useMutation({
-    mutationFn: async () => {
-      const result = await http.put(`users/me/address/${id}`);
+    mutationFn: async({ data, id }: {data: any, id: string}) => {
+      const result = await http.put(`users/me/address/${id}`, data);
       return result?.data;
       },
       onSuccess: () => {
@@ -31,5 +43,5 @@ const queryClient = useQueryClient()
           });
       },
   });
-    return {address, addresses, updateAddress}
+    return { addresses, address, addAddress, updateAddress };
 };

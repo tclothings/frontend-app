@@ -1,8 +1,8 @@
 import Addresses from "app/components/pages/customer/addresses";
 
 export const metadata = {
-  title: "Orders",
-  description: "View orders list.",
+  title: "Address Book",
+  description: "View Address List.",
 };
 
 export default async function AddressPage() {

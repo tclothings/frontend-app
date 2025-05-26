@@ -2,11 +2,18 @@
 
 import SubmitButton from "app/components/form/submitButton";
 import AccountPageHeader from "app/components/ui/accountPageHeader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddEditAddress from "./addEditAddress";
+import { useAddresses } from "app/api/client/address";
+import AddressCard from "./addressCard";
+import Spinner from "app/components/form/spinner";
 
 export default function Addresses() {
+
   const [showAddEditAddress, setShowAddEditAddress] = useState(false);
+  const { addresses } = useAddresses({ enabled : true});
+  const [selectedAddress, setSelectedAddress] = useState<any>(null)
+  
   const newAdressBtn = (
     <SubmitButton
       isSmallBtn={true}
@@ -15,20 +22,34 @@ export default function Addresses() {
       handleSubmit={() => setShowAddEditAddress(true)}
     />
   );
+
+  if(addresses.isPending) return <Spinner />
+  const addressList = addresses?.data?.data
   return (
-    <div className="dark:bg-black h-screen px-4">
+    <div className="h-full">
       {showAddEditAddress ? (
         <AddEditAddress
-          item={showAddEditAddress}
+          item={selectedAddress}
+          setSelectedAddress={setSelectedAddress}
           setShowAddEditAddress={setShowAddEditAddress}
         />
       ) : (
         <>
           {" "}
-          <AccountPageHeader title="Addresses" btn={newAdressBtn} />
-          <div className="py-2 grid grid-cols-2 gap-2">
-                  
-          </div>{" "}
+          <AccountPageHeader title="Address Book" btn={newAdressBtn} />
+          {!addressList?.length ? (
+            <p className="text-center">No Address</p>
+          ) : null}
+          <div className="py-2 grid grid-cols-2 items-stretch gap-4 px-4 overflow-y-auto">
+            {addressList?.map((address: any) => (
+              <AddressCard
+                key={address._id}
+                address={address}
+                setSelectedAddress={setSelectedAddress}
+                setShowAddEditAddress={setShowAddEditAddress}
+              />
+            ))}
+          </div>
         </>
       )}
     </div>

@@ -10,11 +10,11 @@ export default function AccountPageHeader({
   btn?: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-y-6">
-      <div className="flex flex-row justify-between items-center py-2">
+    <div className="flex flex-col gap-y-6 py-2 px-4">
+      <div className="flex flex-row justify-between items-center">
         <h1
           className={clsx(
-            "font-semibold md:font-medium text-xl md:text-[30px] text-grey-900 pb-[11px] md:pb-0",
+            "font-semibold md:font-medium text-xl md:text-[30px] text-grey-900",
             // testSohne.className,
             "antialiased"
           )}

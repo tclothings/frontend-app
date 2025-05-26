@@ -14,12 +14,32 @@ import Button from "app/components/form/button";
 import User from "app/components/icons/user";
 import Image from "next/image";
 import ChangeProfileImg from "app/components/icons/changeProfileImg";
+import { toast } from "sonner";
 
 export default function Biodata() {
   const { userProfile, updateBioData } = useProfile();
 
   const imgInputRef = useRef<HTMLInputElement>(null);
   const [imgFile, setImgFile] = useState<string>("");
+  const methods = useForm({
+    resolver: yupResolver(userInfoSchema),
+  });
+  const { setValue } = methods
+
+  useEffect(() => {
+    if (updateBioData.isSuccess) {
+      toast.success(updateBioData.data?.message);
+      updateBioData.reset();
+    }
+  }, [updateBioData.isSuccess]);
+  useEffect(() => {
+    if (userProfile.isSuccess) {
+      setValue("firstName", userProfile?.data?.firstName);
+      setValue("lastName", userProfile?.data?.lastName);
+      setValue("phoneNumber", userProfile?.data?.phoneNumber?.number);
+      setValue("profilePicture", userProfile?.data?.profilePicture ?? "");
+    }
+  }, [userProfile.isSuccess]);
 
   function handleUploadClick() {
     if (imgInputRef.current) {
@@ -35,18 +55,18 @@ export default function Biodata() {
     }
     setImgFile(URL.createObjectURL(e.target.files[0]));
   }
-  const methods = useForm({
-    resolver: yupResolver(userInfoSchema),
-  });
-  useEffect(() => {
-    if (userProfile.isSuccess) {
-      console.log(userProfile.data, "user");
-    }
-  }, [userProfile.isSuccess]);
 
   const { handleSubmit } = methods;
+
   const onUpdateProfile = (data: any) => {
-    updateBioData.mutate(data);
+     const cleanedData = Object.fromEntries(
+      Object.entries(data).filter(
+        ([_, value]) =>
+          value !== "" && value !== null && value !== undefined
+      )
+    );
+
+    updateBioData.mutate(cleanedData as any);
   };
   return (
     <>
@@ -77,6 +97,7 @@ export default function Biodata() {
             className="text-grey-700 font-medium border border-[1.5px] border-grey-300 py-[10px] px-4 rounded-lg"
             icon={<ChangeProfileImg />}
             onClick={handleUploadClick}
+            disabled={updateBioData.isPending}
           />
           <input
             ref={imgInputRef}
@@ -84,17 +105,19 @@ export default function Biodata() {
             type="file"
             accept="image/*"
             onChange={(e) => handleImgUpload(e)}
+            disabled={updateBioData.isPending}
           />
         </div>
       </div>
       <div className="flex flex-col gap-5 pt-3">
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <Input
             type="text"
             name="firstName"
             methods={methods}
             placeholder="First Name"
             schema={userInfoSchema}
+            disabled={updateBioData.isPending}
           />
           <Input
             type="text"
@@ -102,28 +125,28 @@ export default function Biodata() {
             methods={methods}
             placeholder="Last Name"
             schema={userInfoSchema}
+            disabled={updateBioData.isPending}
           />
         </div>
-        {/* <div className="grid grid-cols-2 gap-5">
-              <NumberInput
-                placeholder="Phone Number"
-                name="phone"
-                methods={methods}
-                schema={userInfoSchema}
-              />
-              <Input
+          <NumberInput
+            placeholder="Phone Number"
+            name="phoneNumber"
+            methods={methods}
+            schema={userInfoSchema}
+            disabled={updateBioData.isPending}
+          />
+          {/* <Input
                 type="date"
                 name="dateOfBirth"
                 methods={methods}
                 placeholder="D.O.B"
                 schema={userInfoSchema}
-              />
-            </div> */}
+              /> */}
         <div className="px-0 md:px-6 flex justify-end">
           <SubmitButton
             isSmallBtn={true}
             name="Save"
-            isLoading={false}
+            isLoading={updateBioData.isPending}
             handleSubmit={handleSubmit(onUpdateProfile)}
           />
         </div>

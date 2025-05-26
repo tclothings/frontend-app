@@ -1,16 +1,17 @@
-import Link from 'next/link';
-import { Suspense } from 'react';
-import MobileMenu from './mobile-menu';
-import Search, { SearchSkeleton } from './search';
-import { Menu } from 'app/lib/types';
-import LogoSquare from 'app/components/logo-square';
-import { navMenu } from 'app/lib/constants';
-import CartModal from 'app/components/cart/modal';
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import { Suspense } from "react";
+import MobileMenu from "./mobile-menu";
+import Search, { SearchSkeleton } from "./search";
+import { Menu } from "app/lib/types";
+import LogoSquare from "app/components/logo-square";
+import { navMenu } from "app/lib/constants";
+import NavClientSection from "./navClientSection";
 
 const { SITE_NAME } = process.env;
 
-export async function Navbar() {
 
+export async function Navbar() {
   return (
     // <nav className="relative sticky top-0 z-50 bg-[var(--background)] flex items-center justify-between p-4 lg:px-6 shadow-lg">
     <nav className="relative sticky top-0 z-50 bg-[var(--background)/80] dark:bg-[var(--background)]  backdrop-blur-md dark:blur-none border-b  border-black/10 dark:border-none shadow-[0_4px_12px_rgba(0,0,0,0.2)] flex items-center justify-between p-4 lg:px-6">
@@ -52,9 +53,11 @@ export async function Navbar() {
             <Search />
           </Suspense> */}
         </div>
-        <div className="flex justify-end md:w-1/3">
+        <NavClientSection />
+        {/* <div className="flex  gap-2  items-center justify-end md:w-1/3">
+          {["/my-account", "/admin"].includes(pathname) && <ProfileAvatar />}
           <CartModal />
-        </div>
+        </div> */}
       </div>
     </nav>
   );

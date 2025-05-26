@@ -108,6 +108,5 @@ export function decodeJwt(token: string) {
       .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
       .join("")
   );
-console.log(base64Url, base64, jsonPayload);
   return JSON.parse(jsonPayload);
 }

@@ -1,7 +1,11 @@
+"use client"
+import { usePathname } from 'next/navigation';
 import FilterList from '../search/filter';
-import { accountNavMenu } from 'app/lib/constants';
+import { clientNavMenu, adminNavMenu } from "app/lib/constants";
 
 export default function NavList() {
-  return <FilterList list={accountNavMenu} title="Account" showLogout={true} />;
+  const pathname = usePathname()
+  const nav = pathname.startsWith("/admin") ? adminNavMenu : clientNavMenu;
+  return <FilterList list={nav} title="Account" />;
 }
 

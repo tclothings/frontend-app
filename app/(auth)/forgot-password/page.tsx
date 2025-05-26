@@ -71,7 +71,7 @@ export default function Page() {
         <div className="flex justify-center">
           <Link
             href={"/login"}
-            className="mt-6 font-semibold  text-blue-600 text-sm"
+            className="font-semibold text-blue-600 text-sm"
           >
             Return to Login
           </Link>

@@ -96,29 +96,46 @@ export const ControlledGoogleAddress = ({
         const long = geometry?.lng();
         const lat = geometry?.lat();
         const address = placeDetails?.formatted_address;
-        const addressComponent = placeDetails?.address_components;
+        const components = placeDetails?.address_components || [];
 
-        const city = addressComponent?.find((location: any) => location?.types?.[0] === "administrative_area_level_3")
-          ?.long_name;
-        const area = addressComponent?.find(
-          (location: any) => location?.types?.[0] === "neighborhood"
-        )?.long_name;
-        const state = addressComponent?.find(
-          (location: any) =>
-            location?.types?.[0] === "administrative_area_level_1"
-        )?.long_name;
-        const country = addressComponent?.find(
-          (location: any) => location?.types?.[0] === "country"
-        )?.long_name;
-        onSearchLocation({ address, lat, long, city, area, state, country });
-        console.log({ city, area, state, country, addressComponent });
+        const getComponent = (types: string[]) =>
+          components.find((comp: any) =>
+            types.some((type) => comp.types.includes(type))
+          )?.long_name || "";
+
+        const streetNumber = getComponent(["street_number"]);
+        const route = getComponent(["route"]);
+        const street = [streetNumber, route].filter(Boolean).join(" ");
+
+        const lga = getComponent(["administrative_area_level_2"]); // Often represents LGA in Nigeria
+        const city = getComponent([
+          "locality",
+          "administrative_area_level_3", // Fallback if locality is missing
+          "sublocality_level_1",
+        ]);
+        const state = getComponent(["administrative_area_level_1"]);
+        const country = getComponent(["country"]);
+
+        onSearchLocation({
+          address,
+          lat,
+          long,
+          street,
+          lga,
+          city,
+          state,
+          country,
+        });
         methods.setValue(name, address as string);
       },
     );
   };
 
   return (
-    <section className={`w-full mb-7 ${"input-container"} ${isClick && "focused"}`} ref={dropdownRefBtn}>
+    <section
+      className={`w-full mb-7 ${"input-container"} ${isClick && "focused"}`}
+      ref={dropdownRefBtn}
+    >
       <input
         {...methods.register(name)}
         type="text"
@@ -132,19 +149,25 @@ export const ControlledGoogleAddress = ({
         onBlur={handleBlur}
       />
 
-      <label className={`input-label text-gray-400 ${errors[name] && "error"} ${isClick && "label-up"}`}>
+      <label
+        className={`input-label text-gray-400 ${errors[name] && "error"} ${
+          isClick && "label-up"
+        }`}
+      >
         {label} {isRequired && isClick && <span className="text-red">*</span>}
       </label>
 
       <ErrorMessage
         errors={errors}
         name={name}
-        render={({ message }) => <p className="error-message mt-[12px]">{message}</p>}
+        render={({ message }) => (
+          <p className="error-message mt-[12px]">{message}</p>
+        )}
       />
 
       <div className="relative z-10">
         {placePredictions.length > 0 && searching && (
-          <div className="absolute left-0 top-full w-full bg-white shadow-md">
+          <div className="absolute left-0 top-full w-full bg-[var(--background)] text-[var(--foreground)]] shadow-md">
             {placePredictions.map((suggestion, index) => (
               <div
                 key={index}

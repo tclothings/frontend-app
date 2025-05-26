@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "app/components/form/button";
-import { ControlledGoogleAddress } from "app/components/form/ControlledGoogleAddress";
+import { ControlledGoogleAddress } from "app/components/form/controlledGoogleAddress";
 import Input from "app/components/form/Input";
 import NumberInput from "app/components/form/numberInput";
 import SubmitButton from "app/components/form/submitButton";
@@ -8,71 +8,123 @@ import { addressSchema } from "app/lib/schemas/biodata";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import CustomCheck from "app/components/form/customCheck";
+import { useAddresses } from "app/api/client/address";
+import { toast } from "sonner";
 
+const emptyValue = ""
 const AddEditAddress = ({
   item,
+  setSelectedAddress,
   setShowAddEditAddress,
 }: {
   item?: any;
+  setSelectedAddress: Dispatch<SetStateAction<any>>;
   setShowAddEditAddress: Dispatch<SetStateAction<boolean>>;
 }) => {
-  useEffect(() => {}, []);
+  const { addAddress, updateAddress } = useAddresses();
+
+  const initialValues = {
+    phoneNumber: item?.phoneNumber?.internationalFormat ?? emptyValue,
+    address: item?.address ?? emptyValue,
+    additionalDetails: item?.additionalDetails ?? emptyValue,
+    isDefault: item?.isDefault ?? false,
+  };
   const methods = useForm({
     resolver: yupResolver(addressSchema),
   });
+  const { handleSubmit, setValue, reset } = methods;
+  const returnToAddressList = () => {
+    reset();
+    setShowAddEditAddress(false);
+    setSelectedAddress(null);
+  };
+  useEffect(() => {
+    if (addAddress.isSuccess) {
+      toast.success(addAddress?.data?.message);
+      addAddress.reset();
+      // returnToAddressList();
+    }
+  }, [addAddress.isSuccess]);
+
+  useEffect(() => {
+    if (updateAddress.isSuccess) {
+      toast.success(updateAddress?.data?.message);
+      updateAddress.reset();
+      returnToAddressList();
+    }
+  }, [updateAddress.isSuccess]);
+
+  useEffect(() => {
+    if (item) {
+      reset(initialValues);
+    }
+  }, [item])
+
   const onSearchLocation = (data: any) => {
-    methods.setValue("address", data.address);
-    methods.setValue("latitude", data.lat?.toString());
-    methods.setValue("longitude", data.long?.toString());
-    methods.setValue("area", data.area?.toString());
-    methods.setValue("city", data.city?.toString());
-    methods.setValue("state", data.state?.toString());
-    methods.setValue("country", data.country?.toString());
+    setValue("address", data.address?.toString());
+    setValue("latitude", data.lat?.toString());
+    setValue("longitude", data.long?.toString());
+    setValue("lga", data.lga?.toString());
+    setValue("city", data.city?.toString());
+    setValue("state", data.state?.toString());
+    setValue("country", data.country?.toString());
+    setValue("street", data.street?.toString());
+  };
+
+  const onAddEditAddress = (data: any) => {
+    // if (!data.lga) {
+    //   data.lga = data.city
+    // }
+    if (item) {
+      updateAddress.mutate({data, id: item._id });
+    } else {
+      addAddress.mutate(data);
+    }
   };
 
   return (
-    <div className="w-full pb-4">
-      <div className="flex items-center gap-4 py-2">
+    <div className="w-full pb-4 px-4">
+      <div className="flex items-center gap-4 py-2 mb-10">
         <Button
           icon={<ArrowLeftIcon width="24" />}
-          onClick={() => setShowAddEditAddress(false)}
+          onClick={returnToAddressList}
         />
         <p>{item ? "Edit Address" : "Add a New Address"}</p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] gap-5 mt-4">
-        <NumberInput
-          name="postalCode"
-          methods={methods}
-          placeholder="Postal code"
-          schema={addressSchema}
-        />
-        <ControlledGoogleAddress
-          name="address"
-          methods={methods}
-          onSearchLocation={onSearchLocation}
-        />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <NumberInput
-          placeholder="Phone Number"
-          name="phone"
-          methods={methods}
-          schema={addressSchema}
-        />
-        <Input
-          placeholder="Additional Details"
-          type="text"
-          name="additionalDetails"
-          methods={methods}
-          schema={addressSchema}
-        />
-      </div>
+      <NumberInput
+        disabled={addAddress.isPending}
+        placeholder="Phone Number"
+        name="phoneNumber"
+        methods={methods}
+        schema={addressSchema}
+        isPhoneNumber={true}
+      />
+      <ControlledGoogleAddress
+        name="address"
+        methods={methods}
+        onSearchLocation={onSearchLocation}
+      />
+
+      <Input
+        disabled={addAddress.isPending}
+        placeholder="Additional Details"
+        type="text"
+        name="additionalDetails"
+        methods={methods}
+        schema={addressSchema}
+      />
+      <CustomCheck
+        name="isDefault"
+        methods={methods}
+        placeholder="Set as Default Address"
+      />
       <div className="flex justify-end">
         <SubmitButton
           isSmallBtn={true}
           name="Save"
-          isLoading={false}
-          handleSubmit={() => {}}
+          isLoading={addAddress.isPending || updateAddress.isPending}
+          handleSubmit={handleSubmit(onAddEditAddress)}
         />
       </div>
     </div>

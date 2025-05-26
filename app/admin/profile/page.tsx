@@ -1,8 +1,8 @@
 import Profile from "app/components/pages/customer/profile";
 
 export const metadata = {
-  title: "Profile",
-  description: "View profile.",
+  title: "Orders",
+  description: "View orders list.",
 };
 
 export default async function ProfilePage() {

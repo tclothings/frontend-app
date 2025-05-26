@@ -1,15 +1,23 @@
 import axios from "axios";
 import { title } from "process";
 import { toast } from "sonner";
+import Cookies from "js-cookie";
+import { authService } from "app/app/services/client/auth.service";
 
+const token = authService.getToken();
+console.log(token, "toke")
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
   },
   withCredentials: true,
 });
-
+axiosInstance.interceptors.request.use((config) => {
+  // console.log("Request Headers:", config.headers);
+  return config;
+});
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -20,6 +28,11 @@ axiosInstance.interceptors.response.use(
       "Something went wrong";
     if (error.response?.status === 401) {
       toast.error(`Error: ${message}`);
+      // toast.error("Unaauthorized, redirecting to login");
+      //   window.location.href = "/login";
+    }
+    else if (error.response?.status === 500) {
+      toast.error(`Something went wrong! Try again!!`);
       // toast.error("Unaauthorized, redirecting to login");
       //   window.location.href = "/login";
     } else {

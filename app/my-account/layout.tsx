@@ -11,13 +11,13 @@ export default function AccountLayout({
   return (
     <>
       <div className="mx-auto flex max-w-(--breakpoint-2xl) w-full flex-col gap-8 px-4 pb-4 text-black md:flex-row dark:text-white">
-        <div className="z-40 bg-[var(--background)] order-first w-full flex-none md:max-w-[150px] sticky top-20 self-start">
+        <div className="dark:bg-black rounded-md order-first w-full md:min-h-[calc(100vh-200px)] h-full md:max-w-[180px]">
           <NavList />
         </div>
-        <div className="order-last min-h-[calc(100vh-78px)] h-full md:max-w-[60vw] w-full lg:max-w-[70vw] md:order-none">
+        <div className="order-last dark:bg-black rounded-md min-h-[calc(100vh-200px)] h-full md:max-w-[60vw] w-full lg:max-w-[70vw] md:order-none">
           {children}
         </div>
-        <div className="md:max-w-[150px] z-30 bg-[var(--background)] order-none md:order-last md:max-w-[125px] w-full sticky top-[145px] md:top-20 self-start">
+        <div className="md:max-w-[150px] dark:bg-black rounded-md order-none md:order-last md:max-w-[125px] w-full md:min-h-[calc(100vh-200px)] h-full">
           <FilterList list={sorting} title="Sort by" />
         </div>
       </div>

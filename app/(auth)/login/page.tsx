@@ -69,7 +69,7 @@ export default function Page() {
         sameSite: "lax",
         expires: data?.data?.exires_in, // 1 day
       });
-      router.replace("/my-account/orders");
+      router.push("/my-account/orders");
       toast.success(data?.message);
     }
   }, [login.isSuccess]);

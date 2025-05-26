@@ -81,7 +81,6 @@ export function AddToCart({ product }: { product: Product }) {
   // const finalVariant = variants.find(
   //   (variant) => variant.id === selectedVariantId
   // )!;
-console.log(product.id, "id")
   return (
     // <form
     //   action={async () => {

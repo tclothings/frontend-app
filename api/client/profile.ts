@@ -7,8 +7,8 @@ export const useProfile = (args?: any) => {
   const userProfile = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
-      const result = await http.put("users/me");
-      return result?.data;
+      const result = await http.get("users/me", { withCredentials: true });
+      return result?.data?.data;
     },
   });
   const changePassword = useMutation({

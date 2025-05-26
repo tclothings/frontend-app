@@ -6,10 +6,11 @@ const registerSchema = Yup.object().shape({
     .required("Password is required")
     .min(6, "Password should be 6 characters or more")
     .label("Password")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-      "Password should contain at least one uppercase, lowercase, number and special character"
-    ),
+    // .matches(
+    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+    //   "Password should contain at least one uppercase, lowercase, number and special character"
+    // )
+    ,
   firstName: Yup.string(),
   lastName: Yup.string(),
 });
@@ -21,10 +22,11 @@ const loginSchema = Yup.object().shape({
     .required("Password is required")
     .min(6, "Password should be 6 characters or more")
     .label("Password")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-      "Password should contain at least one uppercase, lowercase, number and special character"
-    ),
+    // .matches(
+    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+    //   "Password should contain at least one uppercase, lowercase, number and special character"
+    // )
+    ,
   // fullName: Yup.string(),
 });
 const emailSchema = Yup.object().shape({
@@ -37,17 +39,19 @@ const passwordSchema = Yup.object().shape({
     .required("Confirm password is required")
     .min(6, "Password should be 6 characters or more")
     .label("Password")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-      "Password should contain at least one uppercase, lowercase, number and special character"
-    ),
+    // .matches(
+    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+    //   "Password should contain at least one uppercase, lowercase, number and special character"
+    // )
+    ,
   newPassword: Yup.string()
     .required("New password is required")
     .min(6, "Password should be 6 characters or more")
     .label("Password")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-      "Password should contain at least one uppercase, lowercase, number and special character"
-    ),
+    // .matches(
+    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+    //   "Password should contain at least one uppercase, lowercase, number and special character"
+    // )
+    ,
 });
 export { registerSchema, loginSchema, emailSchema, passwordSchema };

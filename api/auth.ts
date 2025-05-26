@@ -38,7 +38,6 @@ export const useAuth = (args?: any) => {
   const logout = useMutation({
     mutationFn: async () => {
       const result = await http.post("auth/logout", {})
-      console.log(result, "res")
       return result?.data
     }
   })

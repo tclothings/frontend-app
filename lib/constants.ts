@@ -48,12 +48,22 @@ export const sorting: SortFilterItemType[] = [
   },
 ];
 
-export const accountNavMenu = [
+export const clientNavMenu = [
+  { title: "Orders", path: "/my-account/orders" },
   { title: "Profile", path: "/my-account/profile" },
   { title: "Address", path: "/my-account/address" },
   { title: "Payment methods", path: "/my-account/payment-methods" },
-  { title: "Orders", path: "/my-account/orders" },
 ];
+
+export const adminNavMenu = [
+  { title: "Orders", path: "/admin/orders" },
+  { title: "Customers", path: "/admin/customers" },
+  { title: "Admin", path: "/admin/admin" },
+  { title: "Address", path: "/admin/address" },
+  { title: "Payment methods", path: "/admin/payment-methods" },
+  { title: "Profile", path: "/admin/profile" },
+];
+
 export const navMenu = [
   { title: "Home", path: "/" },
   { title: "Categories", path: "/category" },
