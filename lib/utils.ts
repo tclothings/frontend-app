@@ -114,3 +114,8 @@ export function decodeJwt(token: string) {
   );
   return JSON.parse(jsonPayload);
 }
+
+export function roles(roles: string[]) {
+  if (!roles?.length) return "User"
+    return roles.map((role) => capitalizeWord(role)).toString();
+}

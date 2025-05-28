@@ -5,7 +5,7 @@ import { formatAmount } from "app/lib/utils";
 import { Suspense } from "react";
 import { recentOrders } from "app/lib/constants";
 import ProductCard from "app/components/orders/productCard";
-import StatusCard from "app/components/orders/statusCard";
+import StatusCard from "app/components/ui/statusCard";
 import Pagination from "app/components/ui/pagination";
 import EmptyOrders from "app/components/orders/emptyOrders";
 import { ordersHeaders } from "app/components/orders/ordersHeaders";

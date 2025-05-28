@@ -12,7 +12,7 @@ import { Fragment, useState } from "react";
 
 
 interface DrawerProps {
-  drawerOpenerText: string;
+  drawerOpenerText?: string;
   title: string;
   children: React.ReactNode;
   isOpen: boolean;
@@ -33,13 +33,14 @@ export default function Drawer({
 
   return (
     <>
-      <button
-        aria-label="Open drawer"
-        onClick={onOpen}
-        className="hover:cursor-pointer text-blue-600 font-bold"
-      >
-        {drawerOpenerText}
-      </button>
+      {drawerOpenerText &&
+        <button
+          aria-label="Open drawer"
+          onClick={onOpen}
+          className="hover:cursor-pointer text-blue-600 font-bold"
+        >
+          {drawerOpenerText}
+        </button>}
       <Transition show={isOpen}>
         <Dialog onClose={onClose} className="relative z-50">
           <TransitionChild

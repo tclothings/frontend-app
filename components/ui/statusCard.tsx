@@ -1,6 +1,6 @@
-import CardStyle from "app/components/icons/cardStyle";
 import { capitalizeWord } from "app/lib/utils";
 import clsx from "clsx";
+import CardStyle from "../icons/cardStyle";
 
 export default function StatusCard({ status }: { status: string }) {
     let className;
@@ -35,7 +35,12 @@ export default function StatusCard({ status }: { status: string }) {
         break;
       case "completed":
         classObj = {
-          className: "bg-success-50 text-success-700",
+          className: "bg-green-50 text-green-700",
+          circleColor: "#02B04E",
+        };
+      case "active":
+        classObj = {
+          className: "bg-green-50 text-green-700",
           circleColor: "#02B04E",
         };
         break;

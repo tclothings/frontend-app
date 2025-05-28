@@ -1,15 +1,15 @@
 export const customerHeaders = [
   {
-    label: "Id",
-  },
-  {
     label: "Name",
   },
   {
     label: "Email",
   },
   {
-    label: "Order Status",
+    label: "Roles",
+  },
+  {
+    label: "Status",
   },
   {
     label: "Created At",

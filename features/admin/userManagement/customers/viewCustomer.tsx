@@ -6,11 +6,11 @@ import { capitalizeWord, formatDate, roles } from "app/lib/utils";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
-interface ViewAdminProps {
+interface ViewCustomerProps {
   onSuccess: () => void;
   item: any;
 }
-const ViewAdmin = ({ onSuccess, item }: ViewAdminProps) => {
+const ViewCustomer = ({ onSuccess, item }: ViewCustomerProps) => {
   const { disableAdmin, enableAdmin } = useAdminUsers();
 
   const isAdminActive = item.status?.toLowerCase() === "active";
@@ -46,7 +46,7 @@ const ViewAdmin = ({ onSuccess, item }: ViewAdminProps) => {
             Date Joined:
           </span>
           <span> {formatDate(item?.createdAt)}</span>
-        </span>
+        </span>{" "}
         <StatusTag status={item?.status} />
       </p>
       <div className="flex flex-col gap-6 border-b border-b-grey-50 mb-10 pb-5">
@@ -76,21 +76,21 @@ const ViewAdmin = ({ onSuccess, item }: ViewAdminProps) => {
         </div>
       </div>
       <div className="flex justify-center">
-        {isAdminActive ? <DisableButton
-          isSmallBtn
-          handleSubmit={onHandleAdminUpdate}
-          isLoading={disableAdmin.isPending}
-          name={"Disable"}
-        /> :
-          <SubmitButton
-            isSmallBtn
-            handleSubmit={onHandleAdminUpdate}
-            isLoading={enableAdmin.isPending}
-            name={"Enable"}
-          />}
+           {isAdminActive ? <DisableButton
+             isSmallBtn
+             handleSubmit={onHandleAdminUpdate}
+             isLoading={disableAdmin.isPending}
+             name={"Disable"}
+           /> :
+             <SubmitButton
+               isSmallBtn
+               handleSubmit={onHandleAdminUpdate}
+               isLoading={enableAdmin.isPending}
+               name={"Enable"}
+             />}
       </div>
     </div>
   );
 };
 
-export default ViewAdmin;
+export default ViewCustomer;

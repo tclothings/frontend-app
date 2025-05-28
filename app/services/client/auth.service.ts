@@ -3,7 +3,6 @@ import Cookies from "js-cookie";
 class AuthService {
   getUserCookies(): { access_token?: string; user?: any } | null {
     const user = Cookies.get("user");
-    console.log(user, "user");
     if (!user) return null;
     try {
       const parsed = JSON.parse(user);

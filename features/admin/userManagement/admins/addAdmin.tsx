@@ -24,7 +24,6 @@ const AddAdmin = ({onSuccess}: {onSuccess: () => void}) => {
     }, [addAmin.isSuccess]);
     
     const onAddNewAdmin = (data: any) => {
-        console.log(data)
         addAmin.mutate(data)
     }
     return (

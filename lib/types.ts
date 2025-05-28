@@ -130,6 +130,13 @@ export type Collection = ProductsCollection & {
 // tables
 export interface TableHeaderProps {
   headers: { label: string; icon?: string }[];
+  header?: string;
+  showRowCount?: boolean;
+  bulkActions?: any[];
+  selectedRowKeys?: React.Key[];
+  totalPages?: number;
+  rows?: number;
+  showPagination?: boolean;
 }
 export interface TableBodyProps {
   isLoading?: boolean;
@@ -140,7 +147,7 @@ export interface TableBodyProps {
   title?: string;
   text?: string;
 }
-export interface TableProps extends TableBodyProps, TableHeaderProps { }4
+export interface TableProps extends TableBodyProps, TableHeaderProps { }
 
 export interface FormatOptions {
   locale?: string;

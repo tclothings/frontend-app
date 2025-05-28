@@ -2,9 +2,8 @@ import { capitalizeWord } from "app/lib/utils";
 import clsx from "clsx";
 import CardStyle from "../icons/cardStyle";
 
-export default function StatusCard({ status }: { status: string }) {
-    let className;
-    let listClass;
+export default function StatusTag({ status }: { status: string }) {
+ 
     let classObj;
     let cardStatus = status.toLowerCase()
 
@@ -35,7 +34,12 @@ export default function StatusCard({ status }: { status: string }) {
         break;
       case "completed":
         classObj = {
-          className: "bg-success-50 text-success-700",
+          className: "bg-green-50 text-green-700",
+          circleColor: "#02B04E",
+        };
+      case "active":
+        classObj = {
+          className: "bg-green-50 text-green-700",
           circleColor: "#02B04E",
         };
         break;
@@ -44,15 +48,15 @@ export default function StatusCard({ status }: { status: string }) {
           className: "bg-grey-100 text-grey-700",
           listClass: "#667185",
         };
-    }
+  }
+  console.log(classObj, "classObj");
     return (
       <span
         className={clsx(
-          "inline-flex gap-2 items-center py-[2px] px-2 rounded-2xl text-xs font-medium whitespace-nowrap ",
+          "inline-flex py-[2px] px-2 rounded-2xl text-xs font-medium whitespace-nowrap",
           classObj.className
         )}
       >
-        <CardStyle color={classObj.circleColor} />
         {capitalizeWord(cardStatus)}
       </span>
     );
