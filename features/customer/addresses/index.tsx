@@ -9,11 +9,10 @@ import AddressCard from "./addressCard";
 import Spinner from "app/components/form/spinner";
 
 export default function Addresses() {
-
   const [showAddEditAddress, setShowAddEditAddress] = useState(false);
-  const { addresses } = useAddresses({ enabled : true});
-  const [selectedAddress, setSelectedAddress] = useState<any>(null)
-  
+  const { addresses } = useAddresses({ enabled: true });
+  const [selectedAddress, setSelectedAddress] = useState<any>(null);
+
   const newAdressBtn = (
     <SubmitButton
       isSmallBtn={true}
@@ -23,8 +22,8 @@ export default function Addresses() {
     />
   );
 
-  if(addresses.isPending) return <Spinner />
-  const addressList = addresses?.data?.data
+  if (addresses.isPending) return <Spinner />;
+  const addressList = addresses?.data?.data;
   return (
     <div className="h-full">
       {showAddEditAddress ? (

@@ -1,6 +1,6 @@
 "use client";
 
-import { Dialog } from "@headlessui/react";
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ReactNode } from "react";
 import clsx from "clsx";
 
@@ -23,19 +23,19 @@ export default function Modal({
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
       <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
       <div className="fixed inset-0 flex items-center justify-center p-4">
-        <Dialog.Panel
+        <DialogPanel
           className={clsx(
             "w-full max-w-md rounded bg-white p-6 shadow-xl",
             className
           )}
         >
           {title && (
-            <Dialog.Title className="text-lg font-semibold mb-4">
+            <DialogTitle className="text-lg font-semibold mb-4">
               {title}
-            </Dialog.Title>
+            </DialogTitle>
           )}
           {children}
-        </Dialog.Panel>
+        </DialogPanel>
       </div>
     </Dialog>
   );

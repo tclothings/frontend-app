@@ -62,8 +62,12 @@ export const formatAmount = (
 }; 
 
 export const capitalizeWord = (word: string) => {
-  if (!word) return;
+  if (!word) return "";
   return word.charAt(0).toLocaleUpperCase() + word.slice(1).toLocaleLowerCase();
+};
+
+export const fullName = (firstName: string, lastName: string) => {
+  return `${capitalizeWord(firstName)} ${capitalizeWord(lastName)}`;
 };
 
 export const generatePagination = (currentPage: number, totalPages: number) => {

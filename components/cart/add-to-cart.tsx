@@ -1,26 +1,26 @@
-'use client';
+"use client";
 
-import { PlusIcon } from '@heroicons/react/24/outline';
-import clsx from 'clsx';
-import { addItem } from 'app/components/cart/actions';
-import { useProduct } from 'app/components/product/product-context';
-import { Product, ProductVariant } from 'app/lib/types';
-import { useActionState } from 'react';
-import { useCart } from './cart-context';
-import useCartStore from 'app/store/cartStore';
+import { PlusIcon } from "@heroicons/react/24/outline";
+import clsx from "clsx";
+import { addItem } from "app/components/cart/actions";
+import { useProduct } from "app/features/landingPage/components/product/product-context";
+import { Product, ProductVariant } from "app/lib/types";
+import { useActionState } from "react";
+import { useCart } from "./cart-context";
+import useCartStore from "app/store/cartStore";
 
 function SubmitButton({
   availableForSale,
   selectedVariantId,
-  onClick
+  onClick,
 }: {
   availableForSale: boolean;
-    selectedVariantId: string | undefined;
-  onClick: any
+  selectedVariantId: string | undefined;
+  onClick: any;
 }) {
   const buttonClasses =
-    'relative flex w-full items-center justify-center rounded-full bg-blue-600 p-4 tracking-wide text-white';
-  const disabledClasses = 'cursor-not-allowed opacity-60 hover:opacity-60';
+    "relative flex w-full items-center justify-center rounded-full bg-blue-600 p-4 tracking-wide text-white";
+  const disabledClasses = "cursor-not-allowed opacity-60 hover:opacity-60";
 
   if (!availableForSale) {
     return (
@@ -62,8 +62,8 @@ function SubmitButton({
 }
 
 export function AddToCart({ product }: { product: Product }) {
-  const availableForSale = !!product.totalQuantity
-    const addItem = useCartStore((state) => state.addItem);
+  const availableForSale = !!product.totalQuantity;
+  const addItem = useCartStore((state) => state.addItem);
 
   // const { variants, availableForSale } = product;
   // const { addCartItem } = useCart();
@@ -91,8 +91,7 @@ export function AddToCart({ product }: { product: Product }) {
     // >
     <>
       <SubmitButton
-        onClick={()=> addItem(product)
-}
+        onClick={() => addItem(product)}
         // availableForSale={availableForSale}
         // selectedVariantId={selectedVariantId}
         availableForSale={availableForSale}
@@ -101,7 +100,7 @@ export function AddToCart({ product }: { product: Product }) {
       {/* <p aria-live="polite" className="sr-only" role="status">
         {message} 
       </p> */}
-      </>
+    </>
     // </form>
   );
 }

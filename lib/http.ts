@@ -1,21 +1,22 @@
 import axios from "axios";
-import { title } from "process";
 import { toast } from "sonner";
-import Cookies from "js-cookie";
 import { authService } from "app/app/services/client/auth.service";
 
-const token = authService.getToken();
-console.log(token, "toke")
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
   },
   withCredentials: true,
 });
 axiosInstance.interceptors.request.use((config) => {
   // console.log("Request Headers:", config.headers);
+  const token = authService.getToken(); // get latest token from cookies
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  } else {
+    delete config.headers.Authorization; // Remove if no token
+  }
   return config;
 });
 axiosInstance.interceptors.response.use(

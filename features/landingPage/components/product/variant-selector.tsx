@@ -1,8 +1,11 @@
-'use client';
+"use client";
 
-import clsx from 'clsx';
-import { useProduct, useUpdateURL } from 'app/components/product/product-context';
-import { ProductOption, ProductVariant } from 'app/lib/types';
+import clsx from "clsx";
+import {
+  useProduct,
+  useUpdateURL,
+} from "app/features/landingPage/components/product/product-context";
+import { ProductOption, ProductVariant } from "app/lib/types";
 
 type Combination = {
   id: string;
@@ -12,7 +15,7 @@ type Combination = {
 
 export function VariantSelector({
   options,
-  variants
+  variants,
 }: {
   options: ProductOption[];
   variants?: ProductVariant[];
@@ -20,7 +23,8 @@ export function VariantSelector({
   const { state, updateOption } = useProduct();
   const updateURL = useUpdateURL();
   const hasNoOptionsOrJustOneOption =
-    !options.length || (options.length === 1 && options[0]?.values.length === 1);
+    !options.length ||
+    (options.length === 1 && options[0]?.values.length === 1);
 
   if (hasNoOptionsOrJustOneOption) {
     return null;
@@ -47,17 +51,20 @@ export function VariantSelector({
             const optionParams = { ...state, [optionNameLowerCase]: value };
 
             // Filter out invalid options and check if the option combination is available for sale.
-            const filtered = Object.entries(optionParams).filter(([key, value]) =>
-              options.find(
-                (option) => option.name.toLowerCase() === key && option.values.includes(value)
-              )
+            const filtered = Object.entries(optionParams).filter(
+              ([key, value]) =>
+                options.find(
+                  (option) =>
+                    option.name.toLowerCase() === key &&
+                    option.values.includes(value)
+                )
             );
             // const isAvailableForSale = combinations.find((combination) =>
             //   filtered.every(
             //     ([key, value]) => combination[key] === value && combination.availableForSale
             //   )
             // );
-const isAvailableForSale = true
+            const isAvailableForSale = true;
             // The option is active if it's in the selected options.
             const isActive = state[optionNameLowerCase] === value;
 
@@ -70,15 +77,17 @@ const isAvailableForSale = true
                 key={value}
                 aria-disabled={!isAvailableForSale}
                 disabled={!isAvailableForSale}
-                title={`${option.name} ${value}${!isAvailableForSale ? ' (Out of Stock)' : ''}`}
+                title={`${option.name} ${value}${
+                  !isAvailableForSale ? " (Out of Stock)" : ""
+                }`}
                 className={clsx(
-                  'flex min-w-[48px] items-center justify-center rounded-full border bg-neutral-100 px-2 py-1 text-sm dark:border-neutral-800 dark:bg-neutral-900',
+                  "flex min-w-[48px] items-center justify-center rounded-full border bg-neutral-100 px-2 py-1 text-sm dark:border-neutral-800 dark:bg-neutral-900",
                   {
-                    'cursor-default ring-2 ring-blue-600': isActive,
-                    'ring-1 ring-transparent transition duration-300 ease-in-out hover:ring-blue-600':
+                    "cursor-default ring-2 ring-blue-600": isActive,
+                    "ring-1 ring-transparent transition duration-300 ease-in-out hover:ring-blue-600":
                       !isActive && isAvailableForSale,
-                    'relative z-10 cursor-not-allowed overflow-hidden bg-neutral-100 text-neutral-500 ring-1 ring-neutral-300 before:absolute before:inset-x-0 before:-z-10 before:h-px before:-rotate-45 before:bg-neutral-300 before:transition-transform dark:bg-neutral-900 dark:text-neutral-400 dark:ring-neutral-700 dark:before:bg-neutral-700':
-                      !isAvailableForSale
+                    "relative z-10 cursor-not-allowed overflow-hidden bg-neutral-100 text-neutral-500 ring-1 ring-neutral-300 before:absolute before:inset-x-0 before:-z-10 before:h-px before:-rotate-45 before:bg-neutral-300 before:transition-transform dark:bg-neutral-900 dark:text-neutral-400 dark:ring-neutral-700 dark:before:bg-neutral-700":
+                      !isAvailableForSale,
                   }
                 )}
               >

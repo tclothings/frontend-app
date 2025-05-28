@@ -24,7 +24,7 @@ export default function Biodata() {
   const methods = useForm({
     resolver: yupResolver(userInfoSchema),
   });
-  const { setValue } = methods
+  const { setValue } = methods;
 
   useEffect(() => {
     if (updateBioData.isSuccess) {
@@ -59,10 +59,9 @@ export default function Biodata() {
   const { handleSubmit } = methods;
 
   const onUpdateProfile = (data: any) => {
-     const cleanedData = Object.fromEntries(
+    const cleanedData = Object.fromEntries(
       Object.entries(data).filter(
-        ([_, value]) =>
-          value !== "" && value !== null && value !== undefined
+        ([_, value]) => value !== "" && value !== null && value !== undefined
       )
     );
 
@@ -128,14 +127,14 @@ export default function Biodata() {
             disabled={updateBioData.isPending}
           />
         </div>
-          <NumberInput
-            placeholder="Phone Number"
-            name="phoneNumber"
-            methods={methods}
-            schema={userInfoSchema}
-            disabled={updateBioData.isPending}
-          />
-          {/* <Input
+        <NumberInput
+          placeholder="Phone Number"
+          name="phoneNumber"
+          methods={methods}
+          schema={userInfoSchema}
+          disabled={updateBioData.isPending}
+        />
+        {/* <Input
                 type="date"
                 name="dateOfBirth"
                 methods={methods}

@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import Modal from "./modal";
 import Button from "../form/button";
 
-interface ConfimationModalProps {
+interface ConfirmationModalProps {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   confirmationMessage: string;
@@ -16,9 +16,9 @@ const ConfirmationModal = ({
   confirmationMessage,
   acceptAction,
   title
-}: ConfimationModalProps) => {
+}: ConfirmationModalProps) => {
   const handleAcceptAction = () => {
-    acceptAction;
+    acceptAction();
     setIsOpen(false);
   };
   return (

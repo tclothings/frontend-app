@@ -66,7 +66,11 @@ const AddressCard = ({
           onClick={handleSetDefaultAddress}
           text="Set as default"
           disabled={address?.isDefault || updateAddress.isPending}
-          className={clsx("p-2", { "text-blue-600": !address?.isDefault }, {"text-[#313133]": address?.isDefault})}
+          className={clsx(
+            "p-2",
+            { "text-blue-600": !address?.isDefault },
+            { "text-[#313133]": address?.isDefault }
+          )}
         />
         <div className="flex item-center gap-2">
           <Button

@@ -1,14 +1,14 @@
-import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
-import { GridTileImage } from 'app/components/grid/tile';
-import { Gallery } from 'app/components/product/gallery';
-import { ProductProvider } from 'app/components/product/product-context';
-import { ProductDescription } from 'app/components/product/product-description';
-import { getProduct, getProductRecommendations } from 'app/lib/';
-import { Image } from 'app/lib/types';
-import Link from 'next/link';
-import { Suspense } from 'react';
+import { GridTileImage } from "app/components/grid/tile";
+import { Gallery } from "app/features/landingPage/components/product/gallery";
+import { ProductProvider } from "app/features/landingPage/components/product/product-context";
+import { ProductDescription } from "app/features/landingPage/components/product/product-description";
+import { getProduct, getProductRecommendations } from "app/lib/";
+import { Image } from "app/lib/types";
+import Link from "next/link";
+import { Suspense } from "react";
 
 export async function generateMetadata(props: {
   params: Promise<{ handle: string }>;
@@ -49,7 +49,9 @@ export async function generateMetadata(props: {
   };
 }
 
-export default async function ProductPage(props: { params: Promise<{ handle: string }> }) {
+export default async function ProductPage(props: {
+  params: Promise<{ handle: string }>;
+}) {
   const params = await props.params;
   const product = await getProduct(params.handle);
 
@@ -81,7 +83,7 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(productJsonLd)
+          __html: JSON.stringify(productJsonLd),
         }}
       />
       <div className="mx-auto max-w-(--breakpoint-2xl) px-4 ">
@@ -95,7 +97,7 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
               <Gallery
                 images={product.images.slice(0, 5).map((image: Image) => ({
                   src: image.url,
-                  altText: image.altText
+                  altText: image.altText,
                 }))}
               />
             </Suspense>
@@ -138,7 +140,7 @@ async function RelatedProducts({ id }: { id: string }) {
                   title: product.title,
                   // amount: product.priceRange.maxVariantPrice.amount,
                   // currencyCode: product.priceRange.maxVariantPrice.currencyCode
-                  amount:"500",
+                  amount: "500",
                   currencyCode: "USD",
                 }}
                 src={product.featuredImage?.url}

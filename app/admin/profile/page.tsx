@@ -1,4 +1,4 @@
-import Profile from "app/components/pages/customer/profile";
+import Profile from "app/features/customers/components/profile";
 
 export const metadata = {
   title: "Orders",

@@ -12,7 +12,7 @@ import CustomCheck from "app/components/form/customCheck";
 import { useAddresses } from "app/api/client/address";
 import { toast } from "sonner";
 
-const emptyValue = ""
+const emptyValue = "";
 const AddEditAddress = ({
   item,
   setSelectedAddress,
@@ -43,7 +43,7 @@ const AddEditAddress = ({
     if (addAddress.isSuccess) {
       toast.success(addAddress?.data?.message);
       addAddress.reset();
-      // returnToAddressList();
+      returnToAddressList();
     }
   }, [addAddress.isSuccess]);
 
@@ -59,7 +59,7 @@ const AddEditAddress = ({
     if (item) {
       reset(initialValues);
     }
-  }, [item])
+  }, [item]);
 
   const onSearchLocation = (data: any) => {
     setValue("address", data.address?.toString());
@@ -77,7 +77,7 @@ const AddEditAddress = ({
     //   data.lga = data.city
     // }
     if (item) {
-      updateAddress.mutate({data, id: item._id });
+      updateAddress.mutate({ data, id: item._id });
     } else {
       addAddress.mutate(data);
     }

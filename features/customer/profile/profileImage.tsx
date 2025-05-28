@@ -1,11 +1,11 @@
-"use client"
+"use client";
 import Button from "app/components/form/button";
 import ChangeProfileImg from "app/components/icons/ChangeProfileImg";
 import User from "app/components/icons/User";
 import Image from "next/image";
 import { ChangeEvent, useRef, useState } from "react";
 
-export default function ProfileImage({ profileImg }: { profileImg : string}) {
+export default function ProfileImage({ profileImg }: { profileImg: string }) {
   const imgInputRef = useRef<HTMLInputElement>(null);
   const [imgFile, setImgFile] = useState<string>("");
 

@@ -43,5 +43,16 @@ const queryClient = useQueryClient()
           });
       },
   });
-    return { addresses, address, addAddress, updateAddress };
+  const deleteAddress = useMutation({
+    mutationFn: async (id: string) => {
+      const result = await http.delete(`users/me/address/${id}`);
+      return result?.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["addresses"],
+      });
+    },
+  });
+    return { addresses, address, addAddress, updateAddress, deleteAddress };
 };

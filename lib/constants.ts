@@ -57,8 +57,9 @@ export const clientNavMenu = [
 
 export const adminNavMenu = [
   { title: "Orders", path: "/admin/orders" },
-  { title: "Customers", path: "/admin/customers" },
-  { title: "Admin", path: "/admin/admin" },
+  { title: "Customers", path: "/admin/user-management/customers" },
+  { title: "Admins", path: "/admin/user-management/admins" },
+
   { title: "Address", path: "/admin/address" },
   { title: "Payment methods", path: "/admin/payment-methods" },
   { title: "Profile", path: "/admin/profile" },

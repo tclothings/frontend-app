@@ -49,7 +49,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
           })}
         </div>
 
-        <p className="block md:hidden text-sm font-medium text-black">
+        <p className="block md:hidden text-sm font-medium">
           Page <span> {currentPage} </span>of
           <span> {totalPages}</span>
         </p>
@@ -80,7 +80,7 @@ function PaginationNumber({
     {
       "": position === "first" || position === "single",
       "": position === "last" || position === "single",
-      "z-10 border-secondary-500 rounded-md text-black": isActive,
+      "z-10 border-secondary-500 rounded-md": isActive,
       "text-grey-400": !isActive,
       "": !isActive && position !== "middle",
       "": position === "middle",
@@ -109,7 +109,8 @@ function PaginationArrow({
   const className = clsx(
     "flex py-[10px] px-4 items-center justify-center rounded-lg border",
     {
-      "pointer-events-none border-grey-10 text-opacity-[0.38]": isDisabled,
+      "pointer-events-none border-[var(--grey-50)] opacity-[0.38]":
+        isDisabled,
       "border-grey-300": !isDisabled,
       "": direction === "left",
       "": direction === "right",

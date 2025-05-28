@@ -23,7 +23,7 @@ export default function PasswordChange() {
       reset();
     }
   }, [changePassword.isSuccess]);
-  
+
   const onPasswordChange = (data: any) => {
     const cleanedData = { ...data };
     delete cleanedData.confirmNewPassword;

@@ -1,4 +1,4 @@
-import Addresses from "app/components/pages/customer/addresses";
+import Addresses from "app/features/customer/addresses";
 
 export const metadata = {
   title: "Address Book",

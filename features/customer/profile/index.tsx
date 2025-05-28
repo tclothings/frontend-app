@@ -4,7 +4,6 @@ import Biodata from "./biodata";
 import AccountPageHeader from "app/components/ui/accountPageHeader";
 
 export default function Profile() {
-
   return (
     <div className="">
       <div className="flex flex-col pb-4 px-4">

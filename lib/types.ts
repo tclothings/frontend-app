@@ -148,3 +148,5 @@ export interface FormatOptions {
   minimumFractionDigits?: number;
   maximumFractionDigits?: number;
 }
+
+export type IUserTable = "customers" | "admins"
