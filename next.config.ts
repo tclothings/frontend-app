@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/unsafe/**",
       },
+      new URL("https://t-clothing-bucket.s3.amazonaws.com/**"),
     ],
   },
   /* config options here */

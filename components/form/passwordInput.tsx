@@ -60,7 +60,7 @@ export default function PasswordInput({ methods, name, placeholder, schema }: IP
           }`}
         >
           {placeholder}{" "}
-          {isRequired && isClick && <span className="text-red">*</span>}
+          {isRequired && isClick && <span className="text-red-500">*</span>}
         </label>
 
         <div className="absolute inset-y-0 right-0 flex items-center">

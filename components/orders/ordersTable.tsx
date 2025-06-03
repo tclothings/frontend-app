@@ -25,8 +25,8 @@ export default function RecentOrdersTable() {
     <>
       {recentOrders?.length > 0 ? (
         <>
-          <Table length={0} headers={ordersHeaders}>
-            {recentOrders.map((order, idx) => (
+          <Table length={recentOrders?.length} headers={ordersHeaders}>
+            {recentOrders?.map((order, idx) => (
               <tr
                 key={idx}
                 // onClick={openOrderDetails}

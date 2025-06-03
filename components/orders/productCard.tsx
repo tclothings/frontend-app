@@ -11,20 +11,20 @@ export default function ProductCard({
 }) {
   return (
     <div className="flex gap-3 w-full">
-      <Image
+      {/* <Image
         src={productImg}
         alt={productImg}
         width={48}
         height={48}
         className="rounded"
-      />
+      /> */}
       <div className="text-sm flex flex-col justify-between text-grey-500 w-full">
         <p className="w-[99%] whitespace-nowrap text-ellipsis overflow-hidden ...">
           {productName}
         </p>
-        <p className="underline w-[99%] whitespace-nowrap text-ellipsis overflow-hidden ...">
+        {/* <p className="underline w-[99%] whitespace-nowrap text-ellipsis overflow-hidden ...">
           {sellerName}
-        </p>
+        </p> */}
       </div>
     </div>
   );

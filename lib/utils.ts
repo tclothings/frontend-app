@@ -1,5 +1,8 @@
 import { ReadonlyURLSearchParams } from "next/navigation";
-import { FormatOptions } from "./types";
+import { FormatOptions, IParams } from "./types";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { s3Client } from "./configs/s3Client";
+import { toast } from "sonner";
 
 export const createUrl = (
   pathname: string,
@@ -61,6 +64,24 @@ export const formatAmount = (
   return formatter.format(amount);
 }; 
 
+export const formatNumber = (amount: number, options: FormatOptions = {}) => {
+  const {
+    locale = "en-NG", // Default locale for Nigeria
+    currency = "NGN", // Default currency for Naira
+    minimumFractionDigits = 0,
+    maximumFractionDigits = 2,
+  } = options;
+  // Configure number format options
+
+  const formatOptions: Intl.NumberFormatOptions = {
+    minimumFractionDigits,
+    maximumFractionDigits,
+  };
+
+  const formatter = new Intl.NumberFormat(locale, formatOptions);
+  return formatter.format(amount);
+};
+
 export const capitalizeWord = (word: string) => {
   if (!word) return "";
   return word.charAt(0).toLocaleUpperCase() + word.slice(1).toLocaleLowerCase();
@@ -119,3 +140,32 @@ export function roles(roles: string[]) {
   if (!roles?.length) return "User"
     return roles.map((role) => capitalizeWord(role)).toString();
 }
+
+
+export const slugify = (name?: string) => {
+  if (!name) return "";
+  return name
+    ?.toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
+};
+
+export const stringifyParams = (data?: IParams) => {
+  let urlParams = [];
+  if (data) {
+
+    if (data.limit) {
+      urlParams.push(`limit=${data.limit}`);
+    }
+
+    if (data.limitless) {
+      urlParams.push(`limitless=${data.limitless}`);
+    }
+
+    if (data.page) {
+      urlParams.push(`page=${data.page}`);
+    }
+  }
+
+  return urlParams.length > 0 ? `?${urlParams.join("&")}` : "";
+};

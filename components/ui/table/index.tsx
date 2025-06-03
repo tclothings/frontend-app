@@ -18,17 +18,18 @@ const Table = ({
   bulkActions,
   selectedRowKeys,
   totalPages = 0,
-  rows,
-  showPagination=false
+  showPagination = false,
 }: TableProps) => {
   return (
     // <div className="max-w-[1267px] xl:max-w-[calc(100vw-280px)] hidden-scroll-bar z-30">
     <>
-      <div className={`w-full overflow-x-auto hidden-scroll-bar z-30`}>
+      <div
+        className={`w-full overflow-x-auto min-h-[600px] hidden-scroll-bar z-30`}
+      >
         <div className="pl-4 space-y-2 flex justify-between items-center">
           {header && (
             <h3 className="font-[tahoma] text-lg font-bold text-[var(--grey-800)]">
-              {header} {showRowCount && `(${rows ?? 0})`}
+              {header} {showRowCount && `(${length ?? 0})`}
             </h3>
           )}
           {bulkActions && selectedRowKeys && selectedRowKeys.length > 0 && (
@@ -40,9 +41,10 @@ const Table = ({
           )}
         </div>
         {/* {length &&  <table className={`${length ? "table-fixed" : "table-auto"} bg-white w-full max-w-[1267px] xl:max-w-[calc(100vw-280px)] rounded-s-lg`}> */}
-        <table className={` w-full`}>
+        <table className={`w-full`}>
           <TableHeader headers={headers} />
           <TableBody
+            headerLength={headers?.length ?? 0}
             isLoading={isLoading}
             length={length}
             className={className}
@@ -54,6 +56,7 @@ const Table = ({
           </TableBody>
         </table>
       </div>
+
       {showPagination && (
         <Suspense>
           <div className="mt-6">

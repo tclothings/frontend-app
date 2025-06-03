@@ -1,4 +1,4 @@
-import Orders from "app/components/orders";
+import Orders from "app/features/customer/orders";
 
 export const metadata = {
   title: "Orders",

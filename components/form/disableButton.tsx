@@ -19,7 +19,7 @@ export default function DisableButton({ handleSubmit, isLoading, name, isSmallBt
       disabled={isLoading}
       onClick={handleSubmit}
       className={clsx(
-        "bg-red-600 px-4 py-[10px] font-bold disabled:bg-grey-300 hover:cursor-pointer",
+        "bg-red-600 px-4 py-[10px] font-bold disabled:bg-grey-300 hover:cursor-pointer w-full",
         { "md:px-4 md:py-2 rounded-sm": isSmallBtn },
         {
           "md:px-6 md:py-4 rounded-lg": !isSmallBtn,

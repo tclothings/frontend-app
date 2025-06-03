@@ -5,6 +5,7 @@ import LogoSquare from "app/components/logo-square";
 import { Suspense } from "react";
 import { companyName, navMenu } from "app/lib/constants";
 import { FaInstagram, FaWhatsapp, FaMapMarkerAlt } from "react-icons/fa";
+import BrandIcon from "../icons/brand";
 
 export default async function Footer() {
   const currentYear = new Date().getFullYear();
@@ -18,11 +19,12 @@ export default async function Footer() {
         <div className="flex w-full flex-col gap-6 border-t border-neutral-200 px-6 py-12 text-sm md:flex-row md:gap-12 md:px-4 min-[1320px]:px-0 dark:border-neutral-700">
           <div>
             <Link
-              className="flex items-center gap-2 text-black md:pt-1 dark:text-white"
+              className="flex items-center gap-2 text-black md:pt-1 dark:text-white w-[100px] lg:w-[200px]"
               href="/"
             >
-              <LogoSquare size="sm" />
-              <span className="uppercase">{companyName}</span>
+              <BrandIcon />
+              {/* <LogoSquare size="sm" />
+              <span className="uppercase">{companyName}</span> */}
             </Link>
           </div>
           <Suspense

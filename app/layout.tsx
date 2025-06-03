@@ -49,15 +49,7 @@ export default function RootLayout({
               position="top-right"
               duration={5000}
               closeButton
-              // toastOptions={{
-              //   // unstyled: true,
-              //   classNames: {
-              //     error: "bg-red-400",
-              //     success: "text-green-400",
-              //     warning: "text-yellow-400",
-              //     info: "bg-blue-400",
-              //   },
-              // }}
+
             />
             <Footer />
         </QueryProvider>

@@ -24,6 +24,7 @@ export default function NumberInput({
 }: IProps) {
   const { formState, watch, setValue, register } = methods; // Destructure methods for cleaner access
   const { errors } = formState; // <--- This is the correct way
+  const [isRequired, setIsRequired] = useState(false);
 
   const [isFocused, setIsFocused] = useState(false);
 
@@ -66,7 +67,6 @@ export default function NumberInput({
     setValue(name, processedValue);
   };
 
-  const [isRequired, setIsRequired] = useState(false);
 
   useEffect(() => {
     if (schema?.fields && name) {
@@ -110,7 +110,7 @@ export default function NumberInput({
           isClick && "label-up"
         }`}
       >
-        {placeholder} {isRequired && <span className="text-red">*</span>}{" "}
+        {placeholder} {isRequired && <span className="text-red-500">*</span>}
         {/* Show * always if required, not just when focused */}
       </label>
 

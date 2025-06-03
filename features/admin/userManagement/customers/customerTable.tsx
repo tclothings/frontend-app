@@ -42,13 +42,10 @@ export default function CustomerTable() {
 
   return (
     <>
-      {data?.length > 0 ? (
-        <>
           <Table
-            length={0}
+            length={rows}
             headers={customerHeaders}
             totalPages={totalPages}
-            rows={rows}
             showPagination
             showRowCount
             header="Customers"
@@ -79,10 +76,6 @@ export default function CustomerTable() {
               
             </div>
           </Suspense> */}
-        </>
-      ) : (
-        <EmptyOrders />
-      )}
       <Drawer
         title={"View Customer"}
         children={

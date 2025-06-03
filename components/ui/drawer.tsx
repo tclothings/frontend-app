@@ -18,6 +18,8 @@ interface DrawerProps {
   isOpen: boolean;
   onClose: () => void;
   onOpen: () => void;
+  drawerOpenerClass?: string;
+  size?: "sm" | "lg"
 }
 export default function Drawer({
   drawerOpenerText,
@@ -26,21 +28,30 @@ export default function Drawer({
   isOpen,
   onClose,
   onOpen,
+  drawerOpenerClass,
+  size="sm",
 }: DrawerProps) {
   // const [isOpen, setIsOpen] = useState(false);
   // const openModal = () => setIsOpen(true);
   // const closeDrawer = () => setIsOpen(false);
-
+  const getSize = {
+    "sm": "max-w-[390px]",
+    "lg": "max-w-[700px]"
+  };
   return (
     <>
-      {drawerOpenerText &&
+      {drawerOpenerText && (
         <button
           aria-label="Open drawer"
           onClick={onOpen}
-          className="hover:cursor-pointer text-blue-600 font-bold"
+          className={clsx(
+            "hover:cursor-pointer text-blue-600 font-bold px-4 py-2 rounded",
+            drawerOpenerClass
+          )}
         >
           {drawerOpenerText}
-        </button>}
+        </button>
+      )}
       <Transition show={isOpen}>
         <Dialog onClose={onClose} className="relative z-50">
           <TransitionChild
@@ -63,7 +74,12 @@ export default function Drawer({
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <DialogPanel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 p-6 text-black backdrop-blur-xl md:w-[390px] dark:border-neutral-700 dark:bg-black/80 dark:text-white">
+            <DialogPanel
+              className={clsx(
+                "fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 p-6 text-black backdrop-blur-xl dark:border-neutral-700 dark:bg-black/80 dark:text-white",
+                getSize[size]
+              )}
+            >
               <div className="flex items-center justify-between mb-8 bg-[var(--background)]">
                 <p className="text-lg font-semibold">{title}</p>
                 <button
@@ -74,7 +90,7 @@ export default function Drawer({
                   <CloseDrawer />
                 </button>
               </div>
-              <div className="h-full overflow-y-auto"> {children}</div>
+              <div className="h-full overflow-y-auto py-5"> {children}</div>
             </DialogPanel>
           </TransitionChild>
         </Dialog>

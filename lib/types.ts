@@ -135,7 +135,6 @@ export interface TableHeaderProps {
   bulkActions?: any[];
   selectedRowKeys?: React.Key[];
   totalPages?: number;
-  rows?: number;
   showPagination?: boolean;
 }
 export interface TableBodyProps {
@@ -146,6 +145,7 @@ export interface TableBodyProps {
   img?: string;
   title?: string;
   text?: string;
+  headerLength?: number;
 }
 export interface TableProps extends TableBodyProps, TableHeaderProps { }
 
@@ -157,3 +157,52 @@ export interface FormatOptions {
 }
 
 export type IUserTable = "customers" | "admins"
+
+// products
+
+export interface IMedia {
+  _id: string;
+  mediaType: string,
+  url: string,
+  altText: string,
+  // isPrimary: true,
+  // displayOrder: 1,
+}
+
+
+export interface IProduct {
+  category: string;
+  createdAt: string;
+  description: string;
+  productImage: string;
+  isActive: boolean;
+  isFeatured: boolean;
+  materials: string;
+  media: IMedia[];
+  name: string;
+  price: number;
+  quantity: number;
+  salePrice: number;
+  size: string;
+  sku: string;
+  updatedAt: string;
+  __v: number;
+  _id: string;
+}
+
+export interface ICategory {
+  name: string;
+  slug: string;
+  description: string;
+  is_active: boolean;
+  createdAt: string;
+  _id: string
+}
+
+export type IParams = {
+  page?: number;
+  limit?: number;
+  limitless?: true;
+  order?: Record<string, string>;
+  q?: Record<string, any>;
+} | null;

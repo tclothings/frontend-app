@@ -167,7 +167,7 @@ export const ControlledGoogleAddress = ({
 
       <div className="relative z-10">
         {placePredictions.length > 0 && searching && (
-          <div className="absolute left-0 top-full w-full bg-[var(--background)] text-[var(--foreground)]] shadow-md">
+          <div className="absolute left-0 top-full w-full bg-[var(--background)] text-[var(--foreground)] shadow-md">
             {placePredictions.map((suggestion, index) => (
               <div
                 key={index}

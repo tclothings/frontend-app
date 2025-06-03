@@ -15,29 +15,50 @@ import User from "app/components/icons/user";
 import Image from "next/image";
 import ChangeProfileImg from "app/components/icons/changeProfileImg";
 import { toast } from "sonner";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { uploadToS3 } from "app/lib/configs/s3Client";
+// import { s3Client } from "app/lib/configs/s3Client";
 
+const bucketName = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME!;
+
+const REGION = process.env.NEXT_PUBLIC_REGION; // e.g., "us-east-1"
+
+
+
+export const s3Client = new S3Client({
+  region: REGION,
+  requestChecksumCalculation: "WHEN_REQUIRED",
+  credentials: {
+    accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY!,
+    secretAccessKey: process.env.NEXT_PUBLIC_SECRET_KEY!,
+  },
+});
 export default function Biodata() {
+  
   const { userProfile, updateBioData } = useProfile();
 
   const imgInputRef = useRef<HTMLInputElement>(null);
-  const [imgFile, setImgFile] = useState<string>("");
   const methods = useForm({
     resolver: yupResolver(userInfoSchema),
   });
-  const { setValue } = methods;
 
+
+  const { setValue, handleSubmit, watch } = methods;
+
+  const profilePicture = watch("profilePicture");
   useEffect(() => {
     if (updateBioData.isSuccess) {
       toast.success(updateBioData.data?.message);
       updateBioData.reset();
     }
   }, [updateBioData.isSuccess]);
+
   useEffect(() => {
     if (userProfile.isSuccess) {
       setValue("firstName", userProfile?.data?.firstName);
       setValue("lastName", userProfile?.data?.lastName);
       setValue("phoneNumber", userProfile?.data?.phoneNumber?.number);
-      setValue("profilePicture", userProfile?.data?.profilePicture ?? "");
+      setValue("profilePicture", userProfile?.data?.profilePicture);
     }
   }, [userProfile.isSuccess]);
 
@@ -46,17 +67,22 @@ export default function Biodata() {
       imgInputRef?.current.click();
     }
   }
-  function handleImgUpload(e: ChangeEvent<HTMLInputElement>) {
-    if (!e.target.files) return;
-    const maxSize = 10 * 1024 * 1024;
-    if (e.target.files[0]?.size > maxSize) {
-      alert("file is too large");
-      return;
-    }
-    setImgFile(URL.createObjectURL(e.target.files[0]));
-  }
+  
+  async function handleImgUpload(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
 
-  const { handleSubmit } = methods;
+    if (!file) return;
+    const maxSize = 10 * 1024 * 1024;
+    if (file?.size > maxSize) {
+      return alert("file is too large");
+    }
+    try {
+      const url = await uploadToS3(file);
+      setValue("profilePicture", url);
+    } catch (err) {
+      console.error("Upload failed:", err);
+      toast.error("Image upload failed");
+    }  }
 
   const onUpdateProfile = (data: any) => {
     const cleanedData = Object.fromEntries(
@@ -71,9 +97,9 @@ export default function Biodata() {
     <>
       <div className="flex flex-col md:flex-row md:items-center justify-center md:justify-start gap-4 py-6">
         <div className="flex justify-center items-center w-[96px] h-[96px] md:w-[160px] md:h-[160px] rounded-[200px] border border-[4px] border-primary-500">
-          {imgFile ? (
+          {profilePicture ? (
             <Image
-              src={imgFile}
+              src={profilePicture}
               alt={"avatar"}
               width={160}
               height={160}

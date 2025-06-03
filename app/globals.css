@@ -180,14 +180,56 @@ body {
     }
   }
 }
+.file-upload-container {
+  position: relative;
+  width: 100%;
+  height: 56px; /* Match this with the regular input's height */
+  border: 1px solid var(--grey-50);
+  border-radius: 4px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+ .file-upload-container-success {
+  /* border-left: 5px solid #211844;
+  border-right: 1px solid #211844;
+  border-top: 1px solid #211844;
+  border-bottom: 1px solid #211844; */
+  &.error {
+    /* border-left: 5px solid var(--red);
+    border-right: 1px solid var(--red);
+    border-top: 1px solid var(--red);
+    border-bottom: 1px solid var(--red); */
+  }  
+}
 
+.file-upload-placeholder {
+  position: absolute;
+  font-size: 14px;
+  color: #bfbfbf;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.filled {
+  transform: translateY(-28px);
+  font-size: 14px;
+  color: #211844;
+  font-weight: 500;
+  background-color: var(--background);
+  padding: 5px 8px;
+
+  &.error {
+    color: var(--red);
+  }
+}
 input:-webkit-autofill {
   box-shadow: 0 0 0px 1000px transparent inset !important;
   -webkit-text-fill-color: var(--foreground, #ededed) !important;
   transition: background-color 9999s ease-in-out 0s;
 }
-
-/* carousel  */
 
 /* Style the custom scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
@@ -208,7 +250,6 @@ input:-webkit-autofill {
 .custom-scrollbar::-webkit-scrollbar-thumb {
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 }
-
 
 /* Dark Mode Override */
 

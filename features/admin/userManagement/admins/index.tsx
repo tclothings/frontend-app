@@ -27,12 +27,6 @@ export default function Admins() {
         }
       />
       <div className="dark:bg-black">
-        <section className="pt-5 pb-[19px] mt-6 md:mt-5 font-medium flex flex-row justify-between items-center">
-          {/* <UserTableTabs
-            activeUserTab={activeUserTab}
-            setActiveUserTab={setActiveUserTab}
-          /> */}
-        </section>
         <AdminTable />
       </div>
     </>

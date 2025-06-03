@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import FilterItemDropdown from "./dropdown";
 import { FilterItem } from "./item";
 import { SortFilterItemType } from "app/lib/types";
-import Logout from "app/components/ui/logout";
 export type ListItem = SortFilterItemType | PathFilterItem;
 export type PathFilterItem = { title: string; path: string };
 

@@ -7,7 +7,7 @@ export const useProfile = (args?: any) => {
   const userProfile = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
-      const result = await http.get("users/me", { withCredentials: true });
+      const result = await http.get("users/me");
       return result?.data?.data;
     },
   });

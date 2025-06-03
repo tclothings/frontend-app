@@ -33,18 +33,15 @@ export default function AdminTable() {
   };
   return (
     <>
-      {data?.length > 0 ? (
-        <>
           <Table
-            length={0}
+            length={rows}
             headers={customerHeaders}
             totalPages={totalPages}
-            rows={rows}
             showPagination
             showRowCount
-            header="Admins"
+            header="All Admins"
           >
-            {data.map((user, idx) => (
+            {data?.map((user, idx) => (
               <tr
                 key={idx}
                 onClick={() => openDetailsModal(user)}
@@ -69,10 +66,6 @@ export default function AdminTable() {
               <Pagination totalPages={totalPages} />
             </div>
           </Suspense> */}
-        </>
-      ) : (
-        <EmptyOrders />
-      )}
       <Drawer
         title={"View Admin"}
         children={
