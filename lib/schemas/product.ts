@@ -10,6 +10,7 @@ export const productSchema = Yup.object().shape({
   description: Yup.string().required("Description is required"),
   price: Yup.number().required("Price is required"),
   salePrice: Yup.number().required("Sales price is required"),
+  quantity: Yup.number().required("Quantity is required"),
   materials: Yup.string(),
   productImage: Yup.string().required("Product image is required"),
   isActive: Yup.bool().required(),

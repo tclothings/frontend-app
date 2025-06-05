@@ -76,11 +76,11 @@ export default function Drawer({
           >
             <DialogPanel
               className={clsx(
-                "fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 p-6 text-black backdrop-blur-xl dark:border-neutral-700 dark:bg-black/80 dark:text-white",
+                "fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white p-6 text-black backdrop-blur-xl dark:border-neutral-700 dark:bg-black/80 dark:text-white",
                 getSize[size]
               )}
             >
-              <div className="flex items-center justify-between mb-8 bg-[var(--background)]">
+              <div className="flex items-center justify-between mb-8 bg-[var(--grey-100)] dark:bg-[var(--background)] px-2">
                 <p className="text-lg font-semibold">{title}</p>
                 <button
                   aria-label="Close drawer"

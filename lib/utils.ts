@@ -169,3 +169,37 @@ export const stringifyParams = (data?: IParams) => {
 
   return urlParams.length > 0 ? `?${urlParams.join("&")}` : "";
 };
+
+export const resizeImageToSquare = (file: File, size = 1000): Promise<File> => {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    const img = new Image();
+
+    reader.onload = () => {
+      img.src = reader.result as string;
+    };
+
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d")!;
+      const minSide = Math.min(img.width, img.height);
+      const sx = (img.width - minSide) / 2;
+      const sy = (img.height - minSide) / 2;
+
+      canvas.width = size;
+      canvas.height = size;
+
+      ctx.drawImage(img, sx, sy, minSide, minSide, 0, 0, size, size);
+
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+        const newFile = new File([blob], file.name.replace(/\..+$/, ".webp"), {
+          type: "image/webp",
+        });
+        resolve(newFile);
+      }, "image/webp");
+    };
+
+    reader.readAsDataURL(file);
+  });
+};

@@ -86,12 +86,18 @@ const [isOpenConfirmationModal, setOpenConfirmationModal] = useState(false)
             </h4>
             <p className="font-medium">{capitalizeWord(item?.materials)}</p>
           </div>
+          <div className="text-xs space-y-1">
+            <h4 className="text-neutral-500 dark:text-neutral-400">
+              Image
+            </h4>
+            <img src={item?.productImage} height={600} width={600}/>
+          </div>
         </div>
 
         <div className="flex justify-center gap-10 items-center">
           <DisableButton
             isSmallBtn
-            handleSubmit={()=> setOpenConfirmationModal(true)}
+            handleSubmit={() => setOpenConfirmationModal(true)}
             isLoading={deleteProduct.isPending}
             name={"Delete"}
           />

@@ -20,7 +20,9 @@ export default function Button({ text = "", icon, isLoading, className, ...props
     <button
       disabled={isLoading}
       {...props}
-      className={`${icon ? "flex gap-2 justify-center" : ""} ${btnStyle} disabled:cursor-not-allowed hover:cursor-pointer`}
+      className={`${
+        icon ? "flex gap-2 justify-center" : ""
+      } ${btnStyle} text-white disabled:cursor-not-allowed hover:cursor-pointer`}
     >
       {icon && <span>{icon}</span>} {text ? <span>{text}</span> : null}
     </button>

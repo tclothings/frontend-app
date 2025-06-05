@@ -7,6 +7,7 @@ import { Navbar } from "app/components/layout/navbar";
 import { Toaster } from "sonner";
 import Footer from "app/components/layout/footer";
 import { QueryProvider } from "app/components/providers/query-provider";
+import Head from "next/head";
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
 //   subsets: ["latin"],
@@ -18,9 +19,22 @@ import { QueryProvider } from "app/components/providers/query-provider";
 // });
 
 
+
 export const metadata: Metadata = {
   title: "T clothings",
-  description: "T clothings"
+  description: "T clothings",
+  icons: [
+    {
+      rel: "icon",
+      url: "/favicon-light.ico",
+      media: "(prefers-color-scheme: light)",
+    },
+    {
+      rel: "icon",
+      url: "/favicon-dark.ico",
+      media: "(prefers-color-scheme: dark)",
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -30,15 +44,11 @@ export default function RootLayout({
 }>) {
   const cart = getCart()
   return (
-    // <html lang="en">
-    //   <body
-    //     // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-    //     className={`antialiased`}
-    //   >
-    //     {children}
-    //   </body>
-    // </html>
+
     <html lang="en">
+      <Head>
+        <link rel="icon" href="/favicon-light.ico"/>
+      </Head>
       <body className="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
         {/* <CartProvider cartPromise={cart}> */}
         <QueryProvider>

@@ -6,9 +6,11 @@
   --primary-900: #221845;
   --grey-200: #efe4ec;
   --grey-50: #fbf9fa;
+  --grey-100: #E0E6FA;
   --grey-700: #573f50;
   --red: #ff0000;
   --blue-600: theme("colors.blue.600");
+  --brand-blue: #17318A
 }
 
 @theme inline {

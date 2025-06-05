@@ -30,7 +30,7 @@ export default function Orders() {
           />
         }
       />
-      <div className="dark:bg-black">
+      <div className="">
         <OrderTable />
       </div>
     </>

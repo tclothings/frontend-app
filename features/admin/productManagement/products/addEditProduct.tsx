@@ -5,6 +5,8 @@ import CustomCheck from "app/components/form/customCheck";
 import ImageUpload from "app/components/form/imageUpload";
 import Input from "app/components/form/Input";
 import NumberInput from "app/components/form/numberInput";
+import ProductImageUploader from "app/components/form/ProductImageUploader";
+import ProductVideoUploader from "app/components/form/ProductVideoUploader";
 import Select from "app/components/form/select";
 import SubmitButton from "app/components/form/submitButton";
 import { uploadToS3 } from "app/lib/configs/s3Client";
@@ -42,6 +44,7 @@ const addEditProduct = ({
     name: item?.name ?? emptyValue,
     description: item?.description ?? emptyValue,
     price: item?.price ?? 0,
+    quantity: item?.quantity ?? 0,
     salePrice: item?.salePrice ?? 0,
     materials: item?.materials ?? emptyValue,
     productImage: item?.productImage ?? emptyValue,
@@ -140,13 +143,20 @@ const addEditProduct = ({
           fileNames={fileName}
           initialValue={item?.productImage}
         />
-        <Select
-          name="category"
-          placeholder="Category"
-          methods={methods}
-          options={categoryList}
-        />
-
+        <div className="flex flex-col md:flex-row gap-5">
+          <Select
+            name="category"
+            placeholder="Category"
+            methods={methods}
+            options={categoryList}
+          />
+          <NumberInput
+            name="quantity"
+            placeholder="Quantity"
+            methods={methods}
+            schema={productSchema}
+          />
+        </div>
         <div className="flex flex-col md:flex-row gap-5">
           <NumberInput
             name="price"
@@ -185,6 +195,8 @@ const addEditProduct = ({
             methods={methods}
           />
         </div>
+        <ProductImageUploader />
+<ProductVideoUploader />
         <SubmitButton
           handleSubmit={handleSubmit(onAddEditProduct)}
           isLoading={addProduct.isPending || updateProduct.isPending}

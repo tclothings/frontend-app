@@ -19,7 +19,10 @@ const AddEditCategory = ({ item, onSuccess }: AddEditCategoryProps) => {
   const { addCategory, updateCategory } = useCategories();
   
   const methods = useForm({
-    resolver: yupResolver(categorySchema)
+    resolver: yupResolver(categorySchema),
+    defaultValues: {
+      is_active: true
+    },
   });
   
   const initialValues = {
