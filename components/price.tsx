@@ -22,3 +22,9 @@ const Price = ({
 );
 
 export default Price;
+
+export const PriceSkeleton = () => {
+  return (
+    <p className="w-full h-6 animate-pulse rounded-sm bg-neutral-200 dark:bg-neutral-700"></p>
+  );
+}

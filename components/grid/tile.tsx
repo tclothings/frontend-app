@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import Image from 'next/image';
-import Label from '../label';
+import Label, { LabelSkeleton } from '../label';
 
 export function GridTileImage({
   isInteractive = true,
@@ -21,7 +21,7 @@ export function GridTileImage({
   return (
     <div
       className={clsx(
-        "group flex h-full w-full items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 bg-[var(--grey-100)] dark:bg-black",
+        "group flex h-full w-full items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 bg-[var(--grey-100)] dark:bg-black animate-pulse",
         {
           relative: label,
           "border-2 border-blue-600": active,
@@ -32,7 +32,7 @@ export function GridTileImage({
       {props.src ? (
         <Image
           className={clsx("relative h-full w-full object-contain", {
-            "transition duration-300 ease-in-out group-hover:scale-105":
+            "transition duration-300 ease-in-out group-hover:scale-105 ":
               isInteractive,
           })}
           {...props}
@@ -47,6 +47,25 @@ export function GridTileImage({
           position={label.position}
         />
       ) : null}
+    </div>
+  );
+}
+
+export const GridTileImageSkeleton = () => {
+  return (
+    <div
+      className={clsx(
+        "group flex h-full w-full items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 bg-[var(--grey-100)] dark:bg-black border-2 border-blue-600"
+      )}
+    >
+      <p
+        className={clsx(
+          "relative h-full w-full object-contain transition duration-300 ease-in-out group-hover:scale-105"
+        )}
+      >
+        {" "}
+      </p>
+      <LabelSkeleton />
     </div>
   );
 }
