@@ -11,13 +11,24 @@ import Select from "app/components/form/select";
 import SubmitButton from "app/components/form/submitButton";
 import { uploadToS3 } from "app/lib/configs/s3Client";
 import { productSchema } from "app/lib/schemas/product";
-import { IProduct } from "app/lib/types";
+import { IMedia, IProduct } from "app/lib/types";
 import { slugify } from "app/lib/utils";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const emptyValue = "";
+export interface VideoItem {
+  file: File | null;
+  previewUrl: string;
+  s3Url?: string;
+  uploaded: boolean;
+  altText?: string;
+}
+
+export interface ImageItem extends VideoItem {
+}
+
 const addEditProduct = ({
   item,
   onSuccess,
@@ -28,6 +39,8 @@ const addEditProduct = ({
   setSelectedItem: Dispatch<SetStateAction<any>>;
 }) => {
   const [fileName, setFileName] = useState<string>("");
+  const [videos, setVideos] = useState<VideoItem[]>([]);
+  const [imageItems, setImageItems] = useState<VideoItem[]>([]);
 
   const { addProduct, updateProduct, products } = useProducts();
   const [categoryList, setCategoryList] = useState([]);
@@ -37,6 +50,7 @@ const addEditProduct = ({
     resolver: yupResolver(productSchema),
     defaultValues: {
       isActive: true,
+      media: [],
     },
   });
 
@@ -52,12 +66,48 @@ const addEditProduct = ({
     isFeatured: item?.isFeatured ?? false,
     category: item?.category ?? emptyValue,
     size: item?.size ?? emptyValue,
+    media: item?.media ?? [],
   };
-  const { handleSubmit, reset, setValue } = methods;
+  const { handleSubmit, reset, setValue, watch } = methods;
+
+  const media = watch("media") ?? [];
 
   useEffect(() => {
     if (item) {
       reset(initialValues);
+      if (item.media?.length) {
+        console.log(item?.media, "item?.media");
+
+        const existingVideos = item?.media
+          .filter((item) => item.mediaType === "video")
+          ?.map(({ mediaType, url, altText }) => ({
+            mediaType,
+            url,
+            altText,
+            s3Url: url,
+            previewUrl: url,
+            file: null,
+            uploaded: true,
+          }));
+        if (existingVideos?.length) {
+          setVideos(existingVideos);
+        }
+        const existingImages = item?.media
+          .filter((item) => item.mediaType === "image")
+          ?.map(({ mediaType, url, altText }) => ({
+            mediaType,
+            url,
+            altText,
+            s3Url: url,
+            previewUrl: url,
+            file: null,
+            uploaded: true,
+          }));
+        console.log(existingImages, "existingImages");
+        if (existingImages?.length) {
+          setImageItems(existingImages);
+        }
+      }
     }
   }, [item]);
 
@@ -96,9 +146,10 @@ const addEditProduct = ({
 
   const onAddEditProduct = (data: any) => {
     let cleanedData = { ...data };
+    console.log(data, "data");
     cleanedData.slug = slugify(cleanedData.name);
     if (item) {
-      updateProduct.mutate(cleanedData);
+      updateProduct.mutate({ id: item._id, data: cleanedData });
     } else {
       addProduct.mutate(cleanedData);
     }
@@ -106,10 +157,8 @@ const addEditProduct = ({
 
   const handleFileChange = async (file: File) => {
     if (file) {
-      console.log(file, "edited")
       try {
-        const url = await uploadToS3(file);
-        console.log(url,"url")
+        const url = await uploadToS3(file, "productImage");
         setValue("productImage", url);
         setFileName(file.name);
       } catch (err) {
@@ -118,8 +167,16 @@ const addEditProduct = ({
       }
     }
   };
+  const onSaveVideos = (newMedia: IMedia[]) => {
+    const mediaArray = [...media, ...newMedia];
+    setValue("media", mediaArray);
+  };
+  const onSaveImages = (newMedia: IMedia[]) => {
+    const mediaArray = [...media, ...newMedia];
+    setValue("media", mediaArray);
+  };
   return (
-    <div>
+    <div className="space-y-6">
       <div className="flex flex-col gap-5">
         <Input
           name="name"
@@ -195,9 +252,22 @@ const addEditProduct = ({
             methods={methods}
           />
         </div>
-        <ProductImageUploader />
-<ProductVideoUploader />
+      </div>
+      <ProductImageUploader
+        imageItems={imageItems}
+        setImageItems={setImageItems}
+        onSave={onSaveImages}
+      />
+      <ProductVideoUploader
+        videos={videos}
+        setVideos={setVideos}
+        onSave={onSaveVideos}
+      />
+
+      <div className="mt-10">
         <SubmitButton
+          className="w-full"
+          type="button"
           handleSubmit={handleSubmit(onAddEditProduct)}
           isLoading={addProduct.isPending || updateProduct.isPending}
           name={item ? "Save" : "Create"}

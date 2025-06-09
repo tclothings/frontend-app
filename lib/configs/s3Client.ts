@@ -12,7 +12,7 @@ export const s3Client = new S3Client({
 });
 
 
-export const uploadToS3 = async (file: File, folder = "profile-pictures") => {
+export const uploadToS3 = async (file: File, folder: string) => {
   const key = `${folder}/${file.name}`;
   const command = new PutObjectCommand({
     Bucket: bucketName,

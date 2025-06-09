@@ -1,11 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "app/lib/http";
+import { KEYS } from "./queryKeys";
 
 export const useAdminUsers = (args?: any) => {
   const { id } = args ?? {};
   const queryClient = useQueryClient();
   const admins = useQuery({
-    queryKey: ["admins"],
+    queryKey: [KEYS.ADMINS],
     queryFn: async () => {
       const result = await http.get("admin/admin-users");
       return result?.data?.data;
@@ -19,7 +20,7 @@ export const useAdminUsers = (args?: any) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["admins"],
+        queryKey: [KEYS.ADMINS],
       });
     }
   })
@@ -30,7 +31,7 @@ export const useAdminUsers = (args?: any) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["admins"],
+        queryKey: [KEYS.ADMINS],
       });
     },
   });
@@ -41,7 +42,7 @@ export const useAdminUsers = (args?: any) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["admins"],
+        queryKey: [KEYS.ADMINS],
       });
     },
   });
@@ -53,7 +54,7 @@ export const useCustomerUsers = (args?: any) => {
   const queryClient = useQueryClient();
 
   const customers = useQuery({
-    queryKey: ["customers"],
+    queryKey: [KEYS.CUSTOMERS],
     queryFn: async () => {
       const result = await http.get("users/customer-users");
       return result?.data?.data;

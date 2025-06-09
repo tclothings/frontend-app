@@ -77,7 +77,7 @@ export default function Biodata() {
       return alert("file is too large");
     }
     try {
-      const url = await uploadToS3(file);
+      const url = await uploadToS3(file, "profile");
       setValue("profilePicture", url);
     } catch (err) {
       console.error("Upload failed:", err);

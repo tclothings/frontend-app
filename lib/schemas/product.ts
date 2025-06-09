@@ -21,7 +21,7 @@ export const productSchema = Yup.object().shape({
     Yup.object({
       mediaType: Yup.string().required("Media type is required"),
       url: Yup.string().required("Media url is required"),
-      altText: Yup.string(),
+      altText: Yup.string().required("Media url is required"),
     })
   ),
 });

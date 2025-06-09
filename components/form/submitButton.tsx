@@ -8,6 +8,7 @@ interface IProps {
   handleSubmit: () => void;
   name: string;
   isSmallBtn?: boolean;
+  className?: string;
 }
 const useEnterKeyListener = (callback: () => void) => {
   useEffect(() => {
@@ -23,7 +24,13 @@ const useEnterKeyListener = (callback: () => void) => {
   }, [callback]);
 };
 
-export default function SubmitButton({ handleSubmit, isLoading, name, isSmallBtn }: IProps) {
+export default function SubmitButton({
+  handleSubmit,
+  isLoading,
+  name,
+  isSmallBtn,
+  className,
+}: IProps) {
   useEnterKeyListener(() => {
     document.getElementById("submit-button")?.click();
   });
@@ -34,11 +41,12 @@ export default function SubmitButton({ handleSubmit, isLoading, name, isSmallBtn
       onClick={handleSubmit}
       id="submit-button"
       className={clsx(
-        "bg-blue-600 text-white px-4 py-[10px] font-bold disabled:bg-grey-300 hover:cursor-pointer w-full",
+        "bg-blue-600 px-4 py-[10px] font-bold disabled:bg-grey-300 hover:cursor-pointer text-white",
         { "md:px-4 md:py-2 rounded-sm": isSmallBtn },
         {
           "md:px-6 md:py-4 rounded-lg": !isSmallBtn,
-        }
+        },
+        className
       )}
       type="submit"
       aria-label={name}

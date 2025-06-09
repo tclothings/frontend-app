@@ -1,38 +1,40 @@
-import Grid from 'app/components/grid';
-import ProductGridItems from 'app/components/layout/product-grid-items';
-import { defaultSort, sorting } from 'app/lib/constants';
-import { getProducts } from 'app/lib';
+"use client";
+import Grid from "app/components/grid";
+import { useProducts } from "app/api/client/products";
+import Spinner from "app/components/form/spinner";
+import ProductGridItems from "app/components/layout/product-grid-items";
+import { useSearchParams } from "next/navigation";
+import { defaultSort, sorting } from "app/lib/constants";
+import { useEffect, useState } from "react";
+import Pagination from "app/components/ui/pagination";
 
-export const metadata = {
-  title: 'Search',
-  description: 'Search for products in the store.'
-};
+export default function CategoryPage() {
+  const searchParams = useSearchParams();
+  const sort = searchParams.get("sort");
+  const page = searchParams.get("page");
+const [totalPages, setTotalPages] = useState(0);
 
-export default async function CategoryPage(props: {
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
-  const searchParams = await props.searchParams;
-  const { sort, q: searchValue } = searchParams as { [key: string]: string };
-  const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
+  const { sortKey } = sorting.find((item) => item.slug === sort) || defaultSort;
 
-  const products = await getProducts({ sortKey, reverse, query: searchValue });
-  const resultsText = products.length > 1 ? 'results' : 'result';
+  // console.log(sort, sortKey, "sortKey");
+  const { products } = useProducts({ params: { [sortKey]: sort, page } });
 
+  useEffect(() => {
+    if (products.data) {
+      console.log(products.data, "data");
+      setTotalPages(products.data?.totalPages);
+    }
+  }, [products.data]);
+
+  if (!products?.data) return <Spinner />;
+
+  const data = products.data?.products;
   return (
-    <>
-      {searchValue ? (
-        <p className="mb-4">
-          {products.length === 0
-            ? 'There are no products that match '
-            : `Showing ${products.length} ${resultsText} for `}
-          <span className="font-bold">&quot;{searchValue}&quot;</span>
-        </p>
-      ) : null}
-      {products.length > 0 ? (
-        <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          <ProductGridItems products={products} />
-        </Grid>
-      ) : null}
-    </>
+    <section>
+      <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-10">
+        <ProductGridItems products={data} />
+      </Grid>
+      <Pagination totalPages={totalPages} />
+    </section>
   );
 }

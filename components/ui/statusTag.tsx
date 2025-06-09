@@ -49,7 +49,6 @@ export default function StatusTag({ status }: { status: string }) {
           listClass: "#667185",
         };
   }
-  console.log(classObj, "classObj");
     return (
       <span
         className={clsx(

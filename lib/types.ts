@@ -111,7 +111,7 @@ export type Product = {
 export type SortFilterItemType = {
   title: string;
   slug: string | null;
-  sortKey: "RELEVANCE" | "BEST_SELLING" | "CREATED_AT" | "PRICE";
+  sortKey: "" | "price";
   reverse: boolean;
 };
 
@@ -120,7 +120,7 @@ export type ProductsCollection = {
   title: string;
   description: string;
   seo: SEO;
-  updatedAt: string;
+  // updatedAt: string;
 };
 export type Collection = ProductsCollection & {
   path: string;
@@ -161,7 +161,7 @@ export type IUserTable = "customers" | "admins"
 // products
 
 export interface IMedia {
-  _id: string;
+  _id?: string;
   mediaType: string,
   url: string,
   altText: string,
@@ -180,6 +180,7 @@ export interface IProduct {
   materials: string;
   media: IMedia[];
   name: string;
+  slug: string;
   price: number;
   quantity: number;
   salePrice: number;

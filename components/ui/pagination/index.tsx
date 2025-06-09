@@ -80,8 +80,9 @@ function PaginationNumber({
     {
       "": position === "first" || position === "single",
       "": position === "last" || position === "single",
-      "z-10 border-secondary-500 rounded-md": isActive,
-      "text-grey-400": !isActive,
+      "z-10 rounded-md border-[var(--blue-600)] text-[var(--blue-600)]":
+        isActive,
+      "text-[grey-400]": !isActive,
       "": !isActive && position !== "middle",
       "": position === "middle",
     }

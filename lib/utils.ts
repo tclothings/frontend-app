@@ -150,24 +150,24 @@ export const slugify = (name?: string) => {
     .replace(/(^-|-$)+/g, "");
 };
 
-export const stringifyParams = (data?: IParams) => {
-  let urlParams = [];
-  if (data) {
+// export const stringifyParams = (params: Record<string, any>[]): string => {
+//   const merged = Object.assign({}, ...params); // Merge all objects into one
+//   const query = new URLSearchParams();
+// console.log(query, "qury")
+//   for (const key in merged) {
+//     if (merged[key] !== undefined && merged[key] !== null) {
+//       query.append(key, String(merged[key]));
+//     }
+//   }
 
-    if (data.limit) {
-      urlParams.push(`limit=${data.limit}`);
-    }
+//   return query.toString(); // returns key=value&key2=value2
+// };
 
-    if (data.limitless) {
-      urlParams.push(`limitless=${data.limitless}`);
-    }
-
-    if (data.page) {
-      urlParams.push(`page=${data.page}`);
-    }
-  }
-
-  return urlParams.length > 0 ? `?${urlParams.join("&")}` : "";
+export const stringifyParams = (paramsObject: Record<string, any>) => {
+  const filteredParams = Object.entries(paramsObject)?.filter(([_key, value]) => value != null)
+  // console.log(filteredParams, "filteredParams");
+  const query = new URLSearchParams(filteredParams).toString();
+  return query ? `?${query}` : "";
 };
 
 export const resizeImageToSquare = (file: File, size = 1000): Promise<File> => {

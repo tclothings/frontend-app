@@ -10,6 +10,7 @@ import {
   formatDate,
   formatNumber,
 } from "app/lib/utils";
+import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -17,14 +18,16 @@ interface ViewProductProps {
   item: IProduct | undefined;
   setIsNewProductDrawerOpen: Dispatch<SetStateAction<boolean>>;
   onSuccess: () => void;
+  setSelectedItem: Dispatch<SetStateAction<any>>;
 }
 const ViewProduct = ({
   item,
   setIsNewProductDrawerOpen,
   onSuccess,
+  setSelectedItem
 }: ViewProductProps) => {
   const { deleteProduct } = useProducts();
-const [isOpenConfirmationModal, setOpenConfirmationModal] = useState(false)
+  const [isOpenConfirmationModal, setOpenConfirmationModal] = useState(false);
   useEffect(() => {
     if (deleteProduct.isSuccess) {
       toast.success("Product deleted");
@@ -35,13 +38,16 @@ const [isOpenConfirmationModal, setOpenConfirmationModal] = useState(false)
 
   const onHandleUpdateProduct = () => {
     setIsNewProductDrawerOpen(true);
+    onSuccess();
   };
+
   const onHandleDeleteProduct = () => {
     deleteProduct.mutate(item?._id!);
   };
   if (!item) {
-    return
+    return <div>No product found</div>;
   }
+  console.log(item, "item");
 
   return (
     <>
@@ -55,42 +61,92 @@ const [isOpenConfirmationModal, setOpenConfirmationModal] = useState(false)
           </span>
           <StatusTag status={item?.isActive ? "Active" : "Inactive"} />
         </p>
-        <div className="flex flex-col gap-6 border-b border-b-grey-50 mb-10 pb-5">
-          <div className="text-xs space-y-1">
+        <div className="flex flex-col gap-6 mb-10 pb-5">
+          <div className="space-y-1  border-b border-b-grey-50 py-2">
             <h4 className="text-neutral-500 dark:text-neutral-400">
               Product Name
             </h4>
             <p className="font-medium">{capitalizeWord(item?.name)}</p>
           </div>
-          <div className="text-xs space-y-1">
+          <div className="space-y-1 border-b border-b-grey-50 py-2">
             <h4 className="text-neutral-500 dark:text-neutral-400">
               Description
             </h4>
             <p className="font-medium">{capitalizeWord(item?.description)}</p>
           </div>
-          <div className="text-xs space-y-1">
+          <div className="space-y-1 border-b border-b-grey-50 py-2">
             <h4 className="text-neutral-500 dark:text-neutral-400">Category</h4>
             <p className="font-medium">{capitalizeWord(item?.category)}</p>
           </div>
-          <div className="text-xs space-y-1">
+          <div className="space-y-1 border-b border-b-grey-50 py-2">
             <h4 className="text-neutral-500 dark:text-neutral-400">Price</h4>
             <p className="font-medium">{formatAmount(item?.price)}</p>
           </div>
-          <div className="text-xs space-y-1">
+          <div className="space-y-1 border-b border-b-grey-50 py-2">
             <h4 className="text-neutral-500 dark:text-neutral-400">Quantity</h4>
             <p className="font-medium">{formatNumber(item?.quantity)}</p>{" "}
           </div>
-          <div className="text-xs space-y-1">
+          <div className="space-y-1 border-b border-b-grey-50 py-2">
             <h4 className="text-neutral-500 dark:text-neutral-400">
               Materials
             </h4>
             <p className="font-medium">{capitalizeWord(item?.materials)}</p>
           </div>
-          <div className="text-xs space-y-1">
+          <div className="space-y-1 border-b border-b-grey-50 py-2">
             <h4 className="text-neutral-500 dark:text-neutral-400">
-              Image
+              Product Image
             </h4>
-            <img src={item?.productImage} height={600} width={600}/>
+            <Image alt={item.name} src={item?.productImage} height={300} width={300} />
+          </div>
+
+          <div className="space-y-1 mt-2">
+            <h4 className="dark:text-white text-xl">Media</h4>
+            <div className="">
+              {item?.media?.length > 0 && (
+                <div className="space-y-4">
+                  <div className="">
+                    <h5 className="text-neutral-500 dark:text-neutral-400">
+                      Images
+                    </h5>
+                    <div className="flex gap-3 flex-wrap">
+                      {item?.media
+                        ?.filter((item) => item.mediaType == "image")
+                        ?.map((img, idx) => (
+                          <div key={idx} className="relative group">
+                            <Image
+                              height={300}
+                              width={300}
+                              src={img.url}
+                              alt={img.altText}
+                              className={`object-cover rounded border border-gray-300 cursor-pointer`}
+                            />
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                  <div className=" border-b border-b-grey-50 py-2">
+                    <h5 className="text-neutral-500 dark:text-neutral-400">
+                      Videos
+                    </h5>
+                    <div className="flex gap-3 flex-wrap">
+                      {item?.media
+                        ?.filter((item) => item.mediaType == "video")
+                        ?.map((img, idx) => (
+                          <div key={idx} className="relative group w-[200px]">
+                            <video
+                              height={200}
+                              width={200}
+                              src={img.url}
+                              controls
+                              className="w-full h-auto"
+                            />
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
@@ -100,12 +156,14 @@ const [isOpenConfirmationModal, setOpenConfirmationModal] = useState(false)
             handleSubmit={() => setOpenConfirmationModal(true)}
             isLoading={deleteProduct.isPending}
             name={"Delete"}
+            className="w-full"
           />
           <SubmitButton
             isSmallBtn
             handleSubmit={onHandleUpdateProduct}
             isLoading={false}
             name={"Edit"}
+            className="w-full"
           />
         </div>
       </div>

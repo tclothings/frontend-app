@@ -14,7 +14,7 @@ const { SITE_NAME } = process.env;
 export async function Navbar() {
   return (
     // <nav className="relative sticky top-0 z-50 bg-[var(--background)] flex items-center justify-between p-4 lg:px-6 shadow-lg">
-    <nav className="relative sticky top-0 z-50 bg-[var(--background)/80] dark:bg-[var(--background)]  backdrop-blur-md dark:blur-none border-b  border-black/10 dark:border-none shadow-[0_4px_12px_rgba(0,0,0,0.2)] flex items-center justify-between p-4 lg:px-6">
+    <nav className="relative sticky top-0 z-50 bg-[var(--background)/80] dark:bg-[var(--background)]  backdrop-blur-md dark:blur-none border-b border-black/10 dark:border-none shadow-[0_4px_12px_rgba(0,0,0,0.2)] flex items-center justify-between p-4 lg:px-6">
       <div className="block flex-none md:hidden">
         <Suspense fallback={null}>
           <MobileMenu menu={navMenu} />

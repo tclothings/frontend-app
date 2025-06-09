@@ -20,7 +20,6 @@ export default function OrderTable() {
   if (orders.isPending) return <Spinner />;
   if (orders.isError) return <div>Something went wrong </div>;
 
-  console.log(orders?.data, "orders?.data?")
   const data = orders?.data?.orders;
   const totalPages = orders?.data?.totalPages;
   const rows = orders?.data?.total;

@@ -4,7 +4,6 @@ import { Suspense, useEffect, useState } from 'react';
 
 // import { getCollections } from 'app/lib';
 import FilterList from './filter';
-import { getCategories } from 'app/api/server';
 import { useCategories } from 'app/api/client/categories';
 import { allCategory } from 'app/lib/constants';
 import { capitalizeWord } from 'app/lib/utils';

@@ -1,10 +1,10 @@
 import Products from "app/features/admin/productManagement/products";
 
 export const metadata = {
-  title: "Admins",
-  description: "View admin list.",
+  title: "Products",
+  description: "View product list.",
 };
 
-export default async function CustomersPage() {
+export default async function ProductsPage() {
   return <Products />;
 }

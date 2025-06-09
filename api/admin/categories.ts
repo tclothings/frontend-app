@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "app/lib/http";
 import { stringifyParams } from "app/lib/utils";
+import { KEYS } from "./queryKeys";
 
 export const useCategories = (args?: any) => {
 
@@ -9,7 +10,7 @@ export const useCategories = (args?: any) => {
   const queryClient = useQueryClient()
 
   const categories = useQuery({
-    queryKey: ["categories"],
+    queryKey: [KEYS.CATEGORIES],
     queryFn: async () => {
       let url = "products/all/categories" 
       if (params) {
@@ -21,7 +22,7 @@ export const useCategories = (args?: any) => {
   });
     
     const category = useQuery({
-      queryKey: ["categories", id],
+      queryKey: [KEYS.CATEGORIES, id],
       queryFn: async () => {
         const result = await http.get(`products/categories/${id}`);
         return result?.data?.data;
@@ -36,22 +37,22 @@ export const useCategories = (args?: any) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["categories"]
-      })
+        queryKey: [KEYS.CATEGORIES],
+      });
     }
   })
 
   const updateCategory = useMutation({
     mutationFn: async ({ id, data} : {id: string, data: any}) => {
-      const result = await http.put("products/categories", data);
+      const result = await http.put(`products/category/${id}`, data);
       return result?.data?.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["categories", id],
+        queryKey: [KEYS.CATEGORIES, id],
       });
       queryClient.invalidateQueries({
-        queryKey: ["categories"],
+        queryKey: [KEYS.CATEGORIES],
       });
     },
   });
@@ -63,7 +64,7 @@ export const useCategories = (args?: any) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["categories"],
+        queryKey: [KEYS.CATEGORIES],
       });
     },
   });

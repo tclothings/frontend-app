@@ -81,12 +81,14 @@ export default function ProductTable({
           <ViewProduct
             item={selectedItem}
             setIsNewProductDrawerOpen={setIsNewProductDrawerOpen}
+            setSelectedItem={setSelectedItem}
             onSuccess={() => {
               setIsDrawerOpen(false);
-              setSelectedItem(null);
+              // setSelectedItem(null);
             }}
           />
         }
+        size="lg"
         isOpen={isDrawerOpen}
         onClose={() => {
           setIsDrawerOpen(false);

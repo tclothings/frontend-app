@@ -1,0 +1,49 @@
+"use client";
+
+import { useProducts } from "app/api/client/products";
+import Spinner from "app/components/form/spinner";
+import Grid from "app/components/grid";
+import ProductGridItems from "app/components/layout/product-grid-items";
+import Pagination from "app/components/ui/pagination";
+import { defaultSort, sorting } from "app/lib/constants";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
+const Category = ({ slug }: { slug: string }) => {
+
+    const searchParams = useSearchParams();
+    const sort = searchParams.get("sort");
+    const page = searchParams.get("page");
+  const [totalPages, setTotalPages] = useState(0);
+  
+  const { sortKey } = sorting.find((item) => item.slug === sort) || defaultSort;
+  
+  const { productsByCategorySlug: products } = useProducts({
+    slug,
+    params: { [sortKey]: sort, page },
+  });
+
+
+  useEffect(() => {
+    if (products.data) {
+      console.log(products.data, "data");
+      setTotalPages(products.data?.totalPages);
+    }
+  }, [products.data]);
+
+  if (!products.data) return <Spinner />;
+
+  const data = products.data?.products;
+
+  return (
+    <section>
+    <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-10">
+      <ProductGridItems products={data} />
+      </Grid>
+            <Pagination totalPages={totalPages} />
+      
+      </section>
+  );
+};
+
+export default Category;

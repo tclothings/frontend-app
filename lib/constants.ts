@@ -8,43 +8,51 @@ const logo = "/images/placeholderImg/sellerLogo.png";
 export const emptyValue = ""
 export const DEFAULT_OPTION = "Default Title";
 export const HIDDEN_PRODUCT_TAG = "nextjs-frontend-hidden";
-
+export const allCategory = {
+  handle: "",
+  title: "All",
+  description: "All products",
+  seo: {
+    title: "All",
+    description: "All products",
+  },
+  path: "/category",
+};
 export const TAGS = {
   collections: "collections",
   products: "products",
   cart: "cart",
 };
 export const defaultSort: SortFilterItemType = {
-  title: "Relevance",
+  title: "Latest arrivals",
   slug: null,
-  sortKey: "RELEVANCE",
+  sortKey: "",
   reverse: false,
 };
-
 export const sorting: SortFilterItemType[] = [
   defaultSort,
-  {
-    title: "Trending",
-    slug: "trending-desc",
-    sortKey: "BEST_SELLING",
-    reverse: false,
-  }, // asc
-  {
-    title: "Latest arrivals",
-    slug: "latest-desc",
-    sortKey: "CREATED_AT",
-    reverse: true,
-  },
+  // {
+  //   title: "Trending",
+  //   slug: "trending-desc",
+  //   sortKey: "BEST_SELLING",
+  //   reverse: false,
+  // },
+  // {
+  //   title: "Latest arrivals",
+  //   slug: "latest-desc",
+  //   sortKey: "CREATED_AT",
+  //   reverse: true,
+  // },
   {
     title: "Price: Low to high",
-    slug: "price-asc",
-    sortKey: "PRICE",
+    slug: "asc",
+    sortKey: "price",
     reverse: false,
   }, // asc
   {
     title: "Price: High to low",
-    slug: "price-desc",
-    sortKey: "PRICE",
+    slug: "desc",
+    sortKey: "price",
     reverse: true,
   },
 ];

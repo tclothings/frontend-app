@@ -5,7 +5,6 @@ import "react-image-crop/dist/ReactCrop.css";
 import { UseFormReturn } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import clsx from "clsx";
-import Button from "./button";
 import Modal from "../ui/modal";
 import SubmitButton from "./submitButton";
 
@@ -29,7 +28,7 @@ export default function ImageUpload({
   handleFileChange,
   fileNames,
   schema,
-  accept = "image/*",
+  accept = "image/jpeg,image/png,image/webp",
   outputSize = 1000,
 }: IProps) {
   const { errors } = methods.formState;
@@ -132,7 +131,7 @@ export default function ImageUpload({
     canvas.toBlob(
       (blob) => {
         if (blob) {
-          const file = new File([blob], "product-image.webp", {
+          const file = new File([blob], `upload-${Date.now()}.webp`, {
             type: "image/webp",
           });
           handleFileChange(file);
@@ -153,7 +152,6 @@ export default function ImageUpload({
       unit: "%",
       width: cropWidth,
       height: (cropWidth * height) / width,
-      aspect,
     };
 
     setCrop(crop);
@@ -168,7 +166,7 @@ export default function ImageUpload({
         } ${fileName ? "file-upload-container-success" : ""}`}
       >
         <label
-          className={clsx("file-upload-placeholder", {
+          className={clsx("file-upload-placeholder text-gray-400", {
             filled: fileName || initialValue,
           })}
         >

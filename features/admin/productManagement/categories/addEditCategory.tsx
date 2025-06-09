@@ -42,7 +42,6 @@ const AddEditCategory = ({ item, onSuccess }: AddEditCategoryProps) => {
 
   useEffect(() => {
     if (addCategory.isSuccess) {
-      console.log(addCategory?.data, "addCategory?.data");
       toast.success(addCategory?.data?.message);
       addCategory.reset();
       reset();
@@ -52,7 +51,6 @@ const AddEditCategory = ({ item, onSuccess }: AddEditCategoryProps) => {
 
   useEffect(() => {
     if (updateCategory.isSuccess) {
-      console.log(updateCategory?.data, "updateCategory?.data");
       toast.success(updateCategory?.data?.message);
       updateCategory.reset();
       reset();
@@ -64,7 +62,7 @@ const AddEditCategory = ({ item, onSuccess }: AddEditCategoryProps) => {
     const cleanedData = { ...data };
     cleanedData.slug = slugify(cleanedData.name);
     if (item) {
-      updateCategory.mutate(cleanedData);
+      updateCategory.mutate({id: item._id, data: cleanedData});
     } else {
       addCategory.mutate(cleanedData);
     }
@@ -89,7 +87,7 @@ const AddEditCategory = ({ item, onSuccess }: AddEditCategoryProps) => {
         <CustomCheck name="is_active" placeholder="Active" methods={methods} />
         <SubmitButton
           handleSubmit={handleSubmit(onAddNewCategory)}
-          isLoading={addCategory.isPending}
+          isLoading={addCategory.isPending || updateCategory.isPending}
           name={item ? "Save" : "Create"}
         />
       </div>

@@ -1,28 +1,27 @@
 import Grid from 'app/components/grid';
 import { GridTileImage } from 'app/components/grid/tile';
-import { Product } from 'app/lib/types';
+import { IProduct } from 'app/lib/types';
 import Link from 'next/link';
 
-export default function ProductGridItems({ products }: { products: Product[] }) {
+export default function ProductGridItems({ products }: { products: IProduct[] }) {
   return (
     <>
-      {products.map((product) => (
-        <Grid.Item key={product.handle} className="animate-fadeIn">
+      {products?.map((product) => (
+        <Grid.Item key={product.slug} className="animate-fadeIn">
           <Link
             className="relative inline-block h-full w-full"
-            href={`/product/${product.handle}`}
+            href={`/product/${product.slug}`}
             prefetch={true}
           >
             <GridTileImage
-              alt={product.title}
+              alt={product.name}
               label={{
-                title: product.title,
-                amount: "599",
-                currencyCode: "USD",
-                // amount: product.priceRange.maxVariantPrice.amount,
-                // currencyCode: product.priceRange.maxVariantPrice.currencyCode
+                title: product.name,
+                amount: product.price,
+                salePrice: product.salePrice,
+                currencyCode: "NGN",
               }}
-              src={product.featuredImage?.url}
+              src={product.productImage}
               fill
               sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
             />

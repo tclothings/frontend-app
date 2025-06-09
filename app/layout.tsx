@@ -26,12 +26,12 @@ export const metadata: Metadata = {
   icons: [
     {
       rel: "icon",
-      url: "/favicon-light.ico",
+      url: "/images/favicon-light.ico",
       media: "(prefers-color-scheme: light)",
     },
     {
       rel: "icon",
-      url: "/favicon-dark.ico",
+      url: "/images/favicon-dark.ico",
       media: "(prefers-color-scheme: dark)",
     },
   ],

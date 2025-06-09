@@ -1,9 +1,9 @@
 import Footer from 'app/components/layout/footer';
-import Collections from 'app/components/layout/search/collections';
 import FilterList from 'app/components/layout/search/filter';
 import { sorting } from 'app/lib/constants';
 import ChildrenWrapper from './children-wrapper';
 import { Suspense } from 'react';
+import Collections from 'app/features/landingPage/components/categories/collections';
 
 export default function CategoryLayout({
   children

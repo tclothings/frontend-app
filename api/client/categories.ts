@@ -1,0 +1,35 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import http from "app/lib/http";
+import { stringifyParams } from "app/lib/utils";
+import { KEYS } from "./queryKeys";
+
+export const useCategories = (args?: any) => {
+
+  const { id, params } = args ?? {};
+
+  const categories = useQuery({
+    queryKey: [KEYS.CATEGORIES],
+    queryFn: async () => {
+      let url = "products/all/categories";
+      if (params) {
+        url += stringifyParams(params);
+      }
+      const result = await http.get(url);
+      return result?.data?.data;
+    },
+  });
+    
+    const category = useQuery({
+      queryKey: [KEYS.CATEGORIES, id],
+      queryFn: async () => {
+        const result = await http.get(`products/categories/${id}`);
+        return result?.data?.data;
+      },
+      enabled: !!id,
+    });
+  
+    return {
+      categories,
+      category
+    };
+};

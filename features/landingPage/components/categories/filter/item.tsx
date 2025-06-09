@@ -14,7 +14,6 @@ function PathFilterItem({ item }: { item: PathFilterItem }) {
   const newParams = new URLSearchParams(searchParams.toString());
   const DynamicTag = active ? 'p' : Link;
   newParams.delete('q');
-  newParams.delete("page");
   return (
     <li className="flex text-black dark:text-white py-3 px-4" key={item.title}>
       <DynamicTag

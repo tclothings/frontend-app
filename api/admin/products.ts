@@ -1,12 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "app/lib/http";
+import { KEYS } from "./queryKeys";
 
 export const useProducts = (args?: any) => {
   const queryClient = useQueryClient();
   const { id, params } = args ?? {};
 
   const products = useQuery({
-    queryKey: ["products"],
+    queryKey: [KEYS.PRODUCTS],
     queryFn: async () => {
       let url = "products/all";
       // if (params) {
@@ -18,7 +19,7 @@ export const useProducts = (args?: any) => {
   });
 
   const product = useQuery({
-    queryKey: ["products", id],
+    queryKey: [KEYS.PRODUCTS, id],
     queryFn: async () => {
       const result = await http.get(`products/${id}`);
       return result?.data?.data;
@@ -33,22 +34,22 @@ export const useProducts = (args?: any) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["products"],
+        queryKey: [KEYS.PRODUCTS],
       });
     },
   });
 
   const updateProduct = useMutation({
     mutationFn: async ({ id, data }: { id: string; data: any }) => {
-      const result = await http.put("products", data);
+      const result = await http.put(`products/${id}`, data);
       return result?.data?.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["products", id],
+        queryKey: [KEYS.PRODUCTS, id],
       });
       queryClient.invalidateQueries({
-        queryKey: ["products"],
+        queryKey: [KEYS.PRODUCTS],
       });
     },
   });
