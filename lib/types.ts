@@ -10,12 +10,6 @@ export type Cart = {
   totalQuantity: number;
 };
 
-export type Connection<T> = {
-  edges: Array<Edge<T>>;
-};
-export type Edge<T> = {
-  node: T;
-};
 
 export type Money = {
   amount: string;
@@ -23,89 +17,11 @@ export type Money = {
 };
 
 
-export type CartProduct = {
-  id: string;
-  handle: string;
-  title: string;
-  featuredImage: Image;
-};
-
-export type CartItem = {
-  id: string | undefined;
-  quantity: number;
-  cost: {
-    totalAmount: Money;
-  };
-  merchandise: {
-    id: string;
-    title: string;
-    selectedOptions: {
-      name: string;
-      value: string;
-    }[];
-    product: CartProduct;
-  };
-};
-
-export type Image = {
-  url: string;
-  altText: string;
-  width: number;
-  height: number;
-};
-
 // nav
 export type Menu = {
   title: string;
   path: string;
 };
-
-// product
-export type ProductOption = {
-  id: string;
-  name: string;
-  values: string[];
-};
-export type ProductVariant = {
-  id: string;
-  title: string;
-  availableForSale: boolean;
-  selectedOptions: {
-    name: string;
-    value: string;
-  }[];
-  price: Money;
-};
-export type SEO = {
-  title: string;
-  description: string;
-};
-
-export type Product = {
-  id: string;
-  handle: string;
-  // availableForSale: boolean;
-  title: string;
-  description: string;
-  descriptionHtml: string;
-  options: ProductOption[];
-  totalQuantity: number;
-  price: number;
-  // priceRange: {
-  //   maxVariantPrice: Money;
-  //   minVariantPrice: Money;
-  // };
-  // variants: Connection<ProductVariant>;
-  featuredImage: Image;
-  images: Image[];
-  // seo: SEO;
-  // tags: string[];
-  // updatedAt: string;
-};
-// export type Product = Omit<ShopifyProduct, "variants" | "images"> & {
-//   variants: ProductVariant[];
-//   images: Image[];
-// };
 
 // sort
 export type SortFilterItemType = {
@@ -113,17 +29,6 @@ export type SortFilterItemType = {
   slug: string | null;
   sortKey: "" | "price";
   reverse: boolean;
-};
-
-export type ProductsCollection = {
-  handle: string;
-  title: string;
-  description: string;
-  seo: SEO;
-  // updatedAt: string;
-};
-export type Collection = ProductsCollection & {
-  path: string;
 };
 
 
@@ -191,6 +96,17 @@ export interface IProduct {
   _id: string;
 }
 
+export interface ICartItem {
+  productId: string;
+  product: {
+    _id: string;
+    name: string;
+    price: number;
+  };
+  quantity: number;
+  price: number;
+  subtotal: number;
+} 
 export interface ICategory {
   name: string;
   slug: string;
@@ -198,6 +114,12 @@ export interface ICategory {
   is_active: boolean;
   createdAt: string;
   _id: string
+}
+export interface IShipping {
+  _id: string;
+  name: string;
+  description: string;
+  cost: number | null;
 }
 
 export type IParams = {

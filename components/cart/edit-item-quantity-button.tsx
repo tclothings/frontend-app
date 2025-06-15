@@ -2,74 +2,62 @@
 
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
-// import { updateItemQuantity } from 'app/components/cart/actions';
-import type { CartItem, Product } from "app/lib/types";
-import { useActionState } from "react";
-import useCartStore from "app/store/cartStore";
+import { useCart } from "app/api/client/cart";
+import { toast } from "sonner";
+import { useEffect } from "react";
 
-function SubmitButton({
-  type,
-  onClick,
-}: {
-  type: "plus" | "minus";
-  onClick: any;
-}) {
-  return (
-    <button
-      // type="submit"
-      onClick={onClick}
-      aria-label={
-        type === "plus" ? "Increase item quantity" : "Reduce item quantity"
-      }
-      className={clsx(
-        "ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 transition-all duration-200 hover:border-neutral-800 hover:opacity-80",
-        {
-          "ml-auto": type === "minus",
-        }
-      )}
-    >
-      {type === "plus" ? (
-        <PlusIcon className="h-4 w-4 dark:text-neutral-500" />
-      ) : (
-        <MinusIcon className="h-4 w-4 dark:text-neutral-500" />
-      )}
-    </button>
-  );
-}
 
 export function EditItemQuantityButton({
   item,
   type,
-}: // optimisticUpdate,
+}:
 {
-  item: Product;
+  item: any;
   type: "plus" | "minus";
-  // optimisticUpdate: any;
 }) {
-  const { addItem, removeItem } = useCartStore((state) => state);
-
-  // const [message, formAction] = useActionState(updateItemQuantity, null);
-  // const payload = {
-  //   merchandiseId: item.merchandise.id,
-  //   quantity: type === "plus" ? item.quantity + 1 : item.quantity - 1,
-  // };
-  // const updateItemQuantityAction = formAction.bind(null, payload);
-  const handleClick = () => {
-    if (type === "plus") {
-      addItem(item);
-    } else {
-      removeItem(item);
+  const { updateCartItem } = useCart();
+  
+  useEffect(() => {
+    if (updateCartItem.isSuccess) {
+      toast.success(updateCartItem.data?.message);
     }
+  }, [updateCartItem.isSuccess]);
+  
+  const disablePlusBtn = item?.quantity >= item?.product?.quantity;
+  
+    const disableMinusBtn = item?.quantity <= 1;
+
+  
+  const handleEditCart = () => {
+    const productId = item?.product?._id;
+    if (type === "plus") {
+      if (disablePlusBtn) return;
+        const data = {
+          product: productId,
+          quantity: item?.quantity + 1,
+        };
+      updateCartItem.mutate(data);
+    } else {
+      if (disableMinusBtn) return;
+      const data = {
+        product: productId,
+        quantity: item?.quantity - 1,
+      };
+      updateCartItem.mutate(data);    }
   };
 
   return (
     <button
-      onClick={handleClick}
+      onClick={handleEditCart}
+      disabled={
+        (type === "plus" ? disablePlusBtn : disableMinusBtn) ||
+        updateCartItem.isPending
+      }
       aria-label={
         type === "plus" ? "Increase item quantity" : "Reduce item quantity"
       }
       className={clsx(
-        "ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 transition-all duration-200 hover:border-neutral-800 hover:opacity-80",
+        "hover:cursor-pointer ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 transition-all duration-200 hover:border-neutral-800 hover:opacity-80",
         {
           "ml-auto": type === "minus",
         }
@@ -82,4 +70,4 @@ export function EditItemQuantityButton({
       )}
     </button>
   );
-}
+} 

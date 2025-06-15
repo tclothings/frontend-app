@@ -76,8 +76,6 @@ const addEditProduct = ({
     if (item) {
       reset(initialValues);
       if (item.media?.length) {
-        console.log(item?.media, "item?.media");
-
         const existingVideos = item?.media
           .filter((item) => item.mediaType === "video")
           ?.map(({ mediaType, url, altText }) => ({
@@ -103,7 +101,6 @@ const addEditProduct = ({
             file: null,
             uploaded: true,
           }));
-        console.log(existingImages, "existingImages");
         if (existingImages?.length) {
           setImageItems(existingImages);
         }
@@ -146,7 +143,6 @@ const addEditProduct = ({
 
   const onAddEditProduct = (data: any) => {
     let cleanedData = { ...data };
-    console.log(data, "data");
     cleanedData.slug = slugify(cleanedData.name);
     if (item) {
       updateProduct.mutate({ id: item._id, data: cleanedData });

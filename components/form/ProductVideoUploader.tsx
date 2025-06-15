@@ -25,7 +25,6 @@ export interface VideoUploadProps {
 export default function VideoUpload({ onSave, videos, setVideos }: VideoUploadProps) {
   const [isUploading, setIsUploading] = useState(false);
 
-  console.log(videos, "vid")
   const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const MAX_VIDEO_SIZE_MB = 5;
     const MAX_VIDEO_SIZE_BYTES = MAX_VIDEO_SIZE_MB * 1024 * 1024;

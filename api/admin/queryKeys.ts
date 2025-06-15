@@ -3,4 +3,5 @@ export const KEYS = {
   CATEGORIES: "admin.categories",
   ADMINS: "admin.admins",
   CUSTOMERS: "admin.customers",
+  SHIPPINGLIST: "asmin.shippinglist",
 };

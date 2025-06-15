@@ -5,9 +5,10 @@ import { stringifyParams } from "app/lib/utils";
 
 export const useProducts = (args?: any) => {
   const queryClient = useQueryClient();
-  const { id, params, slug } = args ?? {};
+  const {enabled= true, id, params, slug } = args ?? {};
 
   const products = useQuery({
+    enabled,
     queryKey: [KEYS.PRODUCTS, params],
     queryFn: async () => {
       let url = "products/all";
@@ -38,7 +39,7 @@ export const useProducts = (args?: any) => {
   const product = useQuery({
     queryKey: [KEYS.PRODUCTS, id],
     queryFn: async () => {
-      const result = await http.get(`products/${id}`);
+      const result = await http.get(`products/slug/${id}`);
       return result?.data?.data;
     },
     enabled: !!id,

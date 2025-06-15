@@ -1,23 +1,38 @@
-'use client';
+"use client";
 
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import Form from 'next/form';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Search() {
-    const pathname = usePathname();
-  
-  const searchParams = useSearchParams();
-const showSearchInput = ["/category", "/product"].some((item) =>
-  pathname.startsWith(item) || pathname === "/"
-  );
-   const [query, setQuery] = useState("");
 
-   useEffect(() => {
-     setQuery(searchParams?.get("q") || "");
-   }, [searchParams]);
-  
+  const router = useRouter()
+  const pathname = usePathname();
+
+  const searchParams = useSearchParams();
+  const showSearchInput = ["/category", "/product", "/search"].some(
+    (item) => pathname.startsWith(item) || pathname === "/"
+  );
+  const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    setQuery(searchParams?.get("q") || "");
+  }, [searchParams]);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newSearchParams = new URLSearchParams(searchParams.toString()); // Start with current params
+
+    if (query) {
+      newSearchParams.set("q", query);
+    } else {
+      newSearchParams.delete("q");
+    }
+    newSearchParams.delete("page");
+
+    // Navigate to the current path with the updated search parameters
+    router.push(`/search?${newSearchParams.toString()}`);
+  };
   return (
     <>
       {showSearchInput ? (
@@ -25,7 +40,10 @@ const showSearchInput = ["/category", "/product"].some((item) =>
         //   action="/search"
         //   className="w-max-[550px] relative w-full lg:w-80 xl:w-full"
         // >
-        <>
+        <form
+          onSubmit={handleSearch}
+          className="w-max-[550px] relative w-full lg:w-80 xl:w-full"
+        >
           <input
             type="text"
             // name="q"
@@ -37,7 +55,7 @@ const showSearchInput = ["/category", "/product"].some((item) =>
           <div className="absolute right-0 top-0 mr-3 flex h-full items-center">
             <MagnifyingGlassIcon className="h-4" />
           </div>
-        </>
+        </form>
       ) : // </Form>
       null}
     </>

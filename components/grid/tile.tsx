@@ -21,7 +21,7 @@ export function GridTileImage({
   return (
     <div
       className={clsx(
-        "group flex h-full w-full items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 bg-[var(--grey-100)] dark:bg-black animate-pulse",
+        "group flex h-full w-full items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 bg-[var(--grey-100)] dark:bg-black ",
         {
           relative: label,
           "border-2 border-blue-600": active,
@@ -55,7 +55,7 @@ export const GridTileImageSkeleton = () => {
   return (
     <div
       className={clsx(
-        "group flex h-full w-full items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 bg-[var(--grey-100)] dark:bg-black border-2 border-blue-600"
+        "group flex h-[300px] max-w-[300px] w-full m-auto items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 bg-[var(--grey-100)] dark:bg-black border-2 border-blue-600"
       )}
     >
       <p

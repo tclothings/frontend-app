@@ -15,7 +15,7 @@ export const ControlledGoogleAddress = ({
   onSearchLocation,
   name,
   methods,
-  label = "Enter location...",
+  label = "Enter location",
   schema,
 }: IProps) => {
   const [searching, setSearching] = useState(false);

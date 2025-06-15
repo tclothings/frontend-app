@@ -47,7 +47,6 @@ const ViewProduct = ({
   if (!item) {
     return <div>No product found</div>;
   }
-  console.log(item, "item");
 
   return (
     <>

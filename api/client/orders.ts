@@ -1,12 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "app/lib/http";
+import { KEYS } from "./queryKeys";
 
 export const useOrders = (args?: any) => {
   const queryClient = useQueryClient();
   const { id, params } = args ?? {};
   
   const orders = useQuery({
-    queryKey: ["orders"],
+    queryKey: [KEYS.ORDERS],
     queryFn: async () => {
       let url = "orders/users";
       // if (params) {
@@ -18,22 +19,22 @@ export const useOrders = (args?: any) => {
   });
 
   const order = useQuery({
-    queryKey: ["orders", id],
+    queryKey: [KEYS.ORDERS, id],
     queryFn: async () => {
       const result = await http.get(`orders/${id}`);
       return result?.data?.data;
     },
-    enabled: !!id
+    enabled: !!id,
   });
 
   const addOrder = useMutation({
     mutationFn: async (data: any) => {
       const result = await http.post("orders", data);
-      return result?.data?.data;
+      return result?.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["orders"],
+        queryKey: [KEYS.ORDERS],
       });
     },
   });

@@ -1,39 +1,43 @@
-'use client';
+"use client";
 
-import clsx from 'clsx';
-import { Dialog, Transition } from '@headlessui/react';
-import { ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { createUrl } from 'app/lib/utils';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Fragment, useEffect, useRef, useState } from 'react';
-import { useFormStatus } from 'react-dom';
-// import { createCartAndSetCookie, redirectToCheckout } from './actions';
-import { useCart } from './cart-context';
-import { DeleteItemButton } from './delete-item-button';
-import { EditItemQuantityButton } from './edit-item-quantity-button';
-import OpenCart from './open-cart';
-import LoadingDots from '../loading-dots';
-import Price from '../price';
-import { DEFAULT_OPTION } from 'app/lib/constants';
-import useCartStore from 'app/store/cartStore';
-
-type MerchandiseSearchParams = {
-  [key: string]: string;
-};
+import clsx from "clsx";
+import {
+  Dialog,
+  DialogPanel,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react";
+import { ShoppingCartIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { createUrl } from "app/lib/utils";
+import Image from "next/image";
+import Link from "next/link";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { DeleteItemButton } from "./delete-item-button";
+import { EditItemQuantityButton } from "./edit-item-quantity-button";
+import OpenCart from "./open-cart";
+import LoadingDots from "../loading-dots";
+import Price from "../price";
+import { useCart } from "app/api/client/cart";
+import { ICartItem } from "app/lib/types";
+import { useOrders } from "app/api/client/orders";
+import { useRouter } from "next/navigation";
 
 export default function CartModal() {
-  const items = useCartStore((state) => state.items)
-    const totalQuantity = useCartStore(
-      (state) => state.totalQuantity()
-    );
-  const totalAmount  = useCartStore(
-    (state) => state.totalAmount()
+  const { cartItems } = useCart();
+
+  const cartData = cartItems?.data;
+
+  const items = cartData?.items;
+
+  const totalQuantity = items?.reduce(
+    (acc: number, item: ICartItem) => acc + item.quantity,
+    0
   );
 
-  // const { cart, updateCartItem } = useCart();
+  const totalAmount = cartData?.totalAmount;
+
   const [isOpen, setIsOpen] = useState(false);
-  const quantityRef = useRef(totalQuantity);
+  const previousTotalQuantityRef = useRef(0); 
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
 
@@ -41,27 +45,49 @@ export default function CartModal() {
   //   if (!cart) {
   //   }
   // }, [cart]);
-
+  // useEffect(() => {
+  //   if (totalQuantity > 0 && totalQuantity !== quantityRef.current) {
+  //     if (!isOpen) {
+  //       setIsOpen(true);
+  //     }
+  //     quantityRef.current = totalQuantity;
+  //   }
+  // }, [isOpen, totalQuantity]);
   useEffect(() => {
-    if (
-      totalQuantity> 0 &&
-      totalQuantity !== quantityRef.current
-    ) {
-      if (!isOpen) {
+    // Only run this logic if the cart is not already open
+    if (!isOpen) {
+      // Check if the current totalQuantity is greater than the previous totalQuantity
+      // and if the current totalQuantity is actually greater than 0
+      if (
+        totalQuantity > 0 &&
+        totalQuantity > previousTotalQuantityRef.current
+      ) {
         setIsOpen(true);
       }
-      quantityRef.current = totalQuantity;
     }
+    // Update the ref for the next render
+    previousTotalQuantityRef.current = totalQuantity;
   }, [isOpen, totalQuantity]);
 
+  if (cartItems.isError) {
+    return null;
+  }
+
+  if (cartItems.isPending) {
+    return null;
+  }
   return (
     <>
-      <button aria-label="Open cart" onClick={openCart} className='hover:cursor-pointer'>
+      <button
+        aria-label="Open cart"
+        onClick={openCart}
+        className="hover:cursor-pointer"
+      >
         <OpenCart quantity={items?.length} />
       </button>
       <Transition show={isOpen}>
         <Dialog onClose={closeCart} className="relative z-50">
-          <Transition.Child
+          <TransitionChild
             as={Fragment}
             enter="transition-all ease-in-out duration-300"
             enterFrom="opacity-0 backdrop-blur-none"
@@ -71,8 +97,8 @@ export default function CartModal() {
             leaveTo="opacity-0 backdrop-blur-none"
           >
             <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-          </Transition.Child>
-          <Transition.Child
+          </TransitionChild>
+          <TransitionChild
             as={Fragment}
             enter="transition-all ease-in-out duration-300"
             enterFrom="translate-x-full"
@@ -81,10 +107,14 @@ export default function CartModal() {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 p-6 text-black backdrop-blur-xl md:w-[390px] dark:border-neutral-700 dark:bg-black/80 dark:text-white">
+            <DialogPanel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 p-6 text-black backdrop-blur-xl md:w-[390px] dark:border-neutral-700 dark:bg-black/80 dark:text-white">
               <div className="flex items-center justify-between">
                 <p className="text-lg font-semibold">My Cart</p>
-                <button aria-label="Close cart" onClick={closeCart} className="hover:cursor-pointer">
+                <button
+                  aria-label="Close cart"
+                  onClick={closeCart}
+                  className="hover:cursor-pointer"
+                >
                   <CloseCart />
                 </button>
               </div>
@@ -106,20 +136,9 @@ export default function CartModal() {
                       //   )
                       // )
                       .map((item, i) => {
-                        // const merchandiseSearchParams =
-                        //   {} as MerchandiseSearchParams;
-
-                        // item.merchandise.selectedOptions.forEach(
-                        //   ({ name, value }) => {
-                        //     if (value !== DEFAULT_OPTION) {
-                        //       merchandiseSearchParams[name.toLowerCase()] =
-                        //         value;
-                        //     }
-                        //   }
-                        // );
-
                         const merchandiseUrl = createUrl(
-                          `/product/${item.handle}`, new URLSearchParams()
+                          `/product/${item.product?.slug}`,
+                          new URLSearchParams()
                         );
 
                         return (
@@ -140,14 +159,8 @@ export default function CartModal() {
                                     className="h-full w-full object-cover"
                                     width={64}
                                     height={64}
-                                    alt={
-                                      item.featuredImage
-                                        .altText ||
-                                      item.title
-                                    }
-                                    src={
-                                      item.featuredImage.url
-                                    }
+                                    alt={item.product?.name}
+                                    src={item.product?.productImage}
                                   />
                                 </div>
                                 <Link
@@ -157,21 +170,23 @@ export default function CartModal() {
                                 >
                                   <div className="flex flex-1 flex-col text-base">
                                     <span className="leading-tight">
-                                      {item.title}
+                                      {item.product?.name}
                                     </span>
-                                    {item.title !==
-                                    DEFAULT_OPTION ? (
+                                    {item.quantity > 0 && (
                                       <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                                        {item.title}
+                                        {item.product?.quantity} units left
                                       </p>
-                                    ) : null}
+                                    )}
                                   </div>
                                 </Link>
                               </div>
                               <div className="flex h-16 flex-col justify-between">
                                 <Price
                                   className="flex justify-end space-y-2 text-right text-sm"
-                                  amount={item.price}
+                                  amount={
+                                    // item.product?.salePrice ||
+                                    item.subtotal
+                                  }
                                 />
                                 <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-neutral-200 dark:border-neutral-700">
                                   <EditItemQuantityButton
@@ -212,19 +227,17 @@ export default function CartModal() {
                     <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
                       <p>Total</p>
                       <Price
-                        className="text-right text-base text-black dark:text-white"
+                        className="flex text-right text-base text-black dark:text-white"
                         amount={totalAmount}
-                        currencyCode={"USD"}
+                        currencyCode={"NGN"}
                       />
                     </div>
                   </div>
-                  {/* <form action={redirectToCheckout}>
-                    <CheckoutButton />
-                  </form> */}
+                  <CheckoutButton totalAmount={totalAmount} />
                 </div>
               )}
-            </Dialog.Panel>
-          </Transition.Child>
+            </DialogPanel>
+          </TransitionChild>
         </Dialog>
       </Transition>
     </>
@@ -236,7 +249,7 @@ function CloseCart({ className }: { className?: string }) {
     <div className="relative flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white">
       <XMarkIcon
         className={clsx(
-          'h-6 transition-all ease-in-out hover:scale-110',
+          "h-6 transition-all ease-in-out hover:scale-110",
           className
         )}
       />
@@ -244,16 +257,26 @@ function CloseCart({ className }: { className?: string }) {
   );
 }
 
-function CheckoutButton() {
-  const { pending } = useFormStatus();
-
+function CheckoutButton({ totalAmount }: { totalAmount : number}) {
+const router = useRouter()
+  // const { addOrder } = useOrders()
+  const goToCheckout = () => {
+    router.push("/checkout")
+  }
   return (
     <button
-      className="block w-full rounded-full bg-blue-600 p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100"
-      type="submit"
-      disabled={pending}
+      onClick={goToCheckout}
+      className="flex items-center gap-2 justify-center w-full rounded-full bg-blue-600 p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100"
+      // type="submit"
+      // disabled={addOrder.isPending}
     >
-      {pending ? <LoadingDots className="bg-white" /> : 'Proceed to Checkout'}
+      {/* {addOrder.isPending ? (
+        <LoadingDots className="bg-white" />
+      ) : ( */}
+      <>
+        <span>Checkout </span> (<Price amount={totalAmount} />)
+      </>
+      {/* )} */}
     </button>
   );
 }

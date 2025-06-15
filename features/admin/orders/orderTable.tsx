@@ -1,12 +1,13 @@
 import Table from "app/components/ui/table";
-import { formatAmount, formatDate, formatNumber } from "app/lib/utils";
+import { formatAmount, formatDate } from "app/lib/utils";
 import { useState } from "react";
 
 import Spinner from "app/components/form/spinner";
 import Drawer from "app/components/ui/drawer";
-import ViewProduct from "./viewOrder.tsx";
 import { useOrders } from "app/api/admin/orders";
 import { ordersHeaders } from "./components/orderHeaders";
+import StatusCard from "app/components/ui/statusCard.jsx";
+import ViewOrder from "./viewOrder";
 
 export const metadata = {
   title: "Orders",
@@ -48,11 +49,15 @@ export default function OrderTable() {
             className="hover:cursor-pointer hover:bg-[var(--background)]"
           >
             <td className="px-6 py-4 min-w-[199px]">{order?.orderNumber}</td>
-            <td className="px-6 py-4 min-w-[118px]">{order?.paymentStatus}</td>
+            <td className="px-6 py-4 min-w-[118px]">
+              <StatusCard status={order?.paymentStatus} />
+            </td>
             <td className="px-6 py-4 min-w-[118px]">
               {formatAmount(order?.totalAmount)}
             </td>
-            <td className="px-6 py-4 min-w-[118px]">{order?.status}</td>
+            <td className="px-6 py-4 min-w-[118px]">
+              <StatusCard status={order?.status} />
+            </td>
             <td className="px-6 py-4 min-w-[118px]">
               {formatDate(order?.createdAt)}
             </td>
@@ -69,7 +74,7 @@ export default function OrderTable() {
       <Drawer
         title={"View Order"}
         children={
-          <ViewProduct
+          <ViewOrder
             item={selectedItem}
             onSuccess={() => setIsDrawerOpen(false)}
           />

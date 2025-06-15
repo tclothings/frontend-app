@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
         pathname: "/unsafe/**",
       },
       new URL("https://t-clothing-bucket.s3.amazonaws.com/**"),
+      new URL("https://example.com/**"),
     ],
   },
   /* config options here */

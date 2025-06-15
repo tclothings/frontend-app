@@ -1,6 +1,5 @@
-import { Icon } from "@/app/lib/defintitions";
 
-export default function CardStyle({ color }: Icon) {
+export default function CardStyle({ color = "#9CA3AF" }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

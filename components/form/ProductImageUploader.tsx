@@ -28,8 +28,6 @@ export default function ProductImageUploader({ onSave, imageItems, setImageItems
   const MAX_IMAGE_SIZE_MB = 3;
   const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
 
-  console.log(imageItems, "imageItems");
-
   const handleAddImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -181,7 +179,6 @@ export default function ProductImageUploader({ onSave, imageItems, setImageItems
         altText: item.altText || `Product image`, // Fallback for alt text
       }));
 
-    console.log("Final media array:", mediaArray);
     onSave(mediaArray);
 
     if (!allUploadsSuccessful) {

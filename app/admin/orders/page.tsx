@@ -1,4 +1,3 @@
-
 import Orders from "app/features/admin/orders";
 
 export const metadata = {
@@ -6,9 +5,6 @@ export const metadata = {
   description: "View orders list.",
 };
 
-
 export default function OrdersPage() {
-  return (
-<Orders />
-  );
+  return <Orders />;
 }

@@ -15,7 +15,6 @@ export default function Products() {
   const [isViewCategoriesDrawerOpen, setIsViewCategoriesDrawerOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<IProduct>();
 
-  // const [activeUserTab, setActiveUserTab] = useState <IUserTable>("customers");
   return (
     <>
       <AccountPageHeader
@@ -52,7 +51,7 @@ export default function Products() {
             isOpen={isNewCategoryDrawerOpen}
             onClose={() => setIsNewCategoryDrawerOpen(false)}
             onOpen={() => setIsNewCategoryDrawerOpen(true)}
-          />{" "}
+          />
           <Drawer
             drawerOpenerClass="border border-blue-600 bg-white text-blue-600"
             drawerOpenerText={"Categories"}

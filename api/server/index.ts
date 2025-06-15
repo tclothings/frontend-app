@@ -56,7 +56,6 @@ export async function getCategory(slug: string) {
 
   if (!res.ok) throw new Error("Failed to fetch categories");
   const data = await res.json();
-console.log(data?.data)
   return data?.data;
 }
 
