@@ -9,12 +9,12 @@ import {
   ProductDescription,
   ProductDescriptionSkeleton,
 } from "app/features/landingPage/components/product/product-description";
-import { Image, IMedia, IProduct } from "app/lib/types";
+import { IMedia, IProduct } from "app/lib/types";
 import Link from "next/link";
-import Spinner from "app/components/form/spinner";
 import { useProducts } from "app/api/client/products";
 import { useEffect } from "react";
 import clsx from "clsx";
+import { MediaGallery } from "../../components/product/mediaGallery";
 
 export default function Product({ slug }: { slug: string }) {
   const router = useRouter();
@@ -32,23 +32,31 @@ export default function Product({ slug }: { slug: string }) {
 
   const data = product?.data;
 
+  console.log(data.media, "data")
   const filteredMedia = data?.media
-    ?.filter((item: IMedia) => item.mediaType === "image")
-    ?.map(({ url, altText }: IMedia) => ({ url, altText }));
+    // ?.filter((item: IMedia) => item.mediaType === "image")
+    ?.map(({ url, altText, mediaType }: IMedia) => ({
+      url,
+      altText,
+      mediaType,
+    }));
 
-  const imageMedia = [
-    { url: data?.productImage, altText: data?.name },
+  const media = [
+    { url: data?.productImage, altText: data?.name, mediaType: "image" },
     ...(filteredMedia ?? []),
   ];
   return (
     <div className="mx-auto max-w-(--breakpoint-2xl) px-4 ">
       <div className="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 md:p-12 lg:flex-row lg:gap-8 dark:border-neutral-800 bg-[var(--grey-100)]  dark:bg-black">
         <div className="h-full w-full basis-full lg:basis-4/6">
-          <Gallery
-            images={imageMedia?.slice(0, 5).map((image: Image) => ({
+          {/* <Gallery
+            images={imageMedia?.slice(0, 5).map((image: any) => ({
               src: image.url,
               altText: image.altText,
             }))}
+          /> */}
+          <MediaGallery
+            media={media?.slice(0, 5)}
           />
         </div>
 

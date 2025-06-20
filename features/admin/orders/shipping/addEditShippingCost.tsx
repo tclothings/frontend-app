@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useShipping } from "app/api/admin/shipping";
-import { ControlledGoogleAddress } from "app/components/form/ControlledGoogleAddress";
+import { ControlledGoogleAddress } from "app/components/form/controlledGoogleAddress";
 import Input from "app/components/form/Input";
 import NumberInput from "app/components/form/numberInput";
 import SubmitButton from "app/components/form/submitButton";
@@ -23,15 +23,18 @@ const AddEditShippingCost = ({ item, onSuccess }: addEditShippingCostProps) => {
   });
 
   const initialValues = {
+    lga: emptyValue,
     name: item?.name ?? emptyValue,
     description: item?.description ?? emptyValue,
     cost: item?.cost ?? 0,
   };
 
-  const { handleSubmit, reset, setValue } = methods;
+  const { handleSubmit, reset, setValue, watch } = methods;
+
+  const name = watch("name")
 
   useEffect(() => {
-      reset(initialValues);
+    reset(initialValues);
   }, [item]);
 
   useEffect(() => {
@@ -47,16 +50,18 @@ const AddEditShippingCost = ({ item, onSuccess }: addEditShippingCostProps) => {
     if (updateShippingCost.isSuccess) {
       toast.success(updateShippingCost?.data?.message);
       updateShippingCost.reset();
-      reset();
+      reset();  
       onSuccess();
     }
   }, [updateShippingCost.isSuccess]);
 
   const onAddNewShippingCost = (data: any) => {
+    const cleanedData = {...data}
+    delete cleanedData.lga
     if (item) {
-      updateShippingCost.mutate({ id: item._id, data: data });
+      updateShippingCost.mutate({ id: item._id, data: cleanedData });
     } else {
-      addShippingCost.mutate(data);
+      addShippingCost.mutate(cleanedData);
     }
   };
   const onSearchLocation = (data: any) => {
@@ -64,6 +69,10 @@ const AddEditShippingCost = ({ item, onSuccess }: addEditShippingCostProps) => {
     setValue("description", data.lga?.toString());
     console.log(data);
   };
+  useEffect(() => {
+    setValue("description", `Shipping cost for ${name}`);
+  }, [name]);
+
   return (
     <div>
       <div className="flex flex-col gap-5">
@@ -73,18 +82,25 @@ const AddEditShippingCost = ({ item, onSuccess }: addEditShippingCostProps) => {
             automatically populate the Local Government Area (LGA){" "}
           </p>
           <ControlledGoogleAddress
-            name="name"
+            name="lga"
             methods={methods}
             onSearchLocation={onSearchLocation}
           />
         </div>
         <Input
-          name="description"
+          name="name"
           placeholder="LGA"
           methods={methods}
           type="text"
           schema={shippingSchema}
-          disabled={true}
+          readOnly
+        />
+        <Input
+          name="description"
+          placeholder="Description"
+          methods={methods}
+          type="text"
+          schema={shippingSchema}
         />
         <NumberInput
           name="cost"

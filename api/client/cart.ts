@@ -1,14 +1,18 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "app/lib/http";
 import { KEYS } from "./queryKeys";
+import { get } from "app/lib/http";
 
 export const useCart = (args?: any) => {
   const { id } = args ?? {};
   const queryClient = useQueryClient();
+
   const cartItems = useQuery({
     queryKey: [KEYS.CART],
     queryFn: async () => {
-      const result = await http.get("carts");
+      const result = await get("carts", {
+        suppress401Toast: true
+      });
       return result?.data?.data;
     },
   });

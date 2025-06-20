@@ -41,6 +41,7 @@ export interface TableHeaderProps {
   selectedRowKeys?: React.Key[];
   totalPages?: number;
   showPagination?: boolean;
+  filterComponent?: React.ReactNode
 }
 export interface TableBodyProps {
   isLoading?: boolean;
@@ -70,8 +71,6 @@ export interface IMedia {
   mediaType: string,
   url: string,
   altText: string,
-  // isPrimary: true,
-  // displayOrder: 1,
 }
 
 
@@ -122,6 +121,22 @@ export interface IShipping {
   cost: number | null;
 }
 
+export interface IAddress {
+  additionalDetails: string;
+  city: string;
+  country: string;
+  createdAt: string;
+  isDefault: boolean;
+  latitude: number;
+  lga: string;
+  longitude: number;
+  phoneNumber: { _id: string; number: string };
+  state: string;
+  street: string;
+  updatedAt: string;
+  user: string;
+  _id: string;
+}
 export type IParams = {
   page?: number;
   limit?: number;

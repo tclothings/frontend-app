@@ -3,11 +3,12 @@ import clsx from "clsx";
 import Button from "app/components/form/button";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { IShipping } from "app/lib/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ConfirmationModal from "app/components/ui/confirmationModal";
 import AddEditShippingCost from "./addEditShippingCost";
 import Drawer from "app/components/ui/drawer";
 import { useShipping } from "app/api/admin/shipping";
+import { toast } from "sonner";
 
 // export const metadata = {
 //   title: "Categories",
@@ -25,19 +26,21 @@ export default function ShippingListTable({
     useState(false);
   const [selectedItem, setSelectedItem] = useState<IShipping | undefined>();
 
-  const { shippingCostList } = useShipping({ enabled : true});
+  const { shippingCostList, deleteShippingCost } = useShipping({
+    enabled: true,
+  });
 
-  // useEffect(() => {
-  //   if (deleteCategory.isSuccess) {
-  //     toast.success("Product deleted");
-  //     deleteCategory.reset();
-  //     // onSuccess();
-  //   }
-  // }, [deleteCategory.isSuccess]);
+  useEffect(() => {
+    if (deleteShippingCost.isSuccess) {
+      toast.success("Product deleted");
+      deleteShippingCost.reset();
+      // onSuccess();
+    }
+  }, [deleteShippingCost.isSuccess]);
 
   const onHandleDeleteShippingCost = (item: IShipping ) => {
     setSelectedItem(item);
-    // deleteCategory.mutate(item?._id!);
+    deleteShippingCost.mutate(item?._id!);
   };
   const onHandleUpdateProduct = (item: IShipping ) => {
     setSelectedItem(item);
@@ -47,7 +50,7 @@ export default function ShippingListTable({
   if (shippingCostList.isPending) return <Spinner />;
   if (shippingCostList.isError) return <div>Something went wrong </div>;
 
-  const data = shippingCostList?.data?.shipping;
+  const data = shippingCostList?.data?.shippingCosts;
 
   console.log(shippingCostList?.data, "shippingCostList");
 
@@ -57,8 +60,8 @@ export default function ShippingListTable({
         {data?.map((cost: IShipping, idx: number) => (
           <div
             key={idx}
-            className={clsx("pb-5", {
-              "border-b border-b-grey-50 p-4": idx !== data.length - 1,
+            className={clsx("pb-5 p-4", {
+              "border-b border-b-grey-50": idx !== data.length - 1,
             })}
           >
             <div className="flex justify-end gap-4 mb-3">
@@ -81,10 +84,10 @@ export default function ShippingListTable({
                 icon={<TrashIcon width={20} className="text-[var(--red)]" />}
               />
             </div>
-              <p className="text-neutral-500 dark:text-neutral-400 mb-4">
-                {cost?.name}
-              </p>
-            <p className="mb-2">{cost?.description}</p>
+            <p className=" mb-4">{cost?.name}</p>
+            <p className="text-neutral-500 dark:text-neutral-400 mb-2">
+              {cost?.description}
+            </p>
             {/* <p className="text-xs">{formatDate(cost?.createdAt)}</p> */}
           </div>
         ))}

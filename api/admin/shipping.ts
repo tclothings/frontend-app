@@ -12,7 +12,7 @@ export const useShipping = (args?: any) => {
     queryFn: async () => {
       let url = "orders/shipping-costs";
       const result = await http.get(url);
-      return result?.data;
+      return result?.data?.data;
     },
   });
 
@@ -41,5 +41,22 @@ export const useShipping = (args?: any) => {
       });
     },
   });
-  return { shippingCostList, addShippingCost, updateShippingCost };
+  const deleteShippingCost = useMutation({
+    mutationFn: async (id: string) => {
+      let url = `orders/shipping-cost/${id}`;
+      const result = await http.delete(url);
+      return result?.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [KEYS.SHIPPINGLIST],
+      });
+    },
+  });
+  return {
+    shippingCostList,
+    addShippingCost,
+    updateShippingCost,
+    deleteShippingCost,
+  };
 };

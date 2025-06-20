@@ -9,7 +9,7 @@ export const useCheckout = (args?: any) => {
   const shippingCostList = useQuery({
     queryKey: [KEYS.SHIPPINGLIST],
     queryFn: async () => {
-      let url = "orders/shipping-cost";
+      let url = "orders/shipping-costs";
       const result = await http.get(url);
       return result?.data;
     },

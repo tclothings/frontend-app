@@ -20,8 +20,8 @@ export const metadata = {
 };
 
 export default function CustomerTable() {
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<any>(null);
   const { customers } = useCustomerUsers();
 
   if (customers.isPending) return <Spinner />;
@@ -42,35 +42,35 @@ export default function CustomerTable() {
 
   return (
     <>
-          <Table
-            length={rows}
-            headers={customerHeaders}
-            totalPages={totalPages}
-            showPagination
-            showRowCount
-            header="Customers"
+      <Table
+        length={rows}
+        headers={customerHeaders}
+        totalPages={totalPages}
+        showPagination
+        showRowCount
+        header="Customers"
+      >
+        {data.map((user, idx) => (
+          <tr
+            key={idx}
+            onClick={() => openDetailsModal(user)}
+            className="hover:cursor-pointer hover:bg-[var(--background)]"
           >
-            {data.map((user, idx) => (
-              <tr
-                key={idx}
-                onClick={() => openDetailsModal(user)}
-                className="hover:cursor-pointer hover:bg-[var(--background)]"
-              >
-                <td className="px-6 py-4 min-w-[199px]">
-                  {fullName(user?.firstName, user?.lastName)}
-                </td>
-                <td className="px-6 py-4 min-w-[118px]">{user?.email}</td>
-                <td className="px-6 py-4">{roles(user?.roles)}</td>
-                <td className="px-6 py-4 w-[125px]">
-                  {<StatusCard status={"Active"} />}
-                </td>
-                <td className="px-6 py-4 min-w-[138px]">
-                  {formatDate(user.createdAt)}
-                </td>
-              </tr>
-            ))}
-          </Table>
-          {/* <Suspense>
+            <td className="px-6 py-4 min-w-[199px]">
+              {fullName(user?.firstName, user?.lastName)}
+            </td>
+            <td className="px-6 py-4 min-w-[118px]">{user?.email}</td>
+            <td className="px-6 py-4">{roles(user?.roles)}</td>
+            <td className="px-6 py-4 w-[125px]">
+              {<StatusCard status={"Active"} />}
+            </td>
+            <td className="px-6 py-4 min-w-[138px]">
+              {formatDate(user.createdAt)}
+            </td>
+          </tr>
+        ))}
+      </Table>
+      {/* <Suspense>
             <div className="mt-6">
               <Pagination totalPages={totalPages} />
               

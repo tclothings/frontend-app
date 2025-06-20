@@ -3,6 +3,7 @@ import TableBody from "./TableBody";
 import TableHeader from "./TableHeader";
 import { Suspense } from "react";
 import Pagination from "../pagination";
+import FilterBtn from "../tableFilter";
 
 const Table = ({
   isLoading,
@@ -19,6 +20,7 @@ const Table = ({
   selectedRowKeys,
   totalPages = 0,
   showPagination = false,
+  filterComponent
 }: TableProps) => {
   return (
     // <div className="max-w-[1267px] xl:max-w-[calc(100vw-280px)] hidden-scroll-bar z-30">
@@ -26,12 +28,13 @@ const Table = ({
       <div
         className={`w-full overflow-x-auto min-h-[600px] hidden-scroll-bar z-30`}
       >
-        <div className="pl-4 space-y-2 flex justify-between items-center">
+        <div className="px-4 space-y-2 flex justify-between items-center">
           {header && (
-            <h3 className="font-[tahoma] text-lg font-bold text-[var(--grey-800)]">
+            <h3 className="text-lg font-bold text-[var(--grey-800)]">
               {header} {showRowCount && `(${length ?? 0})`}
             </h3>
           )}
+          {filterComponent && <FilterBtn>{filterComponent}</FilterBtn>}
           {bulkActions && selectedRowKeys && selectedRowKeys.length > 0 && (
             <div className="flex items-center gap-2">
               {bulkActions.map((each: any, idx: number) => (

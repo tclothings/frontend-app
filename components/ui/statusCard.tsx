@@ -1,30 +1,31 @@
 import { capitalizeWord } from "app/lib/utils";
 import clsx from "clsx";
-import CardStyle from "../icons/cardStyle"; 
+import CardStyle from "../icons/cardStyle"; // Assuming CardStyle takes a `color` prop
 
 export default function StatusCard({ status }: { status: string }) {
   let classObj;
   const cardStatus = status.toLowerCase();
 
   switch (cardStatus) {
-    case "pending": 
+    case "pending":
       classObj = {
-        className: "bg-grey-100 text-grey-700",
-        circleColor: "#667185", 
+        // Changed for better visibility on dark backgrounds
+        className: "bg-gray-700 text-gray-200", // Dark grey background, light grey text
+        circleColor: "#D1D5DB", // A light grey for the circle
       };
       break;
     case "paid":
     case "successful":
       classObj = {
         className: "bg-green-50 text-green-700",
-        circleColor: "#02B04E",
+        circleColor: "#02B04E", // Green
       };
       break;
     case "failed":
     case "cancelled":
       classObj = {
         className: "bg-error-50 text-error-700",
-        circleColor: "#F73502",
+        circleColor: "#F73502", // Red
       };
       break;
     case "refunded":
@@ -32,19 +33,19 @@ export default function StatusCard({ status }: { status: string }) {
     case "returned":
       classObj = {
         className: "bg-purple-50 text-purple-700",
-        circleColor: "#800080",
+        circleColor: "#800080", // Purple
       };
       break;
     case "processing":
       classObj = {
         className: "bg-blue-50 text-blue-700",
-        circleColor: "#3366FF",
+        circleColor: "#3366FF", // Blue
       };
       break;
     case "shipped":
       classObj = {
         className: "bg-indigo-50 text-indigo-700",
-        circleColor: "#663399",
+        circleColor: "#663399", // Darker indigo/violet
       };
       break;
     case "delivered":
@@ -52,7 +53,7 @@ export default function StatusCard({ status }: { status: string }) {
     case "active":
       classObj = {
         className: "bg-green-50 text-green-700",
-        circleColor: "#02B04E",
+        circleColor: "#02B04E", // Green
       };
       break;
     case "initiated":
@@ -64,13 +65,13 @@ export default function StatusCard({ status }: { status: string }) {
     case "dispute":
       classObj = {
         className: "bg-warning-50 text-warning-700",
-        circleColor: "#F7B302",
+        circleColor: "#F7B302", // Orange/Warning color
       };
       break;
     default:
       classObj = {
         className: "bg-neutral-100 text-neutral-600",
-        circleColor: "#9CA3AF",
+        circleColor: "#9CA3AF", // Light gray
       };
   }
 

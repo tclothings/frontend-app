@@ -19,7 +19,7 @@ interface DrawerProps {
   onClose: () => void;
   onOpen: () => void;
   drawerOpenerClass?: string;
-  size?: "sm" | "lg"
+  size?: "sm" | "lg" | "xl"
 }
 export default function Drawer({
   drawerOpenerText,
@@ -35,8 +35,9 @@ export default function Drawer({
   // const openModal = () => setIsOpen(true);
   // const closeDrawer = () => setIsOpen(false);
   const getSize = {
-    "sm": "max-w-[390px]",
-    "lg": "max-w-[700px]"
+    sm: "max-w-[390px]",
+    lg: "max-w-[700px]",
+    xl: "max-w-[950px]",
   };
   return (
     <>

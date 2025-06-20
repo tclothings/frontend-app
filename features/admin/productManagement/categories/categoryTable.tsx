@@ -1,4 +1,3 @@
-import Table from "app/components/ui/table";
 import { formatDate } from "app/lib/utils";
 
 import StatusCard from "app/components/ui/statusCard";
@@ -18,11 +17,12 @@ import Drawer from "app/components/ui/drawer";
 //   description: "View category list",
 // };
 interface CategoryTableProps {
-  onSuccess: () => void
+  onSuccess: () => void;
 }
 export default function CategoryTable({ onSuccess }: CategoryTableProps) {
   const [isOpenConfirmationModal, setOpenConfirmationModal] = useState(false);
-  const [isEditCategoryDrawerOpen, setIsEditCategoryDrawerOpen] = useState(false);
+  const [isEditCategoryDrawerOpen, setIsEditCategoryDrawerOpen] =
+    useState(false);
   const [selectedItem, setSelectedItem] = useState<ICategory | undefined>();
   const { categories, deleteCategory } = useCategories({
     params: { limitless: true },
@@ -42,8 +42,8 @@ export default function CategoryTable({ onSuccess }: CategoryTableProps) {
   };
   const onHandleUpdateProduct = (item: ICategory) => {
     setSelectedItem(item);
-    setIsEditCategoryDrawerOpen(true)
-  }
+    setIsEditCategoryDrawerOpen(true);
+  };
 
   if (categories.isPending) return <Spinner />;
   if (categories.isError) return <div>Something went wrong </div>;
@@ -55,8 +55,8 @@ export default function CategoryTable({ onSuccess }: CategoryTableProps) {
         {data?.map((category: ICategory, idx: number) => (
           <div
             key={idx}
-            className={clsx("pb-5", {
-              "border-b border-b-grey-50 p-4": idx !== data.length - 1,
+            className={clsx("pb-5 p-4", {
+              "border-b border-b-grey-50": idx !== data.length - 1,
             })}
           >
             <div className="flex justify-end gap-4 mb-3">

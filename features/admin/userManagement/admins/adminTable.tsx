@@ -33,35 +33,35 @@ export default function AdminTable() {
   };
   return (
     <>
-          <Table
-            length={rows}
-            headers={customerHeaders}
-            totalPages={totalPages}
-            showPagination
-            showRowCount
-            header="All Admins"
+      <Table
+        length={rows}
+        headers={customerHeaders}
+        totalPages={totalPages}
+        showPagination
+        showRowCount
+        header="All Admins"
+      >
+        {data?.map((user, idx) => (
+          <tr
+            key={idx}
+            onClick={() => openDetailsModal(user)}
+            className="hover:cursor-pointer hover:bg-[var(--background)]"
           >
-            {data?.map((user, idx) => (
-              <tr
-                key={idx}
-                onClick={() => openDetailsModal(user)}
-                className="hover:cursor-pointer hover:bg-[var(--background)]"
-              >
-                <td className="px-6 py-4 min-w-[199px]">
-                  {fullName(user?.firstName, user?.lastName!)}
-                </td>
-                <td className="px-6 py-4 min-w-[118px]">{user?.email}</td>
-                <td className="px-6 py-4">{roles(user?.roles)}</td>
-                <td className="px-6 py-4 w-[125px]">
-                  {<StatusCard status={user?.status} />}
-                </td>
-                <td className="px-6 py-4 min-w-[138px]">
-                  {formatDate(user.createdAt)}
-                </td>
-              </tr>
-            ))}
-          </Table>
-          {/* <Suspense>
+            <td className="px-6 py-4 min-w-[199px]">
+              {fullName(user?.firstName, user?.lastName!)}
+            </td>
+            <td className="px-6 py-4 min-w-[118px]">{user?.email}</td>
+            <td className="px-6 py-4">{roles(user?.roles)}</td>
+            <td className="px-6 py-4 w-[125px]">
+              {<StatusCard status={user?.status} />}
+            </td>
+            <td className="px-6 py-4 min-w-[138px]">
+              {formatDate(user.createdAt)}
+            </td>
+          </tr>
+        ))}
+      </Table>
+      {/* <Suspense>
             <div className="mt-6">
               <Pagination totalPages={totalPages} />
             </div>

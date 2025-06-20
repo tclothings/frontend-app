@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { ButtonHTMLAttributes, useCallback, useEffect } from "react";
+import Spinner from "./spinner";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text?: string;
@@ -41,10 +42,11 @@ const {id} = props
       disabled={isLoading}
       {...props}
       className={`${
-        icon ? "flex gap-2 justify-center" : ""
-      } text-white disabled:cursor-not-allowed hover:cursor-pointer ${btnStyle}`}
+        icon ? "gap-2 " : ""
+      } flex  justify-center text-white disabled:cursor-not-allowed hover:cursor-pointer ${btnStyle}`}
     >
-      {icon && <span>{icon}</span>} {text ? <span>{text}</span> : null}
+      {isLoading ? <Spinner /> : <>
+        {icon && <span>{icon}</span>} {text ? <span>{text}</span> : null} </>}
     </button>
   );
 }

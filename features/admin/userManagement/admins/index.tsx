@@ -17,6 +17,7 @@ export default function Admins() {
         title="Admins"
         btn={
           <Drawer
+            drawerOpenerClass="bg-blue-600 text-white"
             drawerOpenerText={"+ Add Admin"}
             title={"New Admin"}
             children={<AddAdmin onSuccess={() => setIsDrawerOpen(false)} />}

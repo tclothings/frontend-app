@@ -41,7 +41,9 @@ export function ProductDescriptionSkeleton() {
       </div>
       {/* <VariantSelector options={product.options} /> */}
       <ProseSkeleton />
-      <AddToCartButtonSkeleton />
+      <div className="mt-6">
+        <AddToCartButtonSkeleton />
+      </div>
     </>
   );
 }

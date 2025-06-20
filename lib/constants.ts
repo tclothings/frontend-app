@@ -70,8 +70,8 @@ export const adminNavMenu = [
   { title: "Admins", path: "/admin/user-management/admins" },
   // { title: "Categories", path: "/admin/product-management/categories" },
   { title: "Products", path: "/admin/product-management/products" },
-  { title: "Address", path: "/admin/address" },
-  { title: "Payment methods", path: "/admin/payment-methods" },
+  // { title: "Address", path: "/admin/address" },
+  // { title: "Payment methods", path: "/admin/payment-methods" },
   { title: "Profile", path: "/admin/profile" },
 ];
 
@@ -311,4 +311,25 @@ export const publicAuthRoutes = [
   "/signup",
   "/forgot-password",
   "/reset-password",
+];
+
+
+export const orderStatuses = [
+  { label: "Draft", value: "DRAFT" },
+  { label: "Pending", value: "PENDING" },
+  { label: "Processing", value: "PROCESSING" },
+  { label: "Shipped", value: "SHIPPED" },
+  { label: "Delivered", value: "DELIVERED" },
+  { label: "Cancelled", value: "CANCELLED" },
+  { label: "Returned", value: "RETURNED" },
+  { label: "Refunded", value: "REFUNDED" },
+];
+
+export const paymentStatuses = [
+  { label: "Pending", value: "PENDING" },
+  { label: "Paid", value: "PAID" },
+  { label: "Failed", value: "FAILED" },
+  { label: "Refunded", value: "REFUNDED" },
+  { label: "Partially Refunded", value: "PARTIALLY_REFUNDED" },
+  { label: "Successful", value: "SUCCESSFUL" },
 ];

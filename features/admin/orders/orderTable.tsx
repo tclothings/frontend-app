@@ -6,8 +6,9 @@ import Spinner from "app/components/form/spinner";
 import Drawer from "app/components/ui/drawer";
 import { useOrders } from "app/api/admin/orders";
 import { ordersHeaders } from "./components/orderHeaders";
-import StatusCard from "app/components/ui/statusCard.jsx";
 import ViewOrder from "./viewOrder";
+import StatusCard from "app/components/ui/statusCard";
+import OrdersFilter from "./components/ordersFilter";
 
 export const metadata = {
   title: "Orders",
@@ -23,9 +24,9 @@ export default function OrderTable() {
   if (orders.isError) return <div>Something went wrong </div>;
 
   const data = orders?.data;
-  const ordersList = data?.data
+  const ordersList = data?.data;
 
-  const totalPages =data?.totalPages;
+  const totalPages = data?.totalPages;
   const rows = data?.total;
 
   const openDetailsModal = (order) => {
@@ -41,6 +42,7 @@ export default function OrderTable() {
         showPagination
         showRowCount
         header="All Orders"
+        filterComponent={<OrdersFilter />}
       >
         {ordersList?.map((order, idx) => (
           <tr

@@ -4,4 +4,5 @@ export const KEYS = {
   ADMINS: "admin.admins",
   CUSTOMERS: "admin.customers",
   SHIPPINGLIST: "asmin.shippinglist",
+  ORDERS: "admin.orders"
 };

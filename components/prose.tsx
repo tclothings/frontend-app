@@ -37,12 +37,12 @@ export function ProseSkeleton({ className }: { className?: string }) {
             <div className="h-4 bg-gray-200 rounded-md w-10/12"></div>
             <div className="h-4 bg-gray-200 rounded-md w-1/2"></div>{" "}
             {/* Shorter line for variety */}
-            <div className="h-4 bg-gray-200 rounded-md w-full"></div>
+            {/* <div className="h-4 bg-gray-200 rounded-md w-full"></div>
             <div className="h-4 bg-gray-200 rounded-md w-9/12"></div>
-            <div className="h-4 bg-gray-200 rounded-md w-full"></div>
+            <div className="h-4 bg-gray-200 rounded-md w-full"></div> */}
             {/* Simulated list items */}
-            <div className="h-4 bg-gray-200 rounded-md w-3/4 ml-6"></div>
-            <div className="h-4 bg-gray-200 rounded-md w-2/3 ml-6"></div>
+            {/* <div className="h-4 bg-gray-200 rounded-md w-3/4 ml-6"></div>
+            <div className="h-4 bg-gray-200 rounded-md w-2/3 ml-6"></div> */}
           </div>
         </div>
     </div>

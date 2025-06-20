@@ -21,6 +21,7 @@ import { useCart } from "app/api/client/cart";
 import { ICartItem } from "app/lib/types";
 import { useOrders } from "app/api/client/orders";
 import { useRouter } from "next/navigation";
+import Button from "../form/button";
 
 export default function CartModal() {
   const { cartItems } = useCart();
@@ -37,7 +38,7 @@ export default function CartModal() {
   const totalAmount = cartData?.totalAmount;
 
   const [isOpen, setIsOpen] = useState(false);
-  const previousTotalQuantityRef = useRef(0); 
+  const previousTotalQuantityRef = useRef(0);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
 
@@ -233,7 +234,10 @@ export default function CartModal() {
                       />
                     </div>
                   </div>
-                  <CheckoutButton totalAmount={totalAmount} />
+                  <CheckoutButton
+                    totalAmount={totalAmount}
+                    disabled={!items.length}
+                  />
                 </div>
               )}
             </DialogPanel>
@@ -257,26 +261,24 @@ function CloseCart({ className }: { className?: string }) {
   );
 }
 
-function CheckoutButton({ totalAmount }: { totalAmount : number}) {
-const router = useRouter()
+function CheckoutButton({
+  totalAmount,
+  disabled,
+}: {
+  totalAmount: number;
+  disabled: boolean
+}) {
+  const router = useRouter();
   // const { addOrder } = useOrders()
   const goToCheckout = () => {
-    router.push("/checkout")
-  }
+    router.push("/checkout/shipping-options");
+  };
   return (
-    <button
+    <Button
+      disabled={disabled}
       onClick={goToCheckout}
       className="flex items-center gap-2 justify-center w-full rounded-full bg-blue-600 p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100"
-      // type="submit"
-      // disabled={addOrder.isPending}
-    >
-      {/* {addOrder.isPending ? (
-        <LoadingDots className="bg-white" />
-      ) : ( */}
-      <>
-        <span>Checkout </span> (<Price amount={totalAmount} />)
-      </>
-      {/* )} */}
-    </button>
+      text={`Checkout ${(<Price amount={totalAmount} />)}`}
+    />
   );
 }

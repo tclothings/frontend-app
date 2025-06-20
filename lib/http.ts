@@ -22,28 +22,34 @@ axiosInstance.interceptors.request.use((config) => {
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.log(error, "err");
+    const config = error.config;
     const message =
       error.response?.data?.error?.message ||
       error.message ||
       "Something went wrong";
+      const suppress401 = config?.suppress401Toast;
+
     if (error.response?.status === 401) {
-      toast.error(`Error: ${message}`);
-      // toast.error("Unaauthorized, redirecting to login");
-      //   window.location.href = "/login";
+      if (!suppress401) {
+        toast.error(`Error: ${message}`);
+        // toast.error("Unaauthorized, redirecting to login");
+        //   window.location.href = "/login";
+      }
     }
     else if (error.response?.status === 500) {
       toast.error(`Something went wrong! Try again!!`);
       // toast.error("Unaauthorized, redirecting to login");
       //   window.location.href = "/login";
     } else {
-      console.log(error, "err");
+      // console.log(error, "err");
       toast.error(`Error: ${message}`);
     }
     return Promise.reject(error);
   }
 );
-
+export const get = async (url: string, config?: any) => {
+  return axiosInstance.get(url, config);
+};
 export const post = async (endpoint: string, payload: any) => {
   return axiosInstance.post(endpoint, payload);
 };

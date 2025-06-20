@@ -14,6 +14,7 @@
     "@heroicons/react": "^2.2.0",
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^5.0.1",
+    "@paystack/inline-js": "^2.22.6",
     "@tanstack/react-query": "^5.76.0",
     "axios": "^1.9.0",
     "blueimp-canvas-to-blob": "^3.29.0",

@@ -5,4 +5,5 @@ export const KEYS = {
   CART: "cart",
   ORDERS: "orders",
   SHIPPINGLIST: "orders.shippinglist",
+  PAYMENT: "payment",
 };

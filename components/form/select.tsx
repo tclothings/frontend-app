@@ -58,6 +58,7 @@ export default function Select({ name, options, methods, placeholder, schema,dis
         <option value=""></option>
         {options.map((r) => (
           <option
+            className="text-black"
             key={r.value}
             value={r.value}
             disabled={disabledOptions?.includes(r.value)}

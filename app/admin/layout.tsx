@@ -16,9 +16,9 @@ export default function AccountLayout({
         <div className="order-last bg-[var(--grey-100)]  dark:bg-black rounded-md min-h-[calc(100vh-200px)] h-full md:max-w-[60vw] w-full lg:max-w-[70vw] md:order-none">
           {children}
         </div>
-        <div className="md:max-w-[150px] bg-[var(--grey-100)]  dark:bg-black rounded-md order-none md:order-last md:max-w-[125px] w-full md:min-h-[calc(100vh-200px)] h-full">
+        {/* <div className="md:max-w-[150px] bg-[var(--grey-100)]  dark:bg-black rounded-md order-none md:order-last md:max-w-[125px] w-full md:min-h-[calc(100vh-200px)] h-full">
           <FilterList list={sorting} title="Sort by" />
-        </div>
+        </div> */}
       </div>
       {/* <Footer /> */}
     </>

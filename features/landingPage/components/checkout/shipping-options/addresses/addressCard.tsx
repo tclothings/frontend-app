@@ -13,7 +13,8 @@ const AddressCard = ({
   address: any;
   setSelectedAddress: Dispatch<SetStateAction<any>>;
   setShowAddEditAddress: Dispatch<SetStateAction<boolean>>;
-}) => {
+  }) => {
+  
   const handleEditAddress = () => {
     setSelectedAddress(address);
     setShowAddEditAddress(true);
@@ -45,6 +46,7 @@ const AddressCard = ({
           }
         )}
       >
+        
         <p>{address?.address}</p>
         <p>{address?.additionalDetails}</p>
 
@@ -78,12 +80,10 @@ const AddressCard = ({
             className="p-2"
             onClick={handleEditAddress}
           />
-          <Button
+          {/* <Button
             icon={<TrashIcon width="24" color="#E04337" />}
             className="p-2"
-
-            // onClick={() => setShowAddEditAddress(false)}
-          />
+          /> */}
         </div>
       </div>
     </div>
