@@ -8,13 +8,6 @@ import { toast } from "sonner";
 import { VideoItem } from "app/features/admin/productManagement/products/addEditProduct";
 
 
-
-// interface IMedia {
-//   mediaType: string
-//   url: string;
-//   altText?: string;
-// }
-
 export interface VideoUploadProps {
   onSave: (newMedia: IMedia[]) => void;
   videos: VideoItem[];
@@ -68,7 +61,7 @@ export default function VideoUpload({ onSave, videos, setVideos }: VideoUploadPr
             uploaded: true,
           };
         } catch (err) {
-          console.error("Upload failed for", video.file.name);
+          console.error(`${err} || Upload failed for`, video.file.name);
         }
       }
     }
@@ -78,7 +71,7 @@ export default function VideoUpload({ onSave, videos, setVideos }: VideoUploadPr
       .map((v) => ({
         mediaType: "video",
         url: v.s3Url!,
-        altText: v.altText || v.file?.name!,
+        altText: v.altText || v.file?.name || "",
       }));
     onSave(mediaItems);
     setIsUploading(false);
@@ -134,7 +127,6 @@ export default function VideoUpload({ onSave, videos, setVideos }: VideoUploadPr
           handleSubmit={handleUpload}
           isLoading={isUploading}
           name="Upload Videos"
-          type="button"
           className="border bg-white dark:bg-[var(--background)] border-[var(--brand-blue)] !text-[var(--brand-blue)] dark:text-white disabled:opacity-50"
         />
         {/* <Button

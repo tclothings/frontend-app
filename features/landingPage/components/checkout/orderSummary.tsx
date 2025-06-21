@@ -1,8 +1,7 @@
 import { usePayment } from "app/api/client/payment";
 import Button from "app/components/form/button";
-import { IShipping } from "app/lib/types";
+import { ICartItem, IShipping } from "app/lib/types";
 import { formatAmount } from "app/lib/utils";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
@@ -17,7 +16,6 @@ const OrderSummary = ({
   deliveryAddressId: string;
   customerNotes: string;
   }) => {
-  const router = useRouter()
   const { initiatePayment } = usePayment()
   const subTotalAmount = cart?.totalAmount;
   const items = cart?.items;
@@ -26,7 +24,7 @@ const OrderSummary = ({
 
   const confirmOrder = () => {
     const data: any = { deliveryAddressId };
-    const cartItems = items?.map((item) => ({ product: item?.product?._id, quantity: item.quantity })) 
+    const cartItems = items?.map((item: ICartItem) => ({ product: item?.product?._id, quantity: item.quantity })) 
     if (customerNotes) {
       data.customerNotes = customerNotes;
     }

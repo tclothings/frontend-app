@@ -1,11 +1,8 @@
 "use client";
-import { getCollectionProducts } from "app/lib";
 import Link from "next/link";
 import { GridTileImage, GridTileImageSkeleton } from "./grid/tile";
 import { useProducts } from "app/api/client/products";
-import Spinner from "./form/spinner";
 import { IProduct } from "app/lib/types";
-import clsx from "clsx";
 
 export function Carousel() {
   const { products } = useProducts();

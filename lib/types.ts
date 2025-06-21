@@ -1,14 +1,3 @@
-export type Cart = {
-  id: string | undefined;
-  checkoutUrl: string;
-  cost: {
-    subtotalAmount: Money;
-    totalAmount: Money;
-    totalTaxAmount: Money;
-  };
-  // lines: Connection<CartItem>;
-  totalQuantity: number;
-};
 
 
 export type Money = {
@@ -63,6 +52,20 @@ export interface FormatOptions {
 }
 
 export type IUserTable = "customers" | "admins"
+export interface IUser {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  isEmailVerified: boolean;
+  isActive: boolean;
+  roles: UserRole[];
+  status: string;
+  createdAt: string
+}
+
+export type UserRole = "customer" | "admin" | "vendor" | "superadmin"; // extend as needed
+
 
 // products
 
@@ -101,6 +104,9 @@ export interface ICartItem {
     _id: string;
     name: string;
     price: number;
+    slug: string;
+    quantity: number;
+    productImage: string;
   };
   quantity: number;
   price: number;
@@ -144,3 +150,57 @@ export type IParams = {
   order?: Record<string, string>;
   q?: Record<string, any>;
 } | null;
+
+export interface IOrderItem {
+  productId: string;
+  productName: string;
+  quantity: number;
+  price: number;
+  subtotal: number;
+}
+
+export interface IDeliveryDetails {
+  riderName: string;
+  riderPhone: string;
+  deliveryCompany: string;
+}
+
+export interface ITrackingInfo {
+  deliveryDetails: IDeliveryDetails;
+  estimatedDeliveryDate: string; // ISO date string
+  shippedAt: string; // ISO date string
+  deliveredAt: string; // ISO date string
+}
+
+export interface IOrder {
+  _id: string;
+  orderNumber: string;
+  userId: string;
+  status:
+    | "PENDING"
+    | "PROCESSING"
+    | "SHIPPED"
+    | "DELIVERED"
+    | "CANCELLED"
+    | "RETURNED"
+    | "REFUNDED";
+  paymentStatus:
+    | "PENDING"
+    | "PAID"
+    | "FAILED"
+    | "REFUNDED"
+    | "PARTIALLY_REFUNDED"
+    | "SUCCESSFUL";
+  paymentMethod: string;
+  shippingAddress: IAddress;
+  billingAddress: IAddress;
+  items: IOrderItem[];
+  totalAmount: number;
+  shippingCost: number;
+  taxAmount: number;
+  trackingInfo: ITrackingInfo;
+  customerNotes?: string;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+}
+

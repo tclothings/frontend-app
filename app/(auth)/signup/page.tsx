@@ -18,23 +18,13 @@ export default function Page() {
     resolver: yupResolver(registerSchema),
   });
 
-  const { handleSubmit, setValue, reset } = methods;
+  const { handleSubmit, reset } = methods;
 
-  // useEffect(() => {
-  //   if (register.error) {
-  //     if (
-  //       axios.isAxiosError(register.error) &&
-  //       register.error?.status === 400
-  //     ) {
-  //       setValue("password", "");
-  //     }
-  //   }
-  // }, [register.error]);
 
   useEffect(() => {
     if (register.isSuccess) {
       toast.success(register.data?.message);
-      const savedEmail = register.data?.data?.user?.email!;
+      const savedEmail = register.data?.data?.user?.email;
       if (savedEmail) {
         localStorage.setItem("savedEmail", savedEmail);
       }

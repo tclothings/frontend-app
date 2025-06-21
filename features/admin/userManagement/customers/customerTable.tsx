@@ -1,18 +1,13 @@
 import Table from "app/components/ui/table";
-import { formatAmount, formatDate, fullName, roles } from "app/lib/utils";
-
-// import Info from "../OrderDetails/Info";
-import { Suspense, useState } from "react";
-import { recentOrders } from "app/lib/constants";
+import {  formatDate, fullName, roles } from "app/lib/utils";
+import { useState } from "react";
 import StatusCard from "app/components/ui/statusCard";
-import Pagination from "app/components/ui/pagination";
-import EmptyOrders from "app/components/orders/emptyOrders";
 import { useCustomerUsers } from "app/api/admin/users";
 import { customerHeaders } from "../components/userHeaders";
-import UserCard from "../components/userCard";
 import Spinner from "app/components/form/spinner";
 import Drawer from "app/components/ui/drawer";
 import ViewCustomer from "./viewCustomer";
+import { IUser } from "app/lib/types";
 
 export const metadata = {
   title: "Customers",
@@ -35,7 +30,7 @@ export default function CustomerTable() {
   const totalPages = customers?.data?.totalPages;
   const rows = customers?.data?.total;
 
-  const openDetailsModal = (user) => {
+  const openDetailsModal = (user: IUser) => {
     setSelectedItem(user);
     setIsDrawerOpen(true);
   };
@@ -50,7 +45,7 @@ export default function CustomerTable() {
         showRowCount
         header="Customers"
       >
-        {data.map((user, idx) => (
+        {data?.map((user: IUser, idx: number) => (
           <tr
             key={idx}
             onClick={() => openDetailsModal(user)}

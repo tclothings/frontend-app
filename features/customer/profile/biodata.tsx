@@ -6,24 +6,19 @@ import NumberInput from "app/components/form/numberInput";
 import SubmitButton from "app/components/form/submitButton";
 import { userInfoSchema } from "app/lib/schemas/biodata";
 import { useForm } from "react-hook-form";
-import PasswordChange from "./passwordChange";
 import { useProfile } from "app/api/client/profile";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import ProfileImage from "./profileImage";
+import { ChangeEvent, useEffect, useRef } from "react";
 import Button from "app/components/form/button";
-import User from "app/components/icons/user";
 import Image from "next/image";
-import ChangeProfileImg from "app/components/icons/changeProfileImg";
 import { toast } from "sonner";
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { S3Client } from "@aws-sdk/client-s3";
 import { uploadToS3 } from "app/lib/configs/s3Client";
+import User from "app/components/icons/user";
+import ChangeProfileImg from "app/components/icons/changeProfileImg";
 // import { s3Client } from "app/lib/configs/s3Client";
 
-const bucketName = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME!;
 
 const REGION = process.env.NEXT_PUBLIC_REGION; // e.g., "us-east-1"
-
-
 
 export const s3Client = new S3Client({
   region: REGION,

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ButtonHTMLAttributes, useCallback, useEffect } from "react";
+import { ButtonHTMLAttributes, useEffect } from "react";
 import Spinner from "./spinner";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -31,7 +31,7 @@ export default function Button({
   ...props
 }: ButtonProps) {
   useEnterKeyListener(() => document.getElementById("submit-button")?.click);
-  let btnStyle = clsx(
+  const btnStyle = clsx(
     "rounded-lg py-2.5 px-[14px] text-white flex font-medium items-center",
     className
   );

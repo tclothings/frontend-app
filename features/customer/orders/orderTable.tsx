@@ -6,6 +6,7 @@ import Drawer from "app/components/ui/drawer";
 import { ordersHeaders } from "./components/orderHeaders";
 import ViewOrder from "./viewOrder";
 import { useOrders } from "app/api/client/orders";
+import { IOrder } from "app/lib/types";
 
 export const metadata = {
   title: "Orders",
@@ -24,7 +25,7 @@ export default function OrderTable() {
   const totalPages = orders?.data?.totalPages;
   const rows = orders?.data?.total;
 
-  const openDetailsModal = (order) => {
+  const openDetailsModal = (order: IOrder) => {
     setSelectedItem(order);
     setIsDrawerOpen(true);
   };
@@ -38,7 +39,7 @@ export default function OrderTable() {
         showRowCount
         header="All Orders"
       >
-        {data?.map((order, idx) => (
+        {data?.map((order: IOrder, idx: number) => (
           <tr
             key={idx}
             onClick={() => openDetailsModal(order)}

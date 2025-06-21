@@ -2,7 +2,6 @@ import FilterList from "app/components/layout/categories/filter";
 import { sorting } from "app/lib/constants";
 import { Suspense } from "react";
 import Collections from "app/features/landingPage/components/categories/collections";
-import ChildrenWrapper from "app/components/layout/children-wrapper";
 
 export default function LandingLayout({
   children,
@@ -17,7 +16,7 @@ export default function LandingLayout({
         </div>
         <div className="order-last w-full md:order-none py-4">
           <Suspense fallback={null}>
-            <ChildrenWrapper>{children}</ChildrenWrapper>
+            {children}
           </Suspense>
         </div>
         <div className="z-40 bg-[var(--grey-100)] dark:bg-black rounded-md  md:min-h-[calc(100vh-200px)] order-none flex-none md:order-last md:w-[180px]">

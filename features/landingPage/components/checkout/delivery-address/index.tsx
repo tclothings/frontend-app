@@ -1,7 +1,5 @@
 "use client";
 
-import { useAddresses } from "app/api/client/address";
-import Spinner from "app/components/form/spinner";
 import AddressCard from "./addressCard";
 import { useEffect, useState } from "react";
 import Drawer from "app/components/ui/drawer";
@@ -11,7 +9,7 @@ import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { IAddress } from "app/lib/types";
 
-export default function ShippingOptions({ defaultAddress }: { defaultAddress: IAddress | null }) {
+export default function DeliveryAddress({ defaultAddress }: { defaultAddress: IAddress | null }) {
   const [isAddressDrawerOpen, setAddressDrawerOpen] = useState(false);
 
   const [selectedAddress, setSelectedAddress] = useState<IAddress  | null>(null);

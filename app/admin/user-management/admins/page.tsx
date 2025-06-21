@@ -5,6 +5,6 @@ export const metadata = {
   description: "View admin list.",
 };
 
-export default async function CustomersPage() {
+export default async function Page() {
   return <Admins />;
 }

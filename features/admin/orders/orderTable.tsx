@@ -9,6 +9,7 @@ import { ordersHeaders } from "./components/orderHeaders";
 import ViewOrder from "./viewOrder";
 import StatusCard from "app/components/ui/statusCard";
 import OrdersFilter from "./components/ordersFilter";
+import { IOrder } from "app/lib/types";
 
 export const metadata = {
   title: "Orders",
@@ -29,7 +30,7 @@ export default function OrderTable() {
   const totalPages = data?.totalPages;
   const rows = data?.total;
 
-  const openDetailsModal = (order) => {
+  const openDetailsModal = (order: IOrder) => {
     setSelectedItem(order);
     setIsDrawerOpen(true);
   };
@@ -44,7 +45,7 @@ export default function OrderTable() {
         header="All Orders"
         filterComponent={<OrdersFilter />}
       >
-        {ordersList?.map((order, idx) => (
+        {ordersList?.map((order: IOrder, idx: number) => (
           <tr
             key={idx}
             onClick={() => openDetailsModal(order)}

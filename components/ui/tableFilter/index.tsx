@@ -26,11 +26,13 @@ const [isFilterOpen, setFilterOpen] = useState(false)
       <Drawer
         drawerOpenerClass="bg-blue-600 text-white border border-blue-600"
         title={"Filter"}
-        children={children}
         isOpen={isFilterOpen}
         onClose={() => setFilterOpen(false)}
         onOpen={() => setFilterOpen(true)}
-      />
+      >
+        {" "}
+        {children}
+      </Drawer>
     </>
   );
 }

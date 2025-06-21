@@ -2,7 +2,6 @@
 
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ReactNode } from "react";
-import clsx from "clsx";
 
 interface ModalProps {
   isOpen: boolean;

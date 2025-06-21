@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import type { ListItem, PathFilterItem } from '.';
 import { SortFilterItemType } from "app/lib/types";
+import { Suspense } from 'react';
 
 function PathFilterItem({ item }: { item: PathFilterItem }) {
   const pathname = usePathname();
@@ -62,5 +63,13 @@ function SortFilterItem({ item }: { item: SortFilterItemType }) {
 }
 
 export function FilterItem({ item }: { item: ListItem }) {
-  return 'path' in item ? <PathFilterItem item={item} /> : <SortFilterItem item={item} />;
+  return "path" in item ? (
+    <Suspense fallback={null}>
+      <PathFilterItem item={item} />{" "}
+    </Suspense>
+  ) : (
+    <Suspense fallback={null}>
+      <SortFilterItem item={item} />
+    </Suspense>
+  );
 }

@@ -8,7 +8,7 @@ import {
   TransitionChild,
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 
 
 interface DrawerProps {

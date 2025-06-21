@@ -3,7 +3,6 @@ import Grid from "app/components/grid";
 import ProductGridItems from "app/components/layout/product-grid-items";
 import { defaultSort, sorting } from "app/lib/constants";
 import Pagination from "app/components/ui/pagination";
-import Spinner from "app/components/form/spinner";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useProducts } from "app/api/client/products";

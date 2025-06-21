@@ -1,7 +1,7 @@
 "use client";
 import Button from "app/components/form/button";
-import ChangeProfileImg from "app/components/icons/ChangeProfileImg";
-import User from "app/components/icons/User";
+import ChangeProfileImg from "app/components/icons/changeProfileImg";
+import User from "app/components/icons/user";
 import Image from "next/image";
 import { ChangeEvent, useRef, useState } from "react";
 

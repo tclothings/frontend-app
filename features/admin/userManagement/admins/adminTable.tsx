@@ -1,14 +1,14 @@
 import Table from "app/components/ui/table";
 import { formatDate, fullName, roles } from "app/lib/utils";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import StatusCard from "app/components/ui/statusCard";
 import Pagination from "app/components/ui/pagination";
-import EmptyOrders from "app/components/orders/emptyOrders";
 import { useAdminUsers } from "app/api/admin/users";
 import Spinner from "app/components/form/spinner";
 import { customerHeaders } from "../components/userHeaders";
 import Drawer from "app/components/ui/drawer";
 import ViewAdmin from "./viewAdmin";
+import { IUser } from "app/lib/types";
 
 export const metadata = {
   title: "Admin",
@@ -27,7 +27,7 @@ export default function AdminTable() {
   const totalPages = admins?.data?.totalPages;
   const rows = admins?.data?.total;
 
-  const openDetailsModal = (user) => {
+  const openDetailsModal = (user: IUser) => {
     setSelectedItem(user);
     setIsDrawerOpen(true);
   };
@@ -41,7 +41,7 @@ export default function AdminTable() {
         showRowCount
         header="All Admins"
       >
-        {data?.map((user, idx) => (
+        {data?.map((user: IUser, idx: number) => (
           <tr
             key={idx}
             onClick={() => openDetailsModal(user)}

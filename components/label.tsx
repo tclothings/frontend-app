@@ -35,7 +35,7 @@ const Label = ({
                 className="flex rounded-full bg-blue-600 p-2 text-white"
                 amount={salePrice ? salePrice : amount}
                 currencyCode={currencyCode}
-                currencyCodeClassName="hidden @[275px]/label:inline"
+                // currencyCodeClassName="hidden @[275px]/label:inline"
               />
             </div>
           </div>
@@ -45,7 +45,7 @@ const Label = ({
                 className="flex text-xs line-through w-full"
                 amount={amount}
                 currencyCode={currencyCode}
-                currencyCodeClassName="hidden @[275px]/label:inline"
+                // currencyCodeClassName="hidden @[275px]/label:inline"
               />
             </div>
           )}

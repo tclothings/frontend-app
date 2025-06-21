@@ -7,6 +7,7 @@ import Input from "app/components/form/Input";
 import NumberInput from "app/components/form/numberInput";
 import ProductImageUploader from "app/components/form/productImageUploader";
 import ProductVideoUploader from "app/components/form/productVideoUploader";
+import RichTextEditor from "app/components/form/richTextEditor";
 import Select from "app/components/form/select";
 import SubmitButton from "app/components/form/submitButton";
 import { uploadToS3 } from "app/lib/configs/s3Client";
@@ -71,7 +72,7 @@ const addEditProduct = ({
   const { handleSubmit, reset, setValue, watch } = methods;
 
   const media = watch("media") ?? [];
-
+const description = watch("description");
   useEffect(() => {
     if (item) {
       reset(initialValues);
@@ -181,13 +182,18 @@ const addEditProduct = ({
           type="text"
           schema={productSchema}
         />
-        <Input
+
+        <RichTextEditor
+          value={description}
+          onChange={(html) => setValue("description", html)}
+        />
+        {/* <Input
           name="description"
           placeholder="Description"
           methods={methods}
           type="text"
           schema={productSchema}
-        />
+        /> */}
         <ImageUpload
           name="image"
           methods={methods}
@@ -263,7 +269,6 @@ const addEditProduct = ({
       <div className="mt-10">
         <SubmitButton
           className="w-full"
-          type="button"
           handleSubmit={handleSubmit(onAddEditProduct)}
           isLoading={addProduct.isPending || updateProduct.isPending}
           name={item ? "Save" : "Create"}

@@ -5,6 +5,6 @@ export const metadata = {
   description: "View Address List.",
 };
 
-export default async function AddressPage() {
+export default async function Page() {
   return <Addresses />;
 }

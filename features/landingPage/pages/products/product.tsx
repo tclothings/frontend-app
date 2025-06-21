@@ -1,9 +1,8 @@
 "use client";
-import { notFound, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { GridTileImage } from "app/components/grid/tile";
 import ProductImageGallerySkeleton, {
-  Gallery,
 } from "app/features/landingPage/components/product/gallery";
 import {
   ProductDescription,

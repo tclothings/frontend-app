@@ -12,7 +12,7 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 export default function Input({ methods, name, placeholder, type, schema, ...rest }: IProps) {
-  const { formState, watch, setValue, register } = methods; // Destructure methods for cleaner access
+  const { formState, watch, register } = methods; // Destructure methods for cleaner access
   const { errors } = formState; // <--- This is the correct way
   const [isFocused, setIsFocused] = useState(false);
   const [isRequired, setIsRequired] = useState(false);

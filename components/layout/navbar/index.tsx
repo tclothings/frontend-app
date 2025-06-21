@@ -1,15 +1,14 @@
-import dynamic from "next/dynamic";
+
 import Link from "next/link";
 import { Suspense } from "react";
 import MobileMenu from "./mobile-menu";
-import Search, { SearchSkeleton } from "./search";
+import Search from "./search";
 import { Menu } from "app/lib/types";
 import LogoSquare from "app/components/logo-square";
 import { navMenu } from "app/lib/constants";
 import NavClientSection from "./navClientSection";
 
 const { SITE_NAME } = process.env;
-
 
 export async function Navbar() {
   return (
@@ -48,10 +47,14 @@ export async function Navbar() {
             </ul>
           ) : null}
         </div>
-        <div className="hidden justify-center md:flex md:w-1/3">
+        <Suspense fallback={null}>
+          <div className="hidden justify-center md:flex md:w-1/3">
             <Search />
-        </div>
-        <NavClientSection />
+          </div>
+        </Suspense>
+        <Suspense fallback={null}>
+          <NavClientSection />
+        </Suspense>
         {/* <div className="flex  gap-2  items-center justify-end md:w-1/3">
           {["/my-account", "/admin"].includes(pathname) && <ProfileAvatar />}
           <CartModal />

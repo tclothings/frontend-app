@@ -1,15 +1,14 @@
-import clsx from 'clsx';
 
 const Price = ({
   amount,
   className,
   currencyCode = 'NGN',
-  currencyCodeClassName
+  // currencyCodeClassName
 }: {
   amount: number;
   className?: string;
   currencyCode?: string;
-  currencyCodeClassName?: string;
+  // currencyCodeClassName?: string;
 } & React.ComponentProps<'p'>) => {
   const hasKobo = amount % 1 !== 0;
 

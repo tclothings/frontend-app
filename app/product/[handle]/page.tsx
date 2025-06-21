@@ -39,7 +39,7 @@ import Product from "app/features/landingPage/pages/products/product";
 //   };
 // }
 
-export default async function ProductPage(props: {
+export default async function Page(props: {
   params: Promise<{ handle: string }>;
 }) {
   const params = await props.params;

@@ -5,6 +5,6 @@ export const metadata = {
   description: "View orders list.",
 };
 
-export default async function ProfilePage() {
+export default async function Page() {
   return <Profile />;
 }

@@ -8,12 +8,9 @@ import { Fragment, useState } from 'react';
 import AddAdmin from './addAdmin';
 
 export default function AddAdminModal() {
-
-  // const { cart, updateCartItem } = useCart();
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
-
 
   return (
     <>
@@ -58,7 +55,7 @@ export default function AddAdminModal() {
                 </button>
               </div>
 
-              <AddAdmin />
+              <AddAdmin onSuccess={closeModal} />
             </DialogPanel>
           </TransitionChild>
         </Dialog>

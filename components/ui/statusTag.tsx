@@ -1,11 +1,10 @@
 import { capitalizeWord } from "app/lib/utils";
 import clsx from "clsx";
-import CardStyle from "../icons/cardStyle";
 
 export default function StatusTag({ status }: { status: string }) {
  
     let classObj;
-    let cardStatus = status.toLowerCase()
+    const cardStatus = status.toLowerCase()
 
     switch (cardStatus) {
       case "pending":

@@ -7,8 +7,7 @@ const ProductsGridSkeleton = () => {
         <GridTileImageSkeleton />
         <GridTileImageSkeleton /> <GridTileImageSkeleton />{" "}
         <GridTileImageSkeleton /> <GridTileImageSkeleton />{" "}
-        <GridTileImageSkeleton /> <GridTileImageSkeleton />{" "}
-        <GridTileImageSkeleton /> <GridTileImageSkeleton />
+        <GridTileImageSkeleton /> 
       </section>
     );
 }

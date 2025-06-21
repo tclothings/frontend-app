@@ -1,4 +1,4 @@
-export default function User({ isActive = false, width = "16" }) {
+export default function User({ width = "16" }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -4,7 +4,8 @@ import { ChangeEvent, useState } from "react";
 import clsx from "clsx";
 import Button from "app/components/form/button";
 import { orderStatuses } from "app/lib/constants";
-import Input from "app/components/form/Input";
+// import Input from "app/components/form/Input";
+// import { shippingSchema } from "app/lib/schemas/order";
 
 const initialValues = {
   status: [],
@@ -35,14 +36,14 @@ export default function OrdersFilter() {
       <section className="px-4 pb-6">
         <h3 className="py-[10px] text-grey-900 text-sm font-medium">Status </h3>
         <ul className="flex flex-col">
-          <Input
+          {/* <Input
             name="description"
             placeholder="LGA"
             methods={methods}
             type="text"
             schema={shippingSchema}
             disabled={true}
-          />
+          /> */}
           {orderStatuses?.map((status) => (
             <div
               key={status.label}

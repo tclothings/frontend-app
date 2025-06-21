@@ -1,10 +1,9 @@
 "use client"
 import { useProducts } from 'app/api/client/products';
-import { GridTileImage, GridTileImageSkeleton } from 'app/components/grid/tile';
-import type { IProduct, Product } from 'app/lib/types';
+import { GridTileImage } from 'app/components/grid/tile';
+import type { IProduct } from 'app/lib/types';
 import clsx from 'clsx';
 import Link from 'next/link';
-import Spinner from '../form/spinner';
 
 function ThreeItemGridItem({
   item,

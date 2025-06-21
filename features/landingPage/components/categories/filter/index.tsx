@@ -1,3 +1,4 @@
+"use client"
 import { Suspense } from "react";
 import FilterItemDropdown from "./dropdown";
 import { FilterItem } from "./item";

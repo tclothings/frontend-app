@@ -1,12 +1,6 @@
-// import { getCollection, getCollectionProducts } from 'lib/shopify';
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-// import ProductGridItems from 'components/layout/product-grid-items';
-// import { defaultSort, sorting } from 'lib/constants';
-import Grid from 'app/components/grid';
-import { getCollectionProducts } from 'app/lib';
-import ProductGridItems from 'app/components/layout/product-grid-items';
-import Category from 'app/features/landingPage/pages/category';
+// import { notFound } from 'next/navigation';
+
+import Collection from 'app/features/landingPage/pages/collection';
 
 // export async function generateMetadata(props: {
 //   params: Promise<{ collection: string }>;
@@ -23,11 +17,11 @@ import Category from 'app/features/landingPage/pages/category';
 //   };
 // }
 
-export default async function CategoryPage(props: {
+export default async function Page(props: {
   params: Promise<{ collection: string }>;
 }) {
 
   const params = await props.params;
 
-  return <Category slug={params.collection} />;
+  return <Collection slug={params.collection} />;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { ErrorMessage } from "@hookform/error-message";
 import { UseFormReturn } from "react-hook-form";
 
@@ -11,17 +11,6 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export default function CustomCheck({ methods, name, placeholder, ...rest }: IProps) {
   const { errors } = methods.formState;
-  const [isFocused, setIsFocused] = useState(false);
-
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleBlur = () => {
-    setIsFocused(false);
-  };
-
-  const isFieldRegistered = methods.watch(name);
 
   return (
     <>
@@ -32,8 +21,6 @@ export default function CustomCheck({ methods, name, placeholder, ...rest }: IPr
             id={name}
             className={`${errors[name] && "error"}`}
             type={"checkbox"}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
             {...rest}
           />
 

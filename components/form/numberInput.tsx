@@ -45,7 +45,7 @@ export default function NumberInput({
     (fieldValue !== undefined && fieldValue !== null && fieldValue !== "");
 
   const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
-    let rawValue = e.currentTarget.value;
+    const rawValue = e.currentTarget.value;
     let processedValue = "";
 
     if (isPhoneNumber) {

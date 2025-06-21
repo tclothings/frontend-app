@@ -1,7 +1,5 @@
 import Link from "next/link";
-
 import FooterMenu from "app/components/layout/footer-menu";
-import LogoSquare from "app/components/logo-square";
 import { Suspense } from "react";
 import { companyName, navMenu } from "app/lib/constants";
 import { FaInstagram, FaWhatsapp, FaMapMarkerAlt } from "react-icons/fa";

@@ -34,7 +34,7 @@ export default function ProfileAvatar() {
           <div className="py-1 px-4">
             <MenuItem>
               {(
-                { focus } // You can use 'active' for styling if needed
+                // { focus } // You can use 'active' for styling if needed
               ) => (
                 // Pass a class to Logout if it needs active/hover styling
                 // Or directly apply styling to the button within Logout

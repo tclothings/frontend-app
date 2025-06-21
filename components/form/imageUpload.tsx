@@ -17,7 +17,7 @@ interface IProps {
   fileNames: { [key: string]: string } | string;
   schema?: any;
   accept?: string;
-  outputSize?: number; // optional override
+  outputSize?: number;
 }
 
 export default function ImageUpload({
@@ -36,8 +36,13 @@ export default function ImageUpload({
   const [fileName, setFileName] = useState<string | undefined>();
   const [isRequired, setIsRequired] = useState(false);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [crop, setCrop] = useState<Crop>({ unit: "%", width: 50, aspect: 1 });
+  const [crop, setCrop] = useState<Crop>({
+    unit: "%",
+    x: 0,
+    y: 0,
+    width: 50,
+    height: 50,
+  });
   const [completedCrop, setCompletedCrop] = useState<PixelCrop | null>(null);
   const [scale, setScale] = useState(1);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -63,8 +68,6 @@ export default function ImageUpload({
     }
   }, [fileNames, name]);
 
-  const { ref, onChange, ...fileInputProps } = methods.register(name);
-
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files?.[0];
@@ -75,9 +78,8 @@ export default function ImageUpload({
       return;
     }
 
-    onChange(e);
+    methods.setValue(name, file); // update react-hook-form
     if (file) {
-      setImageFile(file);
       setImageSrc(URL.createObjectURL(file));
     }
   };
@@ -145,11 +147,12 @@ export default function ImageUpload({
 
   const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const { width, height } = e.currentTarget;
-    const aspect = 1;
     const cropWidth = 50;
 
     const crop: Crop = {
       unit: "%",
+      x: 25,
+      y: 25,
       width: cropWidth,
       height: (cropWidth * height) / width,
     };
@@ -184,9 +187,14 @@ export default function ImageUpload({
           type="file"
           id={name}
           className="hidden"
-          onChange={handleChange}
-          ref={fileInputRef}
-          {...fileInputProps}
+          ref={(el) => {
+            fileInputRef.current = el;
+            methods.register(name).ref(el); // make RHF work
+          }}
+          onChange={(e) => {
+            methods.register(name).onChange(e); // RHF change
+            handleChange(e); // custom logic
+          }}
           accept={accept}
         />
         <ErrorMessage
@@ -206,7 +214,6 @@ export default function ImageUpload({
               onChange={(c) => setCrop(c)}
               onComplete={(c) => setCompletedCrop(c)}
               aspect={1}
-              circularCrop={false}
             >
               <img
                 ref={imgRef}
@@ -254,7 +261,6 @@ export default function ImageUpload({
 // import { UseFormReturn } from "react-hook-form";
 // import { ErrorMessage } from "@hookform/error-message";
 // import clsx from "clsx";
-// import Button from "./button";
 // import Modal from "../ui/modal";
 // import SubmitButton from "./submitButton";
 
@@ -266,9 +272,8 @@ export default function ImageUpload({
 //   handleFileChange: (file: File) => void;
 //   fileNames: { [key: string]: string } | string;
 //   schema?: any;
-//   type?: string;
-//   height?: number;
 //   accept?: string;
+//   outputSize?: number; // optional override
 // }
 
 // export default function ImageUpload({
@@ -279,17 +284,22 @@ export default function ImageUpload({
 //   handleFileChange,
 //   fileNames,
 //   schema,
-//   type = "image/jpeg",
-//   height = 600,
-//   accept = "image/*",
+//   accept = "image/jpeg,image/png,image/webp",
+//   outputSize = 1000,
 // }: IProps) {
 //   const { errors } = methods.formState;
 //   const fileInputRef = useRef<HTMLInputElement>(null);
 //   const [fileName, setFileName] = useState<string | undefined>();
 //   const [isRequired, setIsRequired] = useState(false);
 //   const [imageSrc, setImageSrc] = useState<string | null>(null);
-//   const [imageFile, setImageFile] = useState<File | null>(null);
-//   const [crop, setCrop] = useState<Crop>({ unit: "%", width: 50, aspect: 1 });
+//   // const [imageFile, setImageFile] = useState<File | null>(null);
+//   const [crop, setCrop] = useState<Crop>({
+//     unit: "%",
+//     width: 50,
+//     x: 0,
+//     y: 0,
+//     height: 50,
+//   });
 //   const [completedCrop, setCompletedCrop] = useState<PixelCrop | null>(null);
 //   const [scale, setScale] = useState(1);
 //   const imgRef = useRef<HTMLImageElement>(null);
@@ -320,17 +330,16 @@ export default function ImageUpload({
 //   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 //     if (!e.target.files) return;
 //     const file = e.target.files?.[0];
-//     const maxAllowedSize = 600 * 1024;
+//     const maxAllowedSize = 3 * 1024 * 1024; // 3MB
+
 //     if (file.size > maxAllowedSize) {
-//       alert("Image too large");
+//       alert("Image too large. Max allowed size is 3MB.");
 //       return;
 //     }
 
 //     onChange(e);
 //     if (file) {
-//       console.log(file, "raw");
-
-//       setImageFile(file);
+//       // setImageFile(file);
 //       setImageSrc(URL.createObjectURL(file));
 //     }
 //   };
@@ -355,47 +364,58 @@ export default function ImageUpload({
 //     const scaleX = image.naturalWidth / image.width;
 //     const scaleY = image.naturalHeight / image.height;
 
-//     const ctx = canvas.getContext("2d");
-//     if (!ctx) return;
-
+//     const cropX = completedCrop.x * scaleX;
+//     const cropY = completedCrop.y * scaleY;
 //     const cropWidth = completedCrop.width * scaleX;
 //     const cropHeight = completedCrop.height * scaleY;
 
-//     canvas.width = cropWidth;
-//     canvas.height = cropHeight;
+//     canvas.width = outputSize;
+//     canvas.height = outputSize;
 
-//     ctx.clearRect(0, 0, cropWidth, cropHeight);
+//     const ctx = canvas.getContext("2d");
+//     if (!ctx) return;
+
+//     ctx.imageSmoothingEnabled = true;
+//     ctx.imageSmoothingQuality = "high";
+
 //     ctx.drawImage(
 //       image,
-//       completedCrop.x * scaleX,
-//       completedCrop.y * scaleY,
+//       cropX,
+//       cropY,
 //       cropWidth,
 //       cropHeight,
 //       0,
 //       0,
-//       cropWidth,
-//       cropHeight
+//       outputSize,
+//       outputSize
 //     );
 
-//     canvas.toBlob((blob) => {
-//       if (blob) {
-//         const file = new File([blob], "cropped-image.jpeg", { type });
-//         handleFileChange(file);
-//         closeModal();
-//       }
-//     }, type);
+//     canvas.toBlob(
+//       (blob) => {
+//         if (blob) {
+//           const file = new File([blob], `upload-${Date.now()}.webp`, {
+//             type: "image/webp",
+//           });
+//           handleFileChange(file);
+//           closeModal();
+//         }
+//       },
+//       "image/webp",
+//       0.9
+//     );
 //   };
 
 //   const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
 //     const { width, height } = e.currentTarget;
-//     const aspect = 1;
+//     // const aspect = 1;
 //     const cropWidth = 50;
 
 //     const crop: Crop = {
 //       unit: "%",
+//       x: 25,
+//       y: 25,
 //       width: cropWidth,
 //       height: (cropWidth * height) / width,
-//       aspect,
 //     };
 
 //     setCrop(crop);
@@ -410,7 +430,7 @@ export default function ImageUpload({
 //         } ${fileName ? "file-upload-container-success" : ""}`}
 //       >
 //         <label
-//           className={clsx("file-upload-placeholder", {
+//           className={clsx("file-upload-placeholder text-gray-400", {
 //             filled: fileName || initialValue,
 //           })}
 //         >
@@ -457,7 +477,7 @@ export default function ImageUpload({
 //                 src={imageSrc}
 //                 alt="Crop preview"
 //                 onLoad={handleImageLoad}
-//                 style={{ transform: `scale(${scale})`, maxHeight: height }}
+//                 style={{ transform: `scale(${scale})`, maxHeight: 600 }}
 //               />
 //             </ReactCrop>
 

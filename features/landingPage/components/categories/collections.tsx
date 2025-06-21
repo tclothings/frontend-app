@@ -7,7 +7,7 @@ import FilterList from './filter';
 import { useCategories } from 'app/api/client/categories';
 import { allCategory } from 'app/lib/constants';
 import { capitalizeWord } from 'app/lib/utils';
-import { ICategory, ProductsCollection } from 'app/lib/types';
+import { ICategory } from 'app/lib/types';
 
 function CollectionList() {
    const [collections, setCollections] = useState([

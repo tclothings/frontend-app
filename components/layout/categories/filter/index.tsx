@@ -1,3 +1,4 @@
+"use client"
 import { Suspense } from "react";
 import FilterItemDropdown from "./dropdown";
 import { FilterItem } from "./item";
@@ -41,9 +42,9 @@ export default function FilterList({
           </h3>
         ) : null}
         <ul className="hidden md:block">
-          <Suspense fallback={null}>
+          {/* <Suspense fallback={null}> */}
             <FilterItemList list={list} />
-          </Suspense>
+          {/* </Suspense> */}
         </ul>
         <ul className="md:hidden">
           <Suspense fallback={null}>

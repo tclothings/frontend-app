@@ -275,3 +275,17 @@ input:-webkit-autofill {
 .sonner-toast-error {
   color: red;
 }
+
+.ProseMirror {
+  height: 100%;
+  /* padding: 1rem; */
+  outline: none;
+}
+
+.ProseMirror p.is-empty::before {
+  content: attr(data-placeholder);
+  color: #999;
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

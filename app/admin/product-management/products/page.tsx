@@ -5,6 +5,6 @@ export const metadata = {
   description: "View product list.",
 };
 
-export default async function ProductsPage() {
+export default async function Page() {
   return <Products />;
 }

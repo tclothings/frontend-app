@@ -1,8 +1,5 @@
 import { ReadonlyURLSearchParams } from "next/navigation";
-import { FormatOptions, IParams } from "./types";
-import { PutObjectCommand } from "@aws-sdk/client-s3";
-import { s3Client } from "./configs/s3Client";
-import { toast } from "sonner";
+import { FormatOptions } from "./types";
 
 export const createUrl = (
   pathname: string,
@@ -67,7 +64,7 @@ export const formatAmount = (
 export const formatNumber = (amount: number, options: FormatOptions = {}) => {
   const {
     locale = "en-NG", // Default locale for Nigeria
-    currency = "NGN", // Default currency for Naira
+    // currency = "NGN", // Default currency for Naira
     minimumFractionDigits = 0,
     maximumFractionDigits = 2,
   } = options;
@@ -164,8 +161,7 @@ export const slugify = (name?: string) => {
 // };
 
 export const stringifyParams = (paramsObject: Record<string, any>) => {
-  const filteredParams = Object.entries(paramsObject)?.filter(([_key, value]) => value != null)
-  // console.log(filteredParams, "filteredParams");
+  const filteredParams = Object.entries(paramsObject)?.filter(([, value]) => value != null)
   const query = new URLSearchParams(filteredParams).toString();
   return query ? `?${query}` : "";
 };

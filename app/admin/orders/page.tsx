@@ -5,6 +5,6 @@ export const metadata = {
   description: "View orders list.",
 };
 
-export default function OrdersPage() {
+export default function Page() {
   return <Orders />;
 }

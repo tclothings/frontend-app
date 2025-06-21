@@ -9,6 +9,7 @@ interface IProps {
   name: string;
   isSmallBtn?: boolean;
   className?: string;
+  disabled?: boolean;
 }
 const useEnterKeyListener = (callback: () => void) => {
   useEffect(() => {
@@ -30,6 +31,7 @@ export default function SubmitButton({
   name,
   isSmallBtn,
   className,
+  disabled,
 }: IProps) {
   useEnterKeyListener(() => {
     document.getElementById("submit-button")?.click();
@@ -37,7 +39,7 @@ export default function SubmitButton({
 
   return (
     <button
-      disabled={isLoading}
+      disabled={disabled || isLoading}
       onClick={handleSubmit}
       id="submit-button"
       className={clsx(

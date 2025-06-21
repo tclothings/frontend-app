@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { getCart } from "app/lib";
-// import { CartProvider } from "app/components/cart/cart-context";
 import { Navbar } from "app/components/layout/navbar";
 import { Toaster } from "sonner";
 import Footer from "app/components/layout/footer";
@@ -42,7 +40,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cart = getCart()
   return (
 
     <html lang="en">

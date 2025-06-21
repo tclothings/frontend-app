@@ -3,17 +3,13 @@
 import AccountPageHeader from "app/components/ui/accountPageHeader";
 import Drawer from "app/components/ui/drawer";
 import { useState } from "react";
-import AddProduct from "./addOrder";
 import OrderTable from "./orderTable";
 import ShippingListTable from "./shipping/shippingListTable";
 import AddEditShippingCost from "./shipping/addEditShippingCost";
 
 export default function Orders() {
-  const [isNewProductDrawerOpen, setIsNewProductDrawerOpen] = useState(false);
   const [isNewCategoryDrawerOpen, setIsNewShippingDrawerOpen] = useState(false);
   const [isViewCategoriesDrawerOpen, setIsViewShippingDrawerOpen] = useState(false);
-
-  // const [activeUserTab, setActiveUserTab] = useState <IUserTable>("customers");
   return (
     <>
       <AccountPageHeader

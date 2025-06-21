@@ -1,20 +1,10 @@
+import { ICategory } from "app/lib/types";
 import { capitalizeWord } from "app/lib/utils";
 
 // app/api/server/categories.ts
 
 
 export async function getCategories() {
-    // const initialCategory = {
-    //     handle: "",
-    //     title: "All",
-    //     description: "All products",
-    //     seo: {
-    //       title: "All",
-    //       description: "All products",
-    //     },
-    //     path: "/category",
-    // }
-    
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}products/all/categories?limitless=true`,
     {
@@ -28,7 +18,7 @@ export async function getCategories() {
   if (!res.ok) throw new Error("Failed to fetch categories");
     const data = await res.json();
     const categories = [
-      ...(data?.data?.categories?.map((category) => ({
+      ...(data?.data?.categories?.map((category: ICategory) => ({
         handle: category.slug,
         title: category.name,
         description: category.description,

@@ -1,6 +1,4 @@
 import NavList from "app/components/layout/account/navList";
-import FilterList from "app/components/layout/categories/filter";
-import { sorting } from "app/lib/constants";
 
 export default function AccountLayout({
   children,
