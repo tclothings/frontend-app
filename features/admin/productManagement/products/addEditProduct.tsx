@@ -144,6 +144,7 @@ const description = watch("description");
 
   const onAddEditProduct = (data: any) => {
     let cleanedData = { ...data };
+    delete cleanedData.image;
     cleanedData.slug = slugify(cleanedData.name);
     if (item) {
       updateProduct.mutate({ id: item._id, data: cleanedData });
