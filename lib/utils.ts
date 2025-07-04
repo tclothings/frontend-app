@@ -157,7 +157,7 @@ export const slugify = (name?: string) => {
 //     }
 //   }
 
-//   return query.toString(); // returns key=value&key2=value2
+//   return query.toString(); 
 // };
 
 export const stringifyParams = (paramsObject: Record<string, any>) => {

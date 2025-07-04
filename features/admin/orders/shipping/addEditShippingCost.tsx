@@ -67,7 +67,6 @@ const AddEditShippingCost = ({ item, onSuccess }: addEditShippingCostProps) => {
   const onSearchLocation = (data: any) => {
     setValue("name", data.lga?.toString());
     setValue("description", data.lga?.toString());
-    console.log(data);
   };
   useEffect(() => {
     setValue("description", `Shipping cost for ${name}`);

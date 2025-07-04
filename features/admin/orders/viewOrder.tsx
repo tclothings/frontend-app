@@ -17,36 +17,15 @@ interface ViewOrderProps {
 const ViewOrder = ({ onSuccess, item }: ViewOrderProps) => {
   const [isUpdateStatus, setUpdateStatus] = useState(false);
 
-  const { updateOrderStatus, order } = useOrders({ id: item._id });
 
-  const methods = useForm({
-    resolver: yupResolver(orderStatusSchema),
-  });
 
-  const { watch, setValue } = methods;
 
-  const status = watch("status");
-  const paymentStatus = watch("paymentStatus");
+  // useEffect(() => {
+  //   setValue("status", item.status);
+  //   setValue("paymentStatus", item.paymentStatus);
+  // }, []);
 
-  useEffect(() => {
-    setValue("status", item.status);
-    setValue("paymentStatus", item.paymentStatus);
-  }, []);
 
-  useEffect(() => {
-    if (updateOrderStatus.isSuccess) {
-      toast.success(updateOrderStatus?.data?.message);
-      updateOrderStatus.reset();
-      setUpdateStatus(false);
-      onSuccess();
-    }
-  }, [updateOrderStatus.isSuccess]);
-
-  const onHandleStatusUpdate = () => {
-    let data = { status, paymentStatus };
-
-    updateOrderStatus.mutate({ id: item._id, data });
-  };
 
   // const openUpdateStatusModal = (statusType: string) => {
   //   setUpdateStatus(true)
@@ -109,12 +88,13 @@ const ViewOrder = ({ onSuccess, item }: ViewOrderProps) => {
         </div>
       </div>
       <UpdateStatus
-        methods={methods}
         isOpen={isUpdateStatus}
         setIsOpen={setUpdateStatus}
-        acceptAction={onHandleStatusUpdate}
+        acceptAction={() => {
+          setUpdateStatus(false);
+          onSuccess()
+        }}
         title="Update Status"
-        isLoading={updateOrderStatus.isPending}
       />
     </>
   );

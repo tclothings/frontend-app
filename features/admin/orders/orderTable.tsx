@@ -10,6 +10,7 @@ import ViewOrder from "./viewOrder";
 import StatusCard from "app/components/ui/statusCard";
 import OrdersFilter from "./components/ordersFilter";
 import { IOrder } from "app/lib/types";
+import { useSearchParams } from "next/navigation";
 
 export const metadata = {
   title: "Orders",
@@ -17,9 +18,11 @@ export const metadata = {
 };
 
 export default function OrderTable() {
+       const params = useSearchParams()
+        const page = params.get("page")
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
-  const { orders } = useOrders();
+  const { orders } = useOrders({ params: { page } });
 
   if (orders.isPending) return <Spinner />;
   if (orders.isError) return <div>Something went wrong </div>;

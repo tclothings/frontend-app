@@ -1,4 +1,3 @@
-"use client"
 import Login from "app/features/auth/Login";
 import { Suspense } from "react";
 

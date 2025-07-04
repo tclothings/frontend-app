@@ -5,33 +5,38 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Search() {
-
-  const router = useRouter()
+  const router = useRouter();
   const pathname = usePathname();
+  const [hasMounted, setHasMounted] = useState(false);
 
   const searchParams = useSearchParams();
-  const showSearchInput = ["/category", "/product", "/search"].some(
-    (item) => pathname.startsWith(item) || pathname === "/"
-  );
+
   const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   useEffect(() => {
     setQuery(searchParams?.get("q") || "");
   }, [searchParams]);
 
+  if (!hasMounted) return null; // prevent hydration mismatch
+
+  const showSearchInput = ["/category", "/product", "/search"].some(
+    (item) => pathname.startsWith(item) || pathname === "/"
+  );
+  
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const newSearchParams = new URLSearchParams(searchParams.toString()); // Start with current params
-
-    if (query) {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    if (query.trim()) {
       newSearchParams.set("q", query);
+      newSearchParams.delete("page");
+      router.push(`/search?${newSearchParams.toString()}`);
     } else {
       newSearchParams.delete("q");
     }
-    newSearchParams.delete("page");
-
-    // Navigate to the current path with the updated search parameters
-    router.push(`/search?${newSearchParams.toString()}`);
   };
   return (
     <>

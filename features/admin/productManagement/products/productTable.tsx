@@ -8,6 +8,7 @@ import Drawer from "app/components/ui/drawer";
 import { useProducts } from "app/api/admin/products";
 import ViewProduct from "./viewProduct";
 import { IProduct } from "app/lib/types";
+import { useSearchParams } from "next/navigation";
 
 export const metadata = {
   title: "Products",
@@ -24,9 +25,10 @@ export default function ProductTable({
   setSelectedItem,
   setIsNewProductDrawerOpen,
 }: ProductTableProps) {
+  const params = useSearchParams()
+  const page = params.get("page")
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  // const [selectedItem, setSelectedItem] = useState<any>(null);
-  const { products } = useProducts();
+  const { products } = useProducts({ params: { page } });
 
   if (products.isPending) return <Spinner />;
   if (products.isError) return <div>Something went wrong </div>;
@@ -59,10 +61,15 @@ export default function ProductTable({
             className="hover:cursor-pointer hover:bg-[var(--background)]"
           >
             <td className="px-6 py-4 min-w-[199px]">{product?.name}</td>
-            <td className="px-6 py-4 min-w-[118px]">{product?.description}</td>
+            <td className="px-6 py-4 min-w-[118px]">
+              {product?.category?.name}
+            </td>
             {/* <td className="px-6 py-4">{roles(product?.roles)}</td> */}
             <td className="px-6 py-4 w-[125px]">
               {formatNumber(product?.price)}
+            </td>
+            <td className="px-6 py-4 w-[125px]">
+              {formatNumber(product?.salePrice) ?? "-"}
             </td>
             <td className="px-6 py-4 min-w-[138px]">
               {formatNumber(product.quantity)}

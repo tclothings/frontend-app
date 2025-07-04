@@ -1,9 +1,13 @@
-import Grid from 'app/components/grid';
-import { GridTileImage } from 'app/components/grid/tile';
-import { IProduct } from 'app/lib/types';
-import Link from 'next/link';
+import Grid from "app/features/landingPage/components/home/grid";
+import { GridTileImage } from "app/components/layout/tile";
+import { IProduct } from "app/lib/types";
+import Link from "next/link";
 
-export default function ProductGridItems({ products }: { products: IProduct[] }) {
+export default function ProductGridItems({
+  products,
+}: {
+  products: IProduct[];
+}) {
   return (
     <>
       {products?.map((product) => (

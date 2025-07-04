@@ -1,22 +1,29 @@
-// components/navbar/NavbarClient.tsx
 "use client";
 
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import CartModal from "app/components/cart/modal";
-import Cookies from "js-cookie";
+import { useSession } from "next-auth/react";
+import { publicAuthRoutes } from "app/lib/constants";
 
 const ProfileAvatar = dynamic(() => import("./profileAvatar"), { ssr: false });
 
 export default function NavClientSection() {
+  const { data: session } = useSession()
   const pathname = usePathname();
-  const userToken = Cookies.get("user")
+  const role = session?.user?.roles?.[0];
+  const isAccountRoute =
+    pathname.startsWith("/my-account") || pathname.startsWith("/admin");
+  const isUser = session && role === "customer";
+  const isNotCheckout = !pathname.startsWith("/checkout");
+  const isPublicRoute = publicAuthRoutes.some((route) =>
+    pathname.endsWith(route)
+  );
   return (
     <div className="flex gap-2 items-center justify-end md:w-1/3">
-      {["/my-account", "/admin"].some((item) => pathname.startsWith(item)) && (
-        <ProfileAvatar />
-      )}
-      {userToken && !pathname.startsWith("/checkout") && <CartModal />}
+      {isAccountRoute && <ProfileAvatar />}
+
+      {isUser && isNotCheckout && !isPublicRoute && <CartModal />}
     </div>
   );
 }

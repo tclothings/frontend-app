@@ -64,12 +64,12 @@ function SortFilterItem({ item }: { item: SortFilterItemType }) {
 
 export function FilterItem({ item }: { item: ListItem }) {
   return "path" in item ? (
-    <Suspense fallback={null}>
-      <PathFilterItem item={item} />{" "}
-    </Suspense>
+    // <Suspense fallback={null}>
+      <PathFilterItem item={item} />
+    // </Suspense>
   ) : (
-    <Suspense fallback={null}>
+    // <Suspense fallback={null}>
       <SortFilterItem item={item} />
-    </Suspense>
+    // </Suspense>
   );
 }

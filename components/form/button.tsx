@@ -31,22 +31,26 @@ export default function Button({
   ...props
 }: ButtonProps) {
   useEnterKeyListener(() => document.getElementById("submit-button")?.click);
-  const btnStyle = clsx(
-    "rounded-lg py-2.5 px-[14px] text-white flex font-medium items-center",
-    className
-  );
-const {id} = props
+
+const {id, disabled} = props
   return (
     <button
       id={type === "submit" ? "submit-button" : id}
-      disabled={isLoading}
+      disabled={isLoading || disabled}
       {...props}
-      className={`${
-        icon ? "gap-2 " : ""
-      } flex  justify-center text-white disabled:cursor-not-allowed hover:cursor-pointer ${btnStyle}`}
+      className={clsx(
+        "flex justify-center font-medium rounded-lg py-2.5 px-[14px] items-center text-white disabled:cursor-not-allowed disabled:opacity-50 hover:cursor-pointer",
+        icon && "gap-2",
+        className
+      )}
     >
-      {isLoading ? <Spinner /> : <>
-        {icon && <span>{icon}</span>} {text ? <span>{text}</span> : null} </>}
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          {icon && <span>{icon}</span>} {text ? <span>{text}</span> : null}{" "}
+        </>
+      )}
     </button>
   );
 }

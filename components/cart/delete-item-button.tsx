@@ -12,10 +12,11 @@ export function DeleteItemButton({
   item: ICartItem;
   }) {
   const { deleteItemFromCart } = useCart()
+
   const handleDelete = () => {
     deleteItemFromCart.mutate(item.product?._id)
   }
-
+  
   useEffect(() => {
     if (deleteItemFromCart.isSuccess) {
       toast.success(deleteItemFromCart.data?.message);
@@ -32,9 +33,7 @@ export function DeleteItemButton({
       >
         <XMarkIcon className="mx-[1px] h-4 w-4 text-white dark:text-black" />
       </button>
-      {/* <p aria-live="polite" className="sr-only" role="status">
-        {message}
-      </p> */}
+
     </>
   );
 }

@@ -78,7 +78,7 @@ export interface IMedia {
 
 
 export interface IProduct {
-  category: string;
+  category: ICategory;
   createdAt: string;
   description: string;
   productImage: string;
@@ -204,3 +204,34 @@ export interface IOrder {
   updatedAt: string; // ISO date string
 }
 
+
+export type ISessionData = {
+  accessToken: string;
+  accessTokenExpires: number;
+  exp: number;
+  expires: number;
+  iat: number;
+  jti: string;
+  refreshToken: string;
+  user: {
+    createdAt: any;
+    deletedAt: any;
+    displayName: string;
+    dob: string;
+    email: string;
+    emailVerified: string;
+    firstName: string;
+    gender: string;
+    id: number;
+    isAdmin: boolean;
+    isCustomer: boolean;
+    isProvider: boolean;
+    lastName: boolean;
+    phone: any;
+    phoneVerified: boolean;
+    photo: any;
+    status: string;
+    updatedAt: any;
+    roles: []
+  };
+};

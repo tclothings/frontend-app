@@ -3,15 +3,17 @@ export const productHeaders = [
     label: "Name",
   },
   {
-    label: "Description",
+    label: "Category",
   },
   {
     label: "Price (NGN)",
   },
   {
+    label: "Sales Price (NGN)",
+  },
+  {
     label: "Quantity",
   },
-
 ];
 
 export const categoryHeaders = [

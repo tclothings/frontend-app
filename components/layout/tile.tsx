@@ -1,6 +1,6 @@
-import clsx from 'clsx';
-import Image from 'next/image';
-import Label, { LabelSkeleton } from '../label';
+import clsx from "clsx";
+import Image from "next/image";
+import Label, { LabelSkeleton } from "../label";
 
 export function GridTileImage({
   isInteractive = true,
@@ -55,7 +55,7 @@ export const GridTileImageSkeleton = () => {
   return (
     <div
       className={clsx(
-        "group flex h-[300px] max-w-[300px] w-full m-auto items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 bg-[var(--grey-100)] dark:bg-black border-2 border-blue-600"
+        "relative group flex h-[300px] max-w-[300px] w-full m-auto items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 bg-[var(--grey-100)] dark:bg-black border-2 border-blue-600"
       )}
     >
       <p
@@ -68,4 +68,4 @@ export const GridTileImageSkeleton = () => {
       <LabelSkeleton />
     </div>
   );
-}
+};

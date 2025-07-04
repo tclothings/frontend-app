@@ -1,8 +1,8 @@
 import Profile from "app/features/customer/profile";
 
 export const metadata = {
-  title: "Orders",
-  description: "View orders list.",
+  title: "Profile",
+  description: "Edit your profile.",
 };
 
 export default async function Page() {

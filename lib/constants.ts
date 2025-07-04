@@ -59,26 +59,22 @@ export const sorting: SortFilterItemType[] = [
 
 export const clientNavMenu = [
   { title: "Orders", path: "/my-account/orders" },
-  { title: "Profile", path: "/my-account/profile" },
   { title: "Address", path: "/my-account/address" },
-  { title: "Payment methods", path: "/my-account/payment-methods" },
+  { title: "Profile", path: "/my-account/profile" },
 ];
 
 export const adminNavMenu = [
-  { title: "Orders", path: "/admin/orders" },
-  { title: "Customers", path: "/admin/user-management/customers" },
-  { title: "Admins", path: "/admin/user-management/admins" },
-  // { title: "Categories", path: "/admin/product-management/categories" },
   { title: "Products", path: "/admin/product-management/products" },
-  // { title: "Address", path: "/admin/address" },
-  // { title: "Payment methods", path: "/admin/payment-methods" },
+  { title: "Orders", path: "/admin/orders" },
+  { title: "Admins", path: "/admin/user-management/admins" },
+  { title: "Customers", path: "/admin/user-management/customers" },
   { title: "Profile", path: "/admin/profile" },
 ];
 
 export const navMenu = [
   { title: "Home", path: "/" },
   { title: "Categories", path: "/category" },
-  { title: "My Account", path: "/my-account/profile" },
+  { title: "My Account", path: "/my-account/orders" },
 ];
 
 export const companyName = "T CLOTHINGS";
@@ -315,9 +311,9 @@ export const publicAuthRoutes = [
 
 
 export const orderStatuses = [
-  { label: "Draft", value: "DRAFT" },
-  { label: "Pending", value: "PENDING" },
-  { label: "Processing", value: "PROCESSING" },
+  // { label: "Draft", value: "DRAFT" },
+  // { label: "Pending", value: "PENDING" },
+  { label: "Processing", value: "PROCESSING" }, //DISABLE
   { label: "Shipped", value: "SHIPPED" },
   { label: "Delivered", value: "DELIVERED" },
   { label: "Cancelled", value: "CANCELLED" },
@@ -326,10 +322,10 @@ export const orderStatuses = [
 ];
 
 export const paymentStatuses = [
-  { label: "Pending", value: "PENDING" },
-  { label: "Paid", value: "PAID" },
-  { label: "Failed", value: "FAILED" },
+  { label: "Pending", value: "PENDING" }, //DISABLE
+  { label: "Paid", value: "PAID" }, //DISABLE
+  { label: "Failed", value: "FAILED" }, //DISABLE
   { label: "Refunded", value: "REFUNDED" },
   { label: "Partially Refunded", value: "PARTIALLY_REFUNDED" },
-  { label: "Successful", value: "SUCCESSFUL" },
+  // { label: "Successful", value: "SUCCESSFUL" },
 ];

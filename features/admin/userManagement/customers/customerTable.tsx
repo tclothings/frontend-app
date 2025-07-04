@@ -8,6 +8,7 @@ import Spinner from "app/components/form/spinner";
 import Drawer from "app/components/ui/drawer";
 import ViewCustomer from "./viewCustomer";
 import { IUser } from "app/lib/types";
+import { useSearchParams } from "next/navigation";
 
 export const metadata = {
   title: "Customers",
@@ -15,17 +16,15 @@ export const metadata = {
 };
 
 export default function CustomerTable() {
+     const params = useSearchParams()
+      const page = params.get("page")
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
-  const { customers } = useCustomerUsers();
+  const { customers } = useCustomerUsers({ params: { page } });
 
   if (customers.isPending) return <Spinner />;
   if (customers.isError) return <div>Something went wrong </div>;
-  // const { openModal } = useAppContexxt();
 
-  // function openOrderDetails() {
-  //   openModal(<Info />, "Order Details");
-  // }
   const data = customers?.data?.data;
   const totalPages = customers?.data?.totalPages;
   const rows = customers?.data?.total;

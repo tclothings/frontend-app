@@ -2,13 +2,13 @@ import Table from "app/components/ui/table";
 import { formatDate, fullName, roles } from "app/lib/utils";
 import { useState } from "react";
 import StatusCard from "app/components/ui/statusCard";
-import Pagination from "app/components/ui/pagination";
 import { useAdminUsers } from "app/api/admin/users";
 import Spinner from "app/components/form/spinner";
 import { customerHeaders } from "../components/userHeaders";
 import Drawer from "app/components/ui/drawer";
 import ViewAdmin from "./viewAdmin";
 import { IUser } from "app/lib/types";
+import { useSearchParams } from "next/navigation";
 
 export const metadata = {
   title: "Admin",
@@ -16,9 +16,11 @@ export const metadata = {
 };
 
 export default function AdminTable() {
+    const params = useSearchParams()
+    const page = params.get("page")
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
-  const { admins } = useAdminUsers();
+  const { admins } = useAdminUsers({ params: { page } });
 
   if (admins.isPending) return <Spinner />;
   if (admins.isError) return <div>Something went wrong </div>;

@@ -1,10 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
 
-import { GridTileImage } from "app/components/grid/tile";
+import { GridTileImage } from "app/components/layout/tile";
 import ProductImageGallerySkeleton, {
-} from "app/features/landingPage/components/product/gallery";
-import {
   ProductDescription,
   ProductDescriptionSkeleton,
 } from "app/features/landingPage/components/product/product-description";
@@ -31,7 +29,6 @@ export default function Product({ slug }: { slug: string }) {
 
   const data = product?.data;
 
-  console.log(data.media, "data")
   const filteredMedia = data?.media
     // ?.filter((item: IMedia) => item.mediaType === "image")
     ?.map(({ url, altText, mediaType }: IMedia) => ({
@@ -48,15 +45,7 @@ export default function Product({ slug }: { slug: string }) {
     <div className="mx-auto max-w-(--breakpoint-2xl) px-4 ">
       <div className="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 md:p-12 lg:flex-row lg:gap-8 dark:border-neutral-800 bg-[var(--grey-100)]  dark:bg-black">
         <div className="h-full w-full basis-full lg:basis-4/6">
-          {/* <Gallery
-            images={imageMedia?.slice(0, 5).map((image: any) => ({
-              src: image.url,
-              altText: image.altText,
-            }))}
-          /> */}
-          <MediaGallery
-            media={media?.slice(0, 5)}
-          />
+          <MediaGallery media={media?.slice(0, 5)} />
         </div>
 
         <div className="basis-full lg:basis-2/6">
@@ -129,7 +118,6 @@ export function ProductSkeleton() {
   );
 }
 
-
 // This component represents a single skeleton for a product grid tile
 function RelatedProductTileSkeleton() {
   return (
@@ -154,11 +142,7 @@ function RelatedProductTileSkeleton() {
   );
 }
 
-export function RelatedProductsSkeleton({
-  className,
-}: {
-  className?: string;
-}) {
+export function RelatedProductsSkeleton({ className }: { className?: string }) {
   return (
     <div className={clsx("py-8", className)}>
       {/* Heading Placeholder */}

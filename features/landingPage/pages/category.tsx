@@ -1,7 +1,7 @@
 "use client";
 
 import { useProducts } from "app/api/client/products";
-import Grid from "app/components/grid";
+import Grid from "app/features/landingPage/components/home/grid";
 import ProductGridItems from "app/components/layout/product-grid-items";
 import Pagination from "app/components/ui/pagination";
 import { defaultSort, sorting } from "app/lib/constants";
@@ -26,19 +26,22 @@ const Category = () => {
   }, [products.data]);
 
   if (!products?.data) return <Spinner />;
-    const data = products.data?.products;
+  const data = products.data?.products;
 
   return (
-    <section>
-      <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-10">
-        <ProductGridItems products={data} />
-      </Grid>
-      <Pagination totalPages={totalPages} />
+    <section className="h-full flex flex-col justify-between relative">
+      {!data?.length ? (
+        <p className="mb-4">No products found in this category</p>
+      ) : (
+        <>
+          <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-10">
+            <ProductGridItems products={data} />
+          </Grid>
+          <Pagination totalPages={totalPages} />
+        </>
+      )}
     </section>
   );
 };
 
 export default Category;
-
-
-

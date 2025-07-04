@@ -1,18 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "app/lib/http";
 import { KEYS } from "./queryKeys";
+import { stringifyParams } from "app/lib/utils";
 
 export const useProducts = (args?: any) => {
   const queryClient = useQueryClient();
   const { id, params } = args ?? {};
 
   const products = useQuery({
-    queryKey: [KEYS.PRODUCTS],
+    queryKey: [KEYS.PRODUCTS, params],
     queryFn: async () => {
       let url = "products/all";
-      // if (params) {
-      //   url = createUrl("products/all", params);
-      // }
+      if (params) {
+        url += stringifyParams(params)
+      }
       const result = await http.get(url);
       return result?.data?.data;
     },
@@ -30,7 +31,7 @@ export const useProducts = (args?: any) => {
   const addProduct = useMutation({
     mutationFn: async (data: any) => {
       const result = await http.post("products", data);
-      return result?.data?.data;
+      return result?.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -42,7 +43,7 @@ export const useProducts = (args?: any) => {
   const updateProduct = useMutation({
     mutationFn: async ({ id, data }: { id: string; data: any }) => {
       const result = await http.put(`products/${id}`, data);
-      return result?.data?.data;
+      return result?.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({

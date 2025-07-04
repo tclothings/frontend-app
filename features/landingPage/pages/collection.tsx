@@ -1,7 +1,7 @@
 "use client";
 
 import { useProducts } from "app/api/client/products";
-import Grid from "app/components/grid";
+import Grid from "app/features/landingPage/components/home/grid";
 import ProductGridItems from "app/components/layout/product-grid-items";
 import Pagination from "app/components/ui/pagination";
 import { defaultSort, sorting } from "app/lib/constants";
@@ -35,9 +35,7 @@ const Collection = ({ slug }: { slug: string }) => {
   return (
     <section className="h-full flex flex-col justify-between">
       {!data?.length ? (
-        <p className="mb-4">
-          No products found in this category 
-        </p>
+        <p className="mb-4">No products found in this category</p>
       ) : (
         <>
           <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-10">
@@ -51,6 +49,3 @@ const Collection = ({ slug }: { slug: string }) => {
 };
 
 export default Collection;
-
-
-

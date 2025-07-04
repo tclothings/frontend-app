@@ -1,5 +1,5 @@
-"use client"
-import Grid from "app/components/grid";
+"use client";
+import Grid from "app/features/landingPage/components/home/grid";
 import ProductGridItems from "app/components/layout/product-grid-items";
 import { defaultSort, sorting } from "app/lib/constants";
 import Pagination from "app/components/ui/pagination";
@@ -46,7 +46,7 @@ export default function Search() {
             {data?.length === 0
               ? "There are no products that match"
               : `Showing ${products.data?.total} ${resultsText} for `}
-            <span className="font-bold">&quot;{search}&quot;</span>
+            <span className="ml-2 font-bold">&quot;{search}&quot;</span>
           </p>
         ) : null}
         <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-10">

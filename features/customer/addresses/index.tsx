@@ -2,11 +2,12 @@
 
 import SubmitButton from "app/components/form/submitButton";
 import AccountPageHeader from "app/components/ui/accountPageHeader";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import AddEditAddress from "./addEditAddress";
 import { useAddresses } from "app/api/client/address";
 import AddressCard from "./addressCard";
 import Spinner from "app/components/form/spinner";
+import Pagination from "app/components/ui/pagination";
 
 export default function Addresses() {
   const [showAddEditAddress, setShowAddEditAddress] = useState(false);
@@ -23,7 +24,10 @@ export default function Addresses() {
   );
 
   if (addresses.isPending) return <Spinner />;
-  const addressList = addresses?.data?.data;
+  const data = addresses?.data;
+  const addressList = data?.data;
+  const totalPages = data?.totalPages;
+  
   return (
     <div className="h-full">
       {showAddEditAddress ? (
@@ -48,7 +52,12 @@ export default function Addresses() {
                 setShowAddEditAddress={setShowAddEditAddress}
               />
             ))}
-          </div>
+            </div>
+                    <Suspense>
+                      <div className="mt-6">
+                        <Pagination totalPages={totalPages} />
+                      </div>
+                    </Suspense>
         </>
       )}
     </div>

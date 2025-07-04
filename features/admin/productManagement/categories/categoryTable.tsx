@@ -12,10 +12,7 @@ import { toast } from "sonner";
 import ConfirmationModal from "app/components/ui/confirmationModal";
 import AddEditCategory from "./addEditCategory";
 import Drawer from "app/components/ui/drawer";
-// export const metadata = {
-//   title: "Categories",
-//   description: "View category list",
-// };
+
 interface CategoryTableProps {
   onSuccess: () => void;
 }
@@ -52,45 +49,49 @@ export default function CategoryTable({ onSuccess }: CategoryTableProps) {
   return (
     <>
       <div className="space-y-5 overflow-y-auto h-full">
-        {data?.map((category: ICategory, idx: number) => (
-          <div
-            key={idx}
-            className={clsx("pb-5 p-4", {
-              "border-b border-b-grey-50": idx !== data.length - 1,
-            })}
-          >
-            <div className="flex justify-end gap-4 mb-3">
-              <Button
-                onClick={() => onHandleUpdateProduct(category)}
-                className="p-1"
-                icon={
-                  <PencilSquareIcon
-                    width={20}
-                    className="text-[var(--blue-600)]"
-                  />
-                }
-              />
-              <Button
-                onClick={() => {
-                  onHandleDeleteProduct(category);
-                  setOpenConfirmationModal(true);
-                }}
-                className="p-1"
-                icon={<TrashIcon width={20} className="text-[var(--red)]" />}
-              />
+        {data?.length ? (
+          data?.map((category: ICategory, idx: number) => (
+            <div
+              key={idx}
+              className={clsx("pb-5 p-4", {
+                "border-b border-b-grey-50": idx !== data.length - 1,
+              })}
+            >
+              <div className="flex justify-end gap-4 mb-3">
+                <Button
+                  onClick={() => onHandleUpdateProduct(category)}
+                  className="p-1"
+                  icon={
+                    <PencilSquareIcon
+                      width={20}
+                      className="text-[var(--blue-600)]"
+                    />
+                  }
+                />
+                <Button
+                  onClick={() => {
+                    onHandleDeleteProduct(category);
+                    setOpenConfirmationModal(true);
+                  }}
+                  className="p-1"
+                  icon={<TrashIcon width={20} className="text-[var(--red)]" />}
+                />
+              </div>
+              <div className="flex justify-between gap-6 mb-4">
+                <p className="text-neutral-500 dark:text-neutral-400">
+                  {category?.name}
+                </p>
+                <StatusCard
+                  status={category?.is_active ? "Active" : "Inactive"}
+                />
+              </div>
+              <p className="mb-2">{category?.description}</p>
+              <p className="text-xs">{formatDate(category?.createdAt)}</p>
             </div>
-            <div className="flex justify-between gap-6 mb-4">
-              <p className="text-neutral-500 dark:text-neutral-400">
-                {category?.name}
-              </p>
-              <StatusCard
-                status={category?.is_active ? "Active" : "Inactive"}
-              />
-            </div>
-            <p className="mb-2">{category?.description}</p>
-            <p className="text-xs">{formatDate(category?.createdAt)}</p>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="mb-4">No category</p>
+        )}
       </div>
       <ConfirmationModal
         isOpen={isOpenConfirmationModal}

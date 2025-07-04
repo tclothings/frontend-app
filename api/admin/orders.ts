@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "app/lib/http";
 import { KEYS } from "./queryKeys";
+import { stringifyParams } from "app/lib/utils";
 
 export const useOrders = (args?: any) => {
   const queryClient = useQueryClient();
@@ -10,9 +11,9 @@ export const useOrders = (args?: any) => {
     queryKey: [KEYS.ORDERS],
     queryFn: async () => {
       let url = "orders/all";
-      // if (params) {
-      //   url = createUrl("products/all", params);
-      // }
+      if (params) {
+        url += stringifyParams(params);
+      }
       const result = await http.get(url);
       return result?.data?.data;
     },

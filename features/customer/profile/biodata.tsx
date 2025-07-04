@@ -37,7 +37,6 @@ export default function Biodata() {
     resolver: yupResolver(userInfoSchema),
   });
 
-
   const { setValue, handleSubmit, watch } = methods;
 
   const profilePicture = watch("profilePicture");

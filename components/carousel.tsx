@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { GridTileImage, GridTileImageSkeleton } from "./grid/tile";
+import { GridTileImage, GridTileImageSkeleton } from "./layout/tile";
 import { useProducts } from "app/api/client/products";
 import { IProduct } from "app/lib/types";
 
@@ -17,7 +17,7 @@ export function Carousel() {
   const carouselProducts = data;
 
   return (
-    <div className="w-full overflow-x-scroll custom-scrollbar pb-6 pt-1">
+    <div className="w-full overflow-x-scroll hidden-scrollbar pb-6 pt-1">
       <ul className="flex animate-carousel gap-4">
         {carouselProducts.map((product: IProduct, i: number) => (
           <li
@@ -50,26 +50,19 @@ export function Carousel() {
 
 export const CarouselSkeleton = () => {
   return (
-    <div className="w-full overflow-x-scroll custom-scrollbar pb-6 pt-1">
+    // Removed 'overflow-x-scroll hidden-scrollbar' from here as Swiper handles its own overflow.
+    // If you still want the custom scrollbar on the skeleton, keep it.
+    <div className="w-full pb-6 pt-1">
       <ul className="flex animate-carousel gap-4">
-        <li className="relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3 animate-pulse">
-          <GridTileImageSkeleton />
-        </li>
-        <li className="relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3 animate-pulse">
-          <GridTileImageSkeleton />
-        </li>{" "}
-        <li className="relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3 animate-pulse">
-          <GridTileImageSkeleton />
-        </li>{" "}
-        <li className="relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3 animate-pulse">
-          <GridTileImageSkeleton />
-        </li>{" "}
-        <li className="relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3 animate-pulse">
-          <GridTileImageSkeleton />
-        </li>{" "}
-        <li className="relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3 animate-pulse">
-          <GridTileImageSkeleton />
-        </li>
+        {/* Render enough skeleton items to fill the view */}
+        {Array.from({ length: 6 }).map((_, i) => (
+          <li
+            key={i}
+            className="relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3 animate-pulse"
+          >
+            <GridTileImageSkeleton />
+          </li>
+        ))}
       </ul>
     </div>
   );

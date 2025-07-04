@@ -1,14 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "app/lib/http";
 import { KEYS } from "./queryKeys";
+import { stringifyParams } from "app/lib/utils";
 
 export const useAdminUsers = (args?: any) => {
-  const { id } = args ?? {};
+  const { id, params } = args ?? {};
   const queryClient = useQueryClient();
   const admins = useQuery({
     queryKey: [KEYS.ADMINS],
     queryFn: async () => {
-      const result = await http.get("admin/admin-users");
+      let url = "admin/admin-users";
+           if (params) {
+              url += stringifyParams(params)
+      }
+      const result = await http.get(url);
       return result?.data?.data;
     },
   });
@@ -50,13 +55,15 @@ export const useAdminUsers = (args?: any) => {
 };
 
 export const useCustomerUsers = (args?: any) => {
-  const { id } = args ?? {};
-  const queryClient = useQueryClient();
-
+  const { id, params } = args ?? {};
   const customers = useQuery({
     queryKey: [KEYS.CUSTOMERS],
     queryFn: async () => {
-      const result = await http.get("users/customer-users");
+      let url = "users/customer-users";
+      if (params) {
+        url += stringifyParams(params);
+      }
+      const result = await http.get(url);
       return result?.data?.data;
     },
   });

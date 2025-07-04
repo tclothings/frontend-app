@@ -66,13 +66,13 @@ export const LabelSkeleton = () => {
       )}
     >
       <div className="flex flex-col">
-        <div className="flex items-center rounded-full border bg-white/70 p-1 text-xs font-semibold text-black backdrop-blur-md dark:border-neutral-800 dark:bg-black/70 dark:text-white">
+        <div className="flex items-center w-20 rounded-full border bg-white/70 p-1 text-xs font-semibold text-black backdrop-blur-md dark:border-neutral-800 dark:bg-black/70 dark:text-white">
           <h3 className="w-fit mr-4 line-clamp-2 grow pl-2 leading-none tracking-tight w-4 h-4 animate-pulse"></h3>
           <div className="flex items-center">
             <PriceSkeleton />
           </div>
         </div>
-        <div className="flex items-center gap-2 flex-shrink-0 ml-auto border bg-white/70 p-1 text-xs font-semibold text-black backdrop-blur-md dark:border-neutral-800 dark:bg-black/70 dark:text-white">
+        <div className="flex items-center gap-2 w-16 flex-shrink-0 ml-auto border bg-white/70 p-1 text-xs font-semibold text-black backdrop-blur-md dark:border-neutral-800 dark:bg-black/70 dark:text-white">
           <PriceSkeleton />
         </div>
       </div>

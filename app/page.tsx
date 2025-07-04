@@ -1,12 +1,5 @@
-import { Carousel } from "app/components/carousel";
-import { ThreeItemGrid } from "app/components/grid/three-items";
+import Home from "app/features/landingPage/pages/home";
 
-
-export default function Home() {
-  return (
-    <>
-        <ThreeItemGrid />
-        <Carousel />
-    </>
-  );
+export default function Page() {
+  return <Home />;
 }

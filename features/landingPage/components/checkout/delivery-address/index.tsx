@@ -43,13 +43,14 @@ export default function DeliveryAddress({ defaultAddress }: { defaultAddress: IA
               <p className="text-center">No Address</p>
             </div>
           </div>
-        ) : null}
-        <div className="">
-          <AddressCard
-            address={defaultAddress}
-            setAddressDrawerOpen={setAddressDrawerOpen}
-          />
-        </div>
+        ) : (
+          <div className="">
+            <AddressCard
+              address={defaultAddress}
+              setAddressDrawerOpen={setAddressDrawerOpen}
+            />
+          </div>
+        )}
       </div>
       <Drawer
         title={"Addresses"}

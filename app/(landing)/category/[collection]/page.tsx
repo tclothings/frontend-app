@@ -20,8 +20,6 @@ import Collection from 'app/features/landingPage/pages/collection';
 export default async function Page(props: {
   params: Promise<{ collection: string }>;
 }) {
-
   const params = await props.params;
-
   return <Collection slug={params.collection} />;
 }

@@ -1,33 +1,43 @@
 "use client";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAuth } from "app/api/auth";
+import { useAuth } from "app/api/useAuth";
 import Input from "app/components/form/Input";
 import PasswordInput from "app/components/form/passwordInput";
 import SubmitButton from "app/components/form/submitButton";
 import { loginSchema } from "app/lib/schemas/auth";
-import axios from "axios";
 // import useAuth from "app/store/authStore";
 import clsx from "clsx";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import Cookies from "js-cookie";
+import { signIn } from "next-auth/react";
 
 export default function Page() {
-  const { login, verifyEmail } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { verifyEmail } = useAuth();
   const router = useRouter();
   const params = useSearchParams();
+  const pathname = usePathname();
   const verifyLink = params.get("response");
 
-  // const { login } = useAuth((state) => state);
-  const methods = useForm({
-    resolver: yupResolver(loginSchema),
-  });
+  useLayoutEffect(() => {
+    const error = params.has("error");
+    const authError = params.has("isAuthError");
+    const callbackUrl = params.get("callbackUrl");
 
-  const { handleSubmit, setValue } = methods;
+    if (authError || error) {
+      const message = params.get("error");
+      toast.error(
+        message ||
+          "Ooops An Error occurred while trying to login, please try again later"
+      );
+      router.push(`${pathname}?callbackUrl=${callbackUrl}`);
+    }
+  }, []);
 
   useEffect(() => {
     const savedEmail = localStorage.getItem("savedEmail");
@@ -54,38 +64,29 @@ export default function Page() {
     }
   }, [verifyEmail.isSuccess, verifyEmail.isError]);
 
-  useEffect(() => {
-    if (login.isSuccess) {
-      const { data } = login;
-      login.reset();
-      const user = JSON.stringify({
-        user: data?.data?.user,
-        access_token: data?.data?.access_token,
-      });
-      Cookies.set("user", user, {
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        expires: data?.data?.exires_in, // 1 day
-      });
-      router.push("/my-account/orders");
-      toast.success(data?.message);
-    }
-  }, [login.isSuccess]);
+  const methods = useForm({
+    resolver: yupResolver(loginSchema),
+  });
 
-  useEffect(() => {
-    if (login.error) {
-      if (axios.isAxiosError(login.error) && login.error?.status === 400) {
-        // setValue("password", "");
-      }
-      login.reset();
-    }
-  }, [login.error]);
-
+  const { handleSubmit, setValue } = methods;
+  
   const onLogin = async (data: any) => {
-    login.mutate(data);
-    // login("134", "admin");
-    // router.push("/my-account/profile")
+    setIsLoading(true);
+    const res = await signIn("credentials", {
+      redirect: false,
+      email: data.email,
+      password: data.password,
+    });
+    if (res?.error) {
+      toast.error(res?.error || "Login failed")
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+      toast.success("Login successful");
+      router.push("/my-account/orders");
+    }
   };
+
   return (
     <section className="pb-8 md:pb-6">
       <header className="my-6 flex flex-col items-center gap-3">
@@ -124,7 +125,7 @@ export default function Page() {
         </div>
         <SubmitButton
           handleSubmit={handleSubmit(onLogin)}
-          isLoading={login.isPending || verifyEmail.isPending}
+          isLoading={isLoading}
           name="Login"
         />
       </div>

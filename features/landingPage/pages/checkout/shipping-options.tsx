@@ -41,7 +41,7 @@ export default function ShippingOptions() {
         setDeliveryAddressId(defaultAddress._id);
       }
       const deliveryAddress = shippingCosts?.find(
-        (data: IShipping) => data.name === defaultAddress.lga
+        (data: IShipping) => data.name === defaultAddress?.lga
       );
       if (deliveryAddress) {
         setShippingAddress(deliveryAddress);
@@ -57,7 +57,7 @@ export default function ShippingOptions() {
     return null;
   }
 
-  if (cartItems.isPending) {
+  if (cartItems.isPending || addresses.isPending) {
     return (
       <div className="h-screen w-full flex items-center justify-center">
         <Spinner />

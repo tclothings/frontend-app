@@ -12,7 +12,6 @@ export function MediaGallery({ media }: { media: IMedia[] }) {
   const nextIndex = activeIndex + 1 < media.length ? activeIndex + 1 : 0;
   const prevIndex = activeIndex === 0 ? media.length - 1 : activeIndex - 1;
 
-  console.log(media, "media")
   const buttonClass =
     "h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-black dark:hover:text-white flex items-center justify-center hover:cursor-pointer";
 
@@ -66,7 +65,7 @@ export function MediaGallery({ media }: { media: IMedia[] }) {
       </div>
 
       {media.length > 1 && (
-        <ul className="my-12 flex items-center flex-wrap justify-center gap-2 overflow-x-auto py-1 lg:mb-0 overflow-y-hidden">
+        <ul className="my-12 flex items-center flex-wrap justify-center gap-2 overflow-x-auto py-1 lg:mb-0 overflow-y-hidden ">
           {media.map((item, index) => {
             const isActive = index === activeIndex;
 
@@ -75,7 +74,7 @@ export function MediaGallery({ media }: { media: IMedia[] }) {
                 <button
                   onClick={() => setActiveIndex(index)}
                   className={clsx(
-                    "h-full w-full rounded-md overflow-hidden ring-2 transition-all",
+                    "h-full w-full rounded-md overflow-hidden ring-2 transition-all hover:cursor-pointer",
                     isActive ? "ring-blue-500" : "ring-transparent"
                   )}
                   aria-label={`Preview ${item.mediaType}`}

@@ -7,16 +7,16 @@ import Input from "app/components/form/Input";
 import NumberInput from "app/components/form/numberInput";
 import ProductImageUploader from "app/components/form/productImageUploader";
 import ProductVideoUploader from "app/components/form/productVideoUploader";
-import RichTextEditor from "app/components/form/richTextEditor";
 import Select from "app/components/form/select";
 import SubmitButton from "app/components/form/submitButton";
 import { uploadToS3 } from "app/lib/configs/s3Client";
 import { productSchema } from "app/lib/schemas/product";
 import { IMedia, IProduct } from "app/lib/types";
 import { slugify } from "app/lib/utils";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import JoditEditor from "jodit-react"
 
 const emptyValue = "";
 export interface VideoItem {
@@ -38,24 +38,21 @@ const addEditProduct = ({
   item?: IProduct;
   onSuccess: () => void;
   setSelectedItem: Dispatch<SetStateAction<any>>;
-}) => {
+  }) => {
+    const editor = useRef(null);
+    const [description, setDescription] = useState("");
   const [fileName, setFileName] = useState<string>("");
   const [videos, setVideos] = useState<VideoItem[]>([]);
   const [imageItems, setImageItems] = useState<VideoItem[]>([]);
 
-  const { addProduct, updateProduct, products } = useProducts();
+  const { addProduct, updateProduct } = useProducts();
   const [categoryList, setCategoryList] = useState([]);
   const { categories } = useCategories({ params: { limitless: true } });
 
-  const methods = useForm({
-    resolver: yupResolver(productSchema),
-    defaultValues: {
-      isActive: true,
-      media: [],
-    },
-  });
 
-  const initialValues = {
+// console.log(item, "item")
+const initialValues = useMemo(
+  () => ({
     name: item?.name ?? emptyValue,
     description: item?.description ?? emptyValue,
     price: item?.price ?? 0,
@@ -65,50 +62,61 @@ const addEditProduct = ({
     productImage: item?.productImage ?? emptyValue,
     isActive: item?.isActive ?? true,
     isFeatured: item?.isFeatured ?? false,
-    category: item?.category ?? emptyValue,
+    category: item?.category?._id ?? emptyValue,
     size: item?.size ?? emptyValue,
     media: item?.media ?? [],
-  };
+  }),
+  [item]
+  );
+  const methods = useForm({
+    resolver: yupResolver(productSchema),
+    defaultValues: {
+      isActive: true,
+      media: [],
+    },
+  });
   const { handleSubmit, reset, setValue, watch } = methods;
 
   const media = watch("media") ?? [];
-const description = watch("description");
-  useEffect(() => {
-    if (item) {
-      reset(initialValues);
-      if (item.media?.length) {
-        const existingVideos = item?.media
-          .filter((item) => item.mediaType === "video")
-          ?.map(({ mediaType, url, altText }) => ({
-            mediaType,
-            url,
-            altText,
-            s3Url: url,
-            previewUrl: url,
-            file: null,
-            uploaded: true,
-          }));
-        if (existingVideos?.length) {
-          setVideos(existingVideos);
-        }
-        const existingImages = item?.media
-          .filter((item) => item.mediaType === "image")
-          ?.map(({ mediaType, url, altText }) => ({
-            mediaType,
-            url,
-            altText,
-            s3Url: url,
-            previewUrl: url,
-            file: null,
-            uploaded: true,
-          }));
-        if (existingImages?.length) {
-          setImageItems(existingImages);
-        }
-      }
-    }
-  }, [item]);
 
+useEffect(() => {
+  if (!categories.data) return;
+
+  const list = categories.data.categories.map((cat: IProduct) => ({
+    label: cat.name,
+    value: cat._id,
+  }));
+
+  setCategoryList(list);
+  reset(initialValues); // Only reset after categories are ready
+  if (item?.description) {
+    setDescription(item?.description);
+}
+  if (item?.media?.length) {
+    const videoMedia = item.media
+      .filter((m) => m.mediaType === "video")
+      .map((m) => ({
+        file: null,
+        previewUrl: m.url,
+        s3Url: m.url,
+        uploaded: true,
+        altText: m.altText,
+      }));
+    const imageMedia = item.media
+      .filter((m) => m.mediaType === "image")
+      .map((m) => ({
+        file: null,
+        previewUrl: m.url,
+        s3Url: m.url,
+        uploaded: true,
+        altText: m.altText,
+      }));
+    setVideos(videoMedia);
+    setImageItems(imageMedia);
+  }
+}, [categories.data, item, reset]);
+
+  
   useEffect(() => {
     if (addProduct.isSuccess) {
       toast.success(addProduct?.data?.message);
@@ -128,24 +136,33 @@ const description = watch("description");
     }
   }, [updateProduct.isSuccess]);
 
-  useEffect(() => {
-    if (categories.data) {
-      const categoriesList = categories.data?.categories;
-      if (categoriesList?.length) {
-        setCategoryList(
-          categoriesList?.map((item: IProduct) => ({
-            label: item.name,
-            value: item._id,
-          }))
-        );
-      }
-    }
-  }, [categories.isSuccess]);
 
+  useEffect(() => {
+    if (categoryList.length) {
+      reset(initialValues);
+  }
+  }, [categoryList])
+  
+  useEffect(() => {
+    if (description) {
+      setValue("description", description);
+    }
+  }, [description]);
+
+ 
   const onAddEditProduct = (data: any) => {
     let cleanedData = { ...data };
     delete cleanedData.image;
     cleanedData.slug = slugify(cleanedData.name);
+    const editedImages = imageItems?.map((image) => ({ mediaType: "image", url: image.s3Url, altText: image.altText })) ?? []
+    const editedVideos =
+      videos?.map((image) => ({
+        mediaType: "video",
+        url: image.s3Url,
+        altText: image.altText,
+      })) ?? [];
+
+    cleanedData.media = [...editedImages, ...editedVideos];
     if (item) {
       updateProduct.mutate({ id: item._id, data: cleanedData });
     } else {
@@ -160,7 +177,6 @@ const description = watch("description");
         setValue("productImage", url);
         setFileName(file.name);
       } catch (err) {
-        console.error("Upload failed:", err);
         toast.error("Image upload failed");
       }
     }
@@ -169,10 +185,24 @@ const description = watch("description");
     const mediaArray = [...media, ...newMedia];
     setValue("media", mediaArray);
   };
+
   const onSaveImages = (newMedia: IMedia[]) => {
     const mediaArray = [...media, ...newMedia];
     setValue("media", mediaArray);
   };
+
+  const handleRemoveMedia = (urlToRemove: string) => {
+    const updatedMedia = media.filter(
+      (item: IMedia) => item.url !== urlToRemove
+    );
+    setValue("media", updatedMedia);
+    setImageItems((prev) =>
+      prev.filter((item) => item.previewUrl !== urlToRemove)
+    );
+    setVideos((prev) => prev.filter((item) => item.previewUrl !== urlToRemove));
+  };
+
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-5">
@@ -183,18 +213,25 @@ const description = watch("description");
           type="text"
           schema={productSchema}
         />
+        <div className="mb-7 bg-[var(--background)]">
+          <JoditEditor
+            ref={editor}
+            value={description}
+            config={{
+              toolbar: true,
+              ...({ placeholder: "Description" } as any),
+              style: {
+                background: "var(--background)", // light gray background
+                color: "var(--foreground)", // dark text
+                padding: "16px",
+                borderRadius: "8px",
+                // border: "1px solid #e5e7eb",
+              },
+            }}
+            onBlur={(newContent) => setDescription(newContent)}
+          />
+        </div>
 
-        <RichTextEditor
-          value={description}
-          onChange={(html) => setValue("description", html)}
-        />
-        {/* <Input
-          name="description"
-          placeholder="Description"
-          methods={methods}
-          type="text"
-          schema={productSchema}
-        /> */}
         <ImageUpload
           name="image"
           methods={methods}
@@ -209,6 +246,7 @@ const description = watch("description");
             placeholder="Category"
             methods={methods}
             options={categoryList}
+            disabled={categories.isPending}
           />
           <NumberInput
             name="quantity"
@@ -247,7 +285,7 @@ const description = watch("description");
             schema={productSchema}
           />
         </div>
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-5">
+        <div className="flex flex-col sm:flex-row justify-between gap-5">
           <CustomCheck name="isActive" placeholder="Active" methods={methods} />
           <CustomCheck
             name="isFeatured"
@@ -260,6 +298,7 @@ const description = watch("description");
         imageItems={imageItems}
         setImageItems={setImageItems}
         onSave={onSaveImages}
+        onRemove={handleRemoveMedia}
       />
       <ProductVideoUploader
         videos={videos}

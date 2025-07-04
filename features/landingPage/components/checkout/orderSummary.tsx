@@ -23,7 +23,8 @@ const OrderSummary = ({
   const totalAmount = subTotalAmount + deliveryAmount;
 
   const confirmOrder = () => {
-    const data: any = { deliveryAddressId };
+    if (!deliveryAddressId) return
+      const data: any = { deliveryAddressId };
     const cartItems = items?.map((item: ICartItem) => ({ product: item?.product?._id, quantity: item.quantity })) 
     if (customerNotes) {
       data.customerNotes = customerNotes;
@@ -38,7 +39,6 @@ const OrderSummary = ({
   }
   useEffect(() => {
     if (initiatePayment.data) {
-      console.log(initiatePayment.data, "initiatePayment.data");
       const { authorizationUrl } = initiatePayment.data?.data;
       if (authorizationUrl) {
         toast.success("You are now being rerouted to pasystack")

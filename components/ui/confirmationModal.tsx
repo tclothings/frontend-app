@@ -35,12 +35,12 @@ const ConfirmationModal = ({
             <Button
               text="Yes"
               onClick={handleAcceptAction}
-              className="bg-blue-500 text-white rounded py-2 px-4"
+              className="bg-blue-500 text-white rounded !px-6"
             />
             <Button
               text="No"
               onClick={() => setIsOpen(false)}
-              className="bg-red-500 text-white rounded py-2 px-4"
+              className="bg-red-500 text-white rounded !px-6"
             />
           </div>
         </div>

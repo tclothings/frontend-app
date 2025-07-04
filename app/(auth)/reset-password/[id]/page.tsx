@@ -1,7 +1,7 @@
 "use client";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAuth } from "app/api/auth";
+import { useAuth } from "app/api/useAuth";
 import PasswordInput from "app/components/form/passwordInput";
 import SubmitButton from "app/components/form/submitButton";
 import { passwordSchema } from "app/lib/schemas/auth";

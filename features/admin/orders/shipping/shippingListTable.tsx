@@ -52,8 +52,6 @@ export default function ShippingListTable({
 
   const data = shippingCostList?.data?.shippingCosts;
 
-  console.log(shippingCostList?.data, "shippingCostList");
-
   return (
     <>
       <div className="space-y-5 overflow-y-auto h-full">

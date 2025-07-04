@@ -4,7 +4,8 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import { useCart } from "app/api/client/cart";
 import { ICartItem, IProduct } from "app/lib/types";
 import clsx from "clsx";
-import Cookies from "js-cookie";
+import { useSession } from "next-auth/react";
+// import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
@@ -49,7 +50,8 @@ function SubmitButton({
 
 export function AddToCart({ product }: { product: IProduct }) {
   const router = useRouter()
-  const userToken = Cookies.get("user");
+  // const userToken = Cookies.get("user");
+  const { data: session } = useSession();
   const { addToCart, updateCartItem, cartItems } = useCart();
   
   const items = cartItems?.data?.items
@@ -65,16 +67,19 @@ export function AddToCart({ product }: { product: IProduct }) {
   }, [addToCart.isSuccess]);
 
   const handleAddToCart = () => {
-    if (userToken) {
+    if (session) {
       if (cartProduct) {
-        const data = { product: product._id, quantity: cartProduct.quantity + 1 };
+        const data = {
+          product: product._id,
+          quantity: cartProduct.quantity + 1,
+        };
         updateCartItem.mutate(data);
-      }else {
+      } else {
         const data = { product: product._id, quantity: 1 };
         addToCart.mutate(data);
       }
     } else {
-      router.push("/login")
+      router.push("/login");
     }
   }
 

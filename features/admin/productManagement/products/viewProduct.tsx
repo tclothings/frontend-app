@@ -47,7 +47,6 @@ const ViewProduct = ({
   if (!item) {
     return <div>No product found</div>;
   }
-
   return (
     <>
       <div>
@@ -71,15 +70,24 @@ const ViewProduct = ({
             <h4 className="text-neutral-500 dark:text-neutral-400">
               Description
             </h4>
-            <p className="font-medium">{capitalizeWord(item?.description)}</p>
+            <p
+              className="font-medium"
+              dangerouslySetInnerHTML={{ __html: item?.description || "" }}
+            />
           </div>
           <div className="space-y-1 border-b border-b-grey-50 py-2">
             <h4 className="text-neutral-500 dark:text-neutral-400">Category</h4>
-            <p className="font-medium">{capitalizeWord(item?.category)}</p>
+            <p className="font-medium">
+              {capitalizeWord(item?.category?.name)}
+            </p>
           </div>
           <div className="space-y-1 border-b border-b-grey-50 py-2">
             <h4 className="text-neutral-500 dark:text-neutral-400">Price</h4>
             <p className="font-medium">{formatAmount(item?.price)}</p>
+          </div>
+          <div className="space-y-1 border-b border-b-grey-50 py-2">
+            <h4 className="text-neutral-500 dark:text-neutral-400">Sales Price</h4>
+            <p className="font-medium">{formatAmount(item?.salePrice)}</p>
           </div>
           <div className="space-y-1 border-b border-b-grey-50 py-2">
             <h4 className="text-neutral-500 dark:text-neutral-400">Quantity</h4>
@@ -95,7 +103,12 @@ const ViewProduct = ({
             <h4 className="text-neutral-500 dark:text-neutral-400">
               Product Image
             </h4>
-            <Image alt={item.name} src={item?.productImage} height={300} width={300} />
+            <Image
+              alt={item.name}
+              src={item?.productImage}
+              height={300}
+              width={300}
+            />
           </div>
 
           <div className="space-y-1 mt-2">
