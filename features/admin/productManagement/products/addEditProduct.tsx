@@ -104,6 +104,7 @@ const description = watch("description");
           }));
         if (existingImages?.length) {
           setImageItems(existingImages);
+          
         }
       }
     }
