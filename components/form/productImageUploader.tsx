@@ -1,4 +1,4 @@
-import { CheckIcon, PencilSquareIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { PencilSquareIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { uploadToS3 } from "app/lib/configs/s3Client";
 import { resizeImageToSquare } from "app/lib/utils";
 import React, { Dispatch, SetStateAction, useState } from "react";

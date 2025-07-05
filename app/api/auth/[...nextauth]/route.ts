@@ -1,9 +1,5 @@
 // app/api/auth/[...nextauth]/route.ts
-import NextAuth, { AuthOptions, Session, User } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import axios from "axios";
-import { JWT } from "next-auth/jwt";
-import http, { post } from "app/lib/http";
+import NextAuth from "next-auth";
 import { authOptions } from "app/lib/authOptions";
 
 // export const authOptions: AuthOptions = {

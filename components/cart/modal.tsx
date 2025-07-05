@@ -8,7 +8,7 @@ import {
   TransitionChild,
 } from "@headlessui/react";
 import { ShoppingCartIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Fragment, useEffect, useMemo, useRef, useState, memo } from "react";
+import { Fragment, useMemo, useState, memo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -30,13 +30,13 @@ const CartModal = () => {
   const items = useMemo(() => cartData?.items || [], [cartData?.items]);
   const totalAmount = cartData?.totalAmount || 0;
 
-  const totalQuantity = useMemo(
-    () => items.reduce((acc, item) => acc + item.quantity, 0),
-    [items]
-  );
+  // const totalQuantity = useMemo(
+  //   () => items.reduce((acc, item) => acc + item.quantity, 0),
+  //   [items]
+  // );
 
   const [isOpen, setIsOpen] = useState(false);
-  const previousTotalQuantityRef = useRef(0);
+  // const previousTotalQuantityRef = useRef(0);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
 
@@ -111,14 +111,14 @@ const CartModal = () => {
 
 export default memo(CartModal);
 
-// ------------------ Subcomponents ------------------
-
 const EmptyCartView = memo(() => (
   <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
     <ShoppingCartIcon className="h-16" />
     <p className="mt-6 text-center text-2xl font-bold">Your cart is empty.</p>
   </div>
 ));
+EmptyCartView.displayName = "EmptyCartView";
+
 
 const CartContent = memo(function CartContent({
   items,
@@ -211,6 +211,8 @@ const CartContent = memo(function CartContent({
     </div>
   );
 });
+
+CartContent.displayName = "CartContent";
 
 function CloseCart({ className }: { className?: string }) {
   return (

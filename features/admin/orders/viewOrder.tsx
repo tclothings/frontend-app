@@ -88,11 +88,12 @@ const ViewOrder = ({ onSuccess, item }: ViewOrderProps) => {
         </div>
       </div>
       <UpdateStatus
+        item={item}
         isOpen={isUpdateStatus}
         setIsOpen={setUpdateStatus}
-        acceptAction={() => {
+        onSuccess={() => {
           setUpdateStatus(false);
-          onSuccess()
+          onSuccess();
         }}
         title="Update Status"
       />

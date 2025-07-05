@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import type { ListItem, PathFilterItem } from '.';
 import { SortFilterItemType } from "app/lib/types";
-import { Suspense } from 'react';
 
 function PathFilterItem({ item }: { item: PathFilterItem }) {
   const pathname = usePathname();
