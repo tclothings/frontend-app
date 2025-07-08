@@ -28,7 +28,7 @@ export default function ProductTable({
   const params = useSearchParams()
   const page = params.get("page")
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const { products } = useProducts({ params: { page } });
+  const { products } = useProducts({ params: { page }, enabled: true });
 
   if (products.isPending) return <Spinner />;
   if (products.isError) return <div>Something went wrong </div>;

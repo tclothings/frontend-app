@@ -13,7 +13,7 @@ function CollectionList() {
    const [collections, setCollections] = useState([
      allCategory
    ]);
-  const { categories } = useCategories({ params: { isActive : true} });
+  const { categories } = useCategories({ params: { isActive : true}, enabled: true });
   
   useEffect(() => {
     if (categories.data) {

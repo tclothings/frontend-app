@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import http from "app/lib/http";
 
-export const useAuth = (args?: any) => {
+export const useAuth = () => {
   const register = useMutation({
     mutationFn: async (data) => {
       const result = await http.post("auth/register", data);

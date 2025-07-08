@@ -5,12 +5,11 @@ import { useProducts } from "app/api/client/products";
 import { GridTileImageSkeleton } from "app/components/layout/tile";
 
 export function ProductCarousel() {
-  const { products } = useProducts();
+  const { products } = useProducts({enabled: true});
 
-  if (products.data) {
+  if (products.isLoading) {
     return <CarouselSkeleton />;
   }
-
   const data = products?.data?.products;
   if (!data?.length) return null;
 
@@ -20,11 +19,8 @@ export function ProductCarousel() {
 
 export const CarouselSkeleton = () => {
   return (
-    // Removed 'overflow-x-scroll hidden-scrollbar' from here as Swiper handles its own overflow.
-    // If you still want the custom scrollbar on the skeleton, keep it.
     <div className="w-full pb-6 pt-1">
       <ul className="flex animate-carousel gap-4">
-        {/* Render enough skeleton items to fill the view */}
         {Array.from({ length: 6 }).map((_, i) => (
           <li
             key={i}

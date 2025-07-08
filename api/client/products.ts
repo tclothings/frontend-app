@@ -1,11 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import http from "app/lib/http";
 import { KEYS } from "./queryKeys";
 import { stringifyParams } from "app/lib/utils";
 
 export const useProducts = (args?: any) => {
-  const queryClient = useQueryClient();
-  const {enabled= true, id, params, slug } = args ?? {};
+  const {enabled= false, id, params, slug } = args ?? {};
 
   const products = useQuery({
     enabled,
@@ -23,9 +22,10 @@ export const useProducts = (args?: any) => {
   });
 
   const productsByCategorySlug = useQuery({
-    enabled: !!slug,
+    enabled: ["string", "number"].includes(typeof slug),
     queryKey: [KEYS.PRODUCTSBYCATEGORYSLUG, params, slug],
     queryFn: async () => {
+      if (!slug) return
       let url = `products/category/${slug}/products`;
       let urlParams = {
         ...(params || {}),
@@ -39,10 +39,11 @@ export const useProducts = (args?: any) => {
   const product = useQuery({
     queryKey: [KEYS.PRODUCTS, id],
     queryFn: async () => {
+      if (!id) return
       const result = await http.get(`products/slug/${id}`);
       return result?.data?.data;
     },
-    enabled: !!id,
+    enabled: ["string", "number"].includes(typeof id),
   });
 
   return { products, product, productsByCategorySlug };

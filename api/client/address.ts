@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "app/lib/http";
 
 export const useAddresses = (args?: any) => {
-  const { id, enabled } = args ?? {};
+  const { id, enabled=false } = args ?? {};
 const queryClient = useQueryClient()
   const addresses = useQuery({
     queryKey: ["addresses"],
@@ -15,10 +15,11 @@ const queryClient = useQueryClient()
   const address = useQuery({
     queryKey: ["addresses", id],
     queryFn: async () => {
+      if(!id) return 
       const result = await http.get("users/me/address");
       return result?.data;
     },
-      enabled: !!id
+    enabled: ["string", "number"].includes(typeof id),
   });
   const addAddress = useMutation({
     mutationFn: async (data) => {

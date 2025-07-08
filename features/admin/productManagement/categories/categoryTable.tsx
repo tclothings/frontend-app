@@ -23,6 +23,7 @@ export default function CategoryTable({ onSuccess }: CategoryTableProps) {
   const [selectedItem, setSelectedItem] = useState<ICategory | undefined>();
   const { categories, deleteCategory } = useCategories({
     params: { limitless: true },
+    enabled: true,
   });
 
   useEffect(() => {

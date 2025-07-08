@@ -5,9 +5,9 @@ import { stringifyParams } from "app/lib/utils";
 
 export const useOrders = (args?: any) => {
   const queryClient = useQueryClient();
-  const { id, params } = args ?? {};
-  
+  const { id, params, enabled=false } = args ?? {};
   const orders = useQuery({
+    enabled,
     queryKey: [KEYS.ORDERS],
     queryFn: async () => {
       let url = "orders/users";
@@ -22,10 +22,11 @@ export const useOrders = (args?: any) => {
   const order = useQuery({
     queryKey: [KEYS.ORDERS, id],
     queryFn: async () => {
+      if (!id) return
       const result = await http.get(`orders/${id}`);
       return result?.data?.data;
     },
-    enabled: !!id,
+    enabled: ["string", "number"].includes(typeof id),
   });
 
   const addOrder = useMutation({

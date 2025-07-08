@@ -3,10 +3,11 @@ import http from "app/lib/http";
 import { KEYS } from "./queryKeys";
 
 export const useCart = (args?: any) => {
-  const { id } = args ?? {};
+  const { enabled = false } = args ?? {};
   const queryClient = useQueryClient();
 
   const cartItems = useQuery({
+    enabled,
     queryKey: [KEYS.CART],
     queryFn: async () => {
       const result = await http.get("carts");

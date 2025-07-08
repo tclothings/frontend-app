@@ -47,6 +47,7 @@ axiosInstance.interceptors.response.use(
       error?.response?.data?.error?.message ||
       error?.message ||
       "Something went wrong";
+    console.log(message, "message", error);
     const suppress401 = config?.suppress401Toast;
     const suppressToast = config?.suppressToast;
     console.log(error, "errors");

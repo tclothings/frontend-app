@@ -54,7 +54,7 @@ function ThreeItemGridItem({
 }
 
 export function ThreeItemGrid() {
-  const { products } = useProducts({ params: { isFeatured: true } });
+  const { products } = useProducts({ params: { isFeatured: true }, enabled: true });
 
   if (!products.data) {
     return <ThreeItemGridSkeleton />;

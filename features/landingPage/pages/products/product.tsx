@@ -58,7 +58,7 @@ export default function Product({ slug }: { slug: string }) {
 }
 
 const RelatedProducts = ({ slug }: { slug: string }) => {
-  const { productsByCategorySlug } = useProducts({ enabled: false, slug });
+  const { productsByCategorySlug } = useProducts({ slug });
 
   if (!productsByCategorySlug.data) {
     return <RelatedProductsSkeleton />;

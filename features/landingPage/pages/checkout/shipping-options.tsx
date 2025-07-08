@@ -16,7 +16,7 @@ export default function ShippingOptions() {
   const [shippingAddress, setShippingAddress] = useState<IShipping | null>(null);
   const [deliveryAddressId, setDeliveryAddressId] = useState<string>("");
 
-  const { cartItems } = useCart();
+  const { cartItems } = useCart({enabled: true});
   const { shippingCostList } = useCheckout();
   const { addresses } = useAddresses({ enabled: true });
 

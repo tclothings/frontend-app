@@ -52,7 +52,7 @@ export function AddToCart({ product }: { product: IProduct }) {
   const router = useRouter()
   // const userToken = Cookies.get("user");
   const { data: session } = useSession();
-  const { addToCart, updateCartItem, cartItems } = useCart();
+  const { addToCart, updateCartItem, cartItems } = useCart({enabled: true});
   
   const items = cartItems?.data?.items
   const cartProduct = items?.find((item: ICartItem) => item.product?._id === product._id);

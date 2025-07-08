@@ -4,7 +4,7 @@ import { KEYS } from "./queryKeys";
 
 export const useShipping = (args?: any) => {
   const queryClient = useQueryClient();
-  const { id, params, enabled=false } = args ?? {};
+  const { enabled=false } = args ?? {};
 
   const shippingCostList = useQuery({
     enabled,

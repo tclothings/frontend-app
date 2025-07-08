@@ -17,7 +17,7 @@ const Category = () => {
 
   const { sortKey } = sorting.find((item) => item.slug === sort) || defaultSort;
 
-  const { products } = useProducts({ params: { [sortKey]: sort, page } });
+  const { products } = useProducts({ params: { [sortKey]: sort, page }, enabled: true });
 
   useEffect(() => {
     if (products.data) {

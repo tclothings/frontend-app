@@ -19,7 +19,7 @@ export default function OrderTable() {
           const page = params.get("page")
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
-  const { orders } = useOrders({ params: { page } });
+  const { orders } = useOrders({ params: { page }, enabled: true });
 
   if (orders.isPending) return <Spinner />;
   if (orders.isError) return <div>Something went wrong </div>;

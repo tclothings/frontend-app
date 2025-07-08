@@ -4,7 +4,7 @@ import { KEYS } from "./queryKeys";
 import { stringifyParams } from "app/lib/utils";
 
 export const useAdminUsers = (args?: any) => {
-  const { id, params } = args ?? {};
+  const { params } = args ?? {};
   const queryClient = useQueryClient();
   const admins = useQuery({
     queryKey: [KEYS.ADMINS],
@@ -55,7 +55,7 @@ export const useAdminUsers = (args?: any) => {
 };
 
 export const useCustomerUsers = (args?: any) => {
-  const { id, params } = args ?? {};
+  const { params } = args ?? {};
   const customers = useQuery({
     queryKey: [KEYS.CUSTOMERS],
     queryFn: async () => {

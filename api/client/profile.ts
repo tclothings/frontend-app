@@ -1,9 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "app/lib/http";
 
-export const useProfile = (args?: any) => {
-  const { id } = args ?? {};
-  const queryClient = useQueryClient();
+export const useProfile = () => {
   const userProfile = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {

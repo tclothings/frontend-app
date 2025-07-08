@@ -24,7 +24,7 @@ export default function Search() {
   const { sortKey } = sorting.find((item) => item.slug === sort) || defaultSort;
 
   const { products } = useProducts({
-    params: { search, [sortKey]: sort, page },
+    params: { search, [sortKey]: sort, page }, enabled: true
   });
 
   useEffect(() => {

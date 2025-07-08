@@ -1,13 +1,7 @@
-import { PencilSquareIcon } from "@heroicons/react/24/outline";
-import Button from "app/components/form/button";
-import { formatAmount, formatDate, roles } from "app/lib/utils";
+
+import { formatAmount, formatDate } from "app/lib/utils";
 import UpdateStatus from "./components/updateStatus";
-import { useEffect, useState } from "react";
-import { useOrders } from "app/api/admin/orders";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { orderStatusSchema } from "app/lib/schemas/order";
-import { toast } from "sonner";
+import { useState } from "react";
 import SubmitButton from "app/components/form/submitButton";
 
 interface ViewOrderProps {
@@ -16,20 +10,6 @@ interface ViewOrderProps {
 }
 const ViewOrder = ({ onSuccess, item }: ViewOrderProps) => {
   const [isUpdateStatus, setUpdateStatus] = useState(false);
-
-
-
-
-  // useEffect(() => {
-  //   setValue("status", item.status);
-  //   setValue("paymentStatus", item.paymentStatus);
-  // }, []);
-
-
-
-  // const openUpdateStatusModal = (statusType: string) => {
-  //   setUpdateStatus(true)
-  // }
   return (
     <>
       <div>

@@ -24,7 +24,7 @@ import { EditItemQuantityButton } from "./edit-item-quantity-button";
 import Price from "../price";
 
 const CartModal = () => {
-  const { cartItems } = useCart();
+  const { cartItems } = useCart({enabled: true});
   const cartData = cartItems?.data;
 
   const items = useMemo(() => cartData?.items || [], [cartData?.items]);

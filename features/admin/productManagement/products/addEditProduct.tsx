@@ -47,7 +47,10 @@ const addEditProduct = ({
 
   const { addProduct, updateProduct } = useProducts();
   const [categoryList, setCategoryList] = useState([]);
-  const { categories } = useCategories({ params: { limitless: true } });
+  const { categories } = useCategories({
+    params: { limitless: true },
+    enabled: true,
+  });
 
 
 // console.log(item, "item")
