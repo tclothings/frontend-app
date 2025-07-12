@@ -118,7 +118,7 @@ export function ThreeItemGrid() {
 
 export const ThreeItemGridSkeleton = () => {
   return (
-    <section className="w-full mx-auto grid max-w-(--breakpoint-2xl) gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2 lg:max-h-[calc(100vh-200px)] h-full animate-pulse">
+    <section className="w-full mx-auto grid max-w-(--breakpoint-2xl) gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2  h-full animate-pulse">
       <ThreeItemGridItemSkeleton size="full" />
       <ThreeItemGridItemSkeleton size="half" />
       <ThreeItemGridItemSkeleton size="half" />
@@ -136,8 +136,8 @@ export const ThreeItemGridItemSkeleton = ({
       className={clsx(
         "shadow-md hover:shadow-lg transition-shadow animate-pulse  bg-neutral-200 dark:bg-neutral-700",
         size === "full"
-          ? "md:col-span-4 md:row-span-2 h-[700px]"
-          : "md:col-span-2 md:row-span-1 h-[345px]"
+          ? "md:col-span-4 md:row-span-2 h-[600px]"
+          : "md:col-span-2 md:row-span-1 h-[292px]"
       )}
     >
       {/* <GridTileImageSkeleton /> */}
