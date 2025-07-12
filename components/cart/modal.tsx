@@ -14,7 +14,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { createUrl } from "app/lib/utils";
-import { useCart } from "app/api/client/cart";
+import { useCart } from "app/api/cart";
 import { ICartItem } from "app/lib/types";
 
 import Button from "../form/button";
@@ -24,7 +24,7 @@ import { EditItemQuantityButton } from "./edit-item-quantity-button";
 import Price from "../price";
 
 const CartModal = () => {
-  const { cartItems } = useCart({enabled: true});
+  const { cartItems } = useCart({ enabled: true });
   const cartData = cartItems?.data;
 
   const items = useMemo(() => cartData?.items || [], [cartData?.items]);
@@ -118,7 +118,6 @@ const EmptyCartView = memo(() => (
   </div>
 ));
 EmptyCartView.displayName = "EmptyCartView";
-
 
 const CartContent = memo(function CartContent({
   items,

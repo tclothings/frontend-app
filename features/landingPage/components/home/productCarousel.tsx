@@ -1,11 +1,11 @@
 "use client"; // Keep this at the top for client-side rendering
 
 import { Carousel } from "app/components/layout/carousel";
-import { useProducts } from "app/api/client/products";
+import { useProducts } from "app/api/products";
 import { GridTileImageSkeleton } from "app/components/layout/tile";
 
 export function ProductCarousel() {
-  const { products } = useProducts({enabled: true});
+  const { products } = useProducts({ enabled: true });
 
   if (products.isLoading) {
     return <CarouselSkeleton />;

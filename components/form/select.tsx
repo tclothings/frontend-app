@@ -13,9 +13,18 @@ interface IProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   methods: UseFormReturn<any>;
   placeholder?: string;
   schema?: any;
-  disabledOptions?: any[]}
+  disabledOptions?: any[];
+}
 
-export default function Select({ name, options, methods, placeholder, schema,disabledOptions, ...rest }: IProps) {
+export default function Select({
+  name,
+  options,
+  methods,
+  placeholder,
+  schema,
+  disabledOptions,
+  ...rest
+}: IProps) {
   const { errors } = methods.formState;
   const [isFocused, setIsFocused] = useState(false);
   const [isRequired, setIsRequired] = useState(false);
@@ -24,7 +33,9 @@ export default function Select({ name, options, methods, placeholder, schema,dis
     if (schema?.fields && name) {
       const fieldSchema = schema.fields[name];
       if (fieldSchema) {
-        const isRequiredField = fieldSchema.describe().tests.some((test: any) => test.name === "required");
+        const isRequiredField = fieldSchema
+          .describe()
+          .tests.some((test: any) => test.name === "required");
         setIsRequired(isRequiredField);
       }
     }
@@ -81,7 +92,7 @@ export default function Select({ name, options, methods, placeholder, schema,dis
         errors={errors}
         name={name}
         render={({ message }) => (
-          <p className="error-message mt-[12px]">{message}</p>
+          <p className="text-xs error-message mt-2">{message}</p>
         )}
       />
     </div>

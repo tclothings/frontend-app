@@ -11,7 +11,12 @@ export interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   schema?: any;
 }
 
-export default function PasswordInput({ methods, name, placeholder, schema }: IProps) {
+export default function PasswordInput({
+  methods,
+  name,
+  placeholder,
+  schema,
+}: IProps) {
   const { errors } = methods.formState;
   const [inputType, setInputType] = useState("password");
   const [isFocused, setIsFocused] = useState(false);
@@ -21,7 +26,9 @@ export default function PasswordInput({ methods, name, placeholder, schema }: IP
     if (schema?.fields && name) {
       const fieldSchema = schema.fields[name];
       if (fieldSchema) {
-        const isRequiredField = fieldSchema.describe().tests.some((test: any) => test.name === "required");
+        const isRequiredField = fieldSchema
+          .describe()
+          .tests.some((test: any) => test.name === "required");
         setIsRequired(isRequiredField);
       }
     }
@@ -60,7 +67,7 @@ export default function PasswordInput({ methods, name, placeholder, schema }: IP
           }`}
         >
           {placeholder}{" "}
-          {isRequired && isClick && <span className="text-red-500">*</span>}
+          {isRequired && <span className="text-red-500">*</span>}
         </label>
 
         <div className="absolute inset-y-0 right-0 flex items-center">
@@ -81,7 +88,7 @@ export default function PasswordInput({ methods, name, placeholder, schema }: IP
         errors={errors}
         name={name}
         render={({ message }) => (
-          <p className="error-message mt-[12px]">{message}</p>
+          <p className="text-xs error-message mt-2">{message}</p>
         )}
       />
     </div>

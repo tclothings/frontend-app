@@ -67,7 +67,6 @@ export default function NumberInput({
     setValue(name, processedValue);
   };
 
-
   useEffect(() => {
     if (schema?.fields && name) {
       const fieldSchema = schema.fields[name];
@@ -118,7 +117,7 @@ export default function NumberInput({
         errors={errors}
         name={name}
         render={({ message }) => (
-          <p className="error-message mt-[12px]">{message}</p>
+          <p className="text-xs error-message mt-2">{message}</p>
         )}
       />
     </div>

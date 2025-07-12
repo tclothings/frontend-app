@@ -6,7 +6,6 @@ import NumberInput from "app/components/form/numberInput";
 import SubmitButton from "app/components/form/submitButton";
 import { userInfoSchema } from "app/lib/schemas/biodata";
 import { useForm } from "react-hook-form";
-import { useProfile } from "app/api/client/profile";
 import { ChangeEvent, useEffect, useRef } from "react";
 import Button from "app/components/form/button";
 import Image from "next/image";
@@ -15,6 +14,7 @@ import { S3Client } from "@aws-sdk/client-s3";
 import { uploadToS3 } from "app/lib/configs/s3Client";
 import User from "app/components/icons/user";
 import ChangeProfileImg from "app/components/icons/changeProfileImg";
+import { useProfile } from "app/api/useAuth";
 // import { s3Client } from "app/lib/configs/s3Client";
 
 

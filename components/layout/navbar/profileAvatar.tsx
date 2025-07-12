@@ -2,7 +2,7 @@
 
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon, UserIcon } from "@heroicons/react/24/outline";
-import { useProfile } from "app/api/client/profile";
+import { useProfile } from "app/api/useAuth";
 import Button from "app/components/form/button";
 import Logout from "app/components/ui/logout";
 import Image from "next/image";

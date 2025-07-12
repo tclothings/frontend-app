@@ -1,6 +1,6 @@
 "use client";
 
-import { useProducts } from "app/api/client/products";
+import { useProducts } from "app/api/products";
 import Grid from "app/features/landingPage/components/home/grid";
 import ProductGridItems from "app/components/layout/product-grid-items";
 import Pagination from "app/components/ui/pagination";
@@ -17,7 +17,10 @@ const Category = () => {
 
   const { sortKey } = sorting.find((item) => item.slug === sort) || defaultSort;
 
-  const { products } = useProducts({ params: { [sortKey]: sort, page }, enabled: true });
+  const { products } = useProducts({
+    params: { [sortKey]: sort, page },
+    enabled: true,
+  });
 
   useEffect(() => {
     if (products.data) {

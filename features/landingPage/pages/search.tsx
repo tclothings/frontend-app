@@ -5,7 +5,7 @@ import { defaultSort, sorting } from "app/lib/constants";
 import Pagination from "app/components/ui/pagination";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useProducts } from "app/api/client/products";
+import { useProducts } from "app/api/products";
 import ProductsGridSkeleton from "../components/productsGridSkeleton";
 
 export const metadata = {
@@ -24,7 +24,8 @@ export default function Search() {
   const { sortKey } = sorting.find((item) => item.slug === sort) || defaultSort;
 
   const { products } = useProducts({
-    params: { search, [sortKey]: sort, page }, enabled: true
+    params: { search, [sortKey]: sort, page },
+    enabled: true,
   });
 
   useEffect(() => {

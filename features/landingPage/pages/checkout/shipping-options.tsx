@@ -1,22 +1,23 @@
 "use client";
-import { useCart } from "app/api/client/cart";
+import { useCart, useCheckout } from "app/api/cart";
 import OrderSummary from "app/features/landingPage/components/checkout/orderSummary";
-import { useCheckout } from "app/api/client/checkout";
 import CustomerNote from "app/features/landingPage/components/checkout/customerNote";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { checkoutSchema } from "app/lib/schemas/order";
 import { useEffect, useState } from "react";
-import { useAddresses } from "app/api/client/address";
 import { IAddress, IShipping } from "app/lib/types";
 import Spinner from "app/components/form/spinner";
 import DeliveryAddress from "../../components/checkout/delivery-address";
+import { useAddresses } from "app/api/payment";
 
 export default function ShippingOptions() {
-  const [shippingAddress, setShippingAddress] = useState<IShipping | null>(null);
+  const [shippingAddress, setShippingAddress] = useState<IShipping | null>(
+    null
+  );
   const [deliveryAddressId, setDeliveryAddressId] = useState<string>("");
 
-  const { cartItems } = useCart({enabled: true});
+  const { cartItems } = useCart({ enabled: true });
   const { shippingCostList } = useCheckout();
   const { addresses } = useAddresses({ enabled: true });
 
@@ -26,7 +27,7 @@ export default function ShippingOptions() {
     resolver: yupResolver(checkoutSchema),
   });
 
-  const { watch } = methods
+  const { watch } = methods;
   const customerNotes = watch("customerNotes");
 
   const addressList = addresses?.data?.data;
@@ -36,7 +37,7 @@ export default function ShippingOptions() {
   );
   useEffect(() => {
     if (shippingCostList.data && addresses.data) {
-      const {shippingCosts} = shippingCostList?.data?.data;
+      const { shippingCosts } = shippingCostList?.data?.data;
       if (defaultAddress) {
         setDeliveryAddressId(defaultAddress._id);
       }
@@ -46,12 +47,10 @@ export default function ShippingOptions() {
       if (deliveryAddress) {
         setShippingAddress(deliveryAddress);
       } else {
-        setShippingAddress(null)
+        setShippingAddress(null);
       }
-
     }
   }, [shippingCostList.data, addresses.data]);
-
 
   if (cartItems.isError) {
     return null;

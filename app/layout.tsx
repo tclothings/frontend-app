@@ -9,21 +9,9 @@ import Head from "next/head";
 import SessionProviderWrapper from "app/components/providers/session-provider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "app/lib/authOptions";
-// import { authOptions } from "./api/auth/[...nextauth]/route";
-// import SessionProviderWrapper from "app/components/providers/session-provider";
-// import { SessionProvider } from "next-auth/react";
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
 
 export const metadata: Metadata = {
-  title: "T clothings",
+  title: "T clothing",
   description: "T clothings",
   icons: [
     {

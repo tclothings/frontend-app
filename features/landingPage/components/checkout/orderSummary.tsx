@@ -1,4 +1,4 @@
-import { usePayment } from "app/api/client/payment";
+import { usePayment } from "app/api/payment";
 import Button from "app/components/form/button";
 import { ICartItem, IShipping } from "app/lib/types";
 import { formatAmount } from "app/lib/utils";

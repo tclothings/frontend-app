@@ -1,5 +1,5 @@
 "use client";
-import { useProducts } from "app/api/client/products";
+import { useProducts } from "app/api/products";
 import { GridTileImage } from "app/components/layout/tile";
 import type { IProduct } from "app/lib/types";
 import clsx from "clsx";
@@ -54,7 +54,10 @@ function ThreeItemGridItem({
 }
 
 export function ThreeItemGrid() {
-  const { products } = useProducts({ params: { isFeatured: true }, enabled: true });
+  const { products } = useProducts({
+    params: { isFeatured: true },
+    enabled: true,
+  });
 
   if (!products.data) {
     return <ThreeItemGridSkeleton />;

@@ -2,8 +2,8 @@ import Button from "app/components/form/button";
 import { TrashIcon, PencilIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { Dispatch, SetStateAction, useEffect } from "react";
-import { useAddresses } from "app/api/client/address";
 import { toast } from "sonner";
+import { useAddresses } from "app/api/payment";
 
 const AddressCard = ({
   address,

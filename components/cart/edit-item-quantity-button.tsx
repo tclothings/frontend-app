@@ -2,40 +2,37 @@
 
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
-import { useCart } from "app/api/client/cart";
+import { useCart } from "app/api/cart";
 import { toast } from "sonner";
 import { useEffect } from "react";
-
 
 export function EditItemQuantityButton({
   item,
   type,
-}:
-{
+}: {
   item: any;
   type: "plus" | "minus";
 }) {
   const { updateCartItem } = useCart();
-  
+
   useEffect(() => {
     if (updateCartItem.isSuccess) {
       toast.success(updateCartItem.data?.message);
     }
   }, [updateCartItem.isSuccess]);
-  
-  const disablePlusBtn = item?.quantity >= item?.product?.quantity;
-  
-    const disableMinusBtn = item?.quantity <= 1;
 
-  
+  const disablePlusBtn = item?.quantity >= item?.product?.quantity;
+
+  const disableMinusBtn = item?.quantity <= 1;
+
   const handleEditCart = () => {
     const productId = item?.product?._id;
     if (type === "plus") {
       if (disablePlusBtn) return;
-        const data = {
-          product: productId,
-          quantity: item?.quantity + 1,
-        };
+      const data = {
+        product: productId,
+        quantity: item?.quantity + 1,
+      };
       updateCartItem.mutate(data);
     } else {
       if (disableMinusBtn) return;
@@ -43,7 +40,8 @@ export function EditItemQuantityButton({
         product: productId,
         quantity: item?.quantity - 1,
       };
-      updateCartItem.mutate(data);    }
+      updateCartItem.mutate(data);
+    }
   };
 
   return (
@@ -70,4 +68,4 @@ export function EditItemQuantityButton({
       )}
     </button>
   );
-} 
+}

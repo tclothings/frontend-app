@@ -5,14 +5,13 @@ const registerSchema = Yup.object().shape({
   password: Yup.string()
     .required("Password is required")
     .min(6, "Password should be 6 characters or more")
-    .label("Password")
-    // .matches(
-    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-    //   "Password should contain at least one uppercase, lowercase, number and special character"
-    // )
-    ,
-  firstName: Yup.string(),
-  lastName: Yup.string(),
+    .label("Password"),
+  // .matches(
+  //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+  //   "Password should contain at least one uppercase, lowercase, number and special character"
+  // )
+  firstName: Yup.string().required("First name is required").label("firstName"),
+  lastName: Yup.string().required("Last name is required").label("lastName"),
 });
 
 

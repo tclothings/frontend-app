@@ -64,7 +64,7 @@ export interface IUser {
   createdAt: string
 }
 
-export type UserRole = "customer" | "admin" | "vendor" | "superadmin"; // extend as needed
+export type UserRole = "customer"
 
 
 // products
