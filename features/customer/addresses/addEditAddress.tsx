@@ -8,9 +8,9 @@ import { Dispatch, SetStateAction, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import CustomCheck from "app/components/form/customCheck";
-import { useAddresses } from "app/api/client/address";
 import { toast } from "sonner";
 import { ControlledGoogleAddress } from "app/components/form/controlledGoogleAddress";
+import { useAddresses } from "app/api/payment";
 
 const emptyValue = "";
 const AddEditAddress = ({

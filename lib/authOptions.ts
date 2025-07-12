@@ -25,14 +25,17 @@ export const authOptions: AuthOptions = {
           const data = res.data?.data;
 
           if (data?.user && data?.access_token) {
-            return {
-              id: data.user.id,
-              firstName: data.user.firstName,
-              lastName: data.user.lastName,
-              email: data.user.email,
-              accessToken: data.access_token,
-              roles: data.user.roles,
-            };
+            if (data?.user?.roles?.[0] !== "customer") {
+            throw new Error("Anauthorized access");
+            }
+              return {
+                id: data.user.id,
+                firstName: data.user.firstName,
+                lastName: data.user.lastName,
+                email: data.user.email,
+                accessToken: data.access_token,
+                roles: data.user.roles,
+              };
           }
           return null;
         } catch (err: any) {

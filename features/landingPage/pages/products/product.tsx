@@ -8,7 +8,7 @@ import ProductImageGallerySkeleton, {
 } from "app/features/landingPage/components/product/product-description";
 import { IMedia, IProduct } from "app/lib/types";
 import Link from "next/link";
-import { useProducts } from "app/api/client/products";
+import { useProducts } from "app/api/products";
 import { useEffect } from "react";
 import clsx from "clsx";
 import { MediaGallery } from "../../components/product/mediaGallery";
@@ -58,7 +58,7 @@ export default function Product({ slug }: { slug: string }) {
 }
 
 const RelatedProducts = ({ slug }: { slug: string }) => {
-  const { productsByCategorySlug } = useProducts({ enabled: false, slug });
+  const { productsByCategorySlug } = useProducts({ slug });
 
   if (!productsByCategorySlug.data) {
     return <RelatedProductsSkeleton />;

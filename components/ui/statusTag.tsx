@@ -36,6 +36,7 @@ export default function StatusTag({ status }: { status: string }) {
           className: "bg-green-50 text-green-700",
           circleColor: "#02B04E",
         };
+                break;
       case "active":
         classObj = {
           className: "bg-green-50 text-green-700",

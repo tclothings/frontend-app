@@ -1,27 +1,23 @@
-'use client';
+"use client";
 
-import { XMarkIcon } from '@heroicons/react/24/outline';
-import { useCart } from 'app/api/client/cart';
-import type { ICartItem } from 'app/lib/types';
-import { useEffect } from 'react';
-import { toast } from 'sonner';
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useCart } from "app/api/cart";
+import type { ICartItem } from "app/lib/types";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
-export function DeleteItemButton({
-  item,
-}: {
-  item: ICartItem;
-  }) {
-  const { deleteItemFromCart } = useCart()
+export function DeleteItemButton({ item }: { item: ICartItem }) {
+  const { deleteItemFromCart } = useCart();
 
   const handleDelete = () => {
-    deleteItemFromCart.mutate(item.product?._id)
-  }
-  
+    deleteItemFromCart.mutate(item.product?._id);
+  };
+
   useEffect(() => {
     if (deleteItemFromCart.isSuccess) {
       toast.success(deleteItemFromCart.data?.message);
     }
-  }, [deleteItemFromCart.isSuccess])
+  }, [deleteItemFromCart.isSuccess]);
 
   return (
     <>
@@ -33,7 +29,6 @@ export function DeleteItemButton({
       >
         <XMarkIcon className="mx-[1px] h-4 w-4 text-white dark:text-black" />
       </button>
-
     </>
   );
 }

@@ -29,7 +29,10 @@ export const ControlledGoogleAddress = ({
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
-      if (dropdownRefBtn.current && !dropdownRefBtn.current.contains(event.target as Node)) {
+      if (
+        dropdownRefBtn.current &&
+        !dropdownRefBtn.current.contains(event.target as Node)
+      ) {
         setSearching(false);
       }
     };
@@ -53,7 +56,9 @@ export const ControlledGoogleAddress = ({
     if (schema?.fields && name) {
       const fieldSchema = schema.fields[name];
       if (fieldSchema) {
-        const isRequiredField = fieldSchema.describe().tests.some((test: any) => test.name === "required");
+        const isRequiredField = fieldSchema
+          .describe()
+          .tests.some((test: any) => test.name === "required");
         setIsRequired(isRequiredField);
       }
     }
@@ -72,15 +77,16 @@ export const ControlledGoogleAddress = ({
 
   const isClick = isFocused || isFieldRegistered;
 
-  const { placesService, placePredictions, getPlacePredictions } = usePlacesService({
-    apiKey: process.env.NEXT_PUBLIC_GOOGLE_KEY,
-    options: {
-      componentRestrictions: {
-        country: "NG",
+  const { placesService, placePredictions, getPlacePredictions } =
+    usePlacesService({
+      apiKey: process.env.NEXT_PUBLIC_GOOGLE_KEY,
+      options: {
+        componentRestrictions: {
+          country: "NG",
+        },
+        input: "string",
       },
-      input: "string",
-    },
-  });
+    });
 
   useEffect(() => {}, [placePredictions]);
 
@@ -91,7 +97,7 @@ export const ControlledGoogleAddress = ({
       {
         placeId: data.place_id,
       },
-      (placeDetails:any) => {
+      (placeDetails: any) => {
         const geometry = placeDetails?.geometry?.location;
         const long = geometry?.lng();
         const lat = geometry?.lat();
@@ -127,7 +133,7 @@ export const ControlledGoogleAddress = ({
           country,
         });
         methods.setValue(name, address as string);
-      },
+      }
     );
   };
 
@@ -161,7 +167,7 @@ export const ControlledGoogleAddress = ({
         errors={errors}
         name={name}
         render={({ message }) => (
-          <p className="error-message mt-[12px]">{message}</p>
+          <p className="text-xs error-message mt-2">{message}</p>
         )}
       />
 

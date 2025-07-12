@@ -5,9 +5,9 @@ import Spinner from "app/components/form/spinner";
 import Drawer from "app/components/ui/drawer";
 import { ordersHeaders } from "./components/orderHeaders";
 import ViewOrder from "./viewOrder";
-import { useOrders } from "app/api/client/orders";
 import { IOrder } from "app/lib/types";
 import { useSearchParams } from "next/navigation";
+import { useOrders } from "app/api/cart";
 
 export const metadata = {
   title: "Orders",
@@ -19,7 +19,7 @@ export default function OrderTable() {
           const page = params.get("page")
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
-  const { orders } = useOrders({ params: { page } });
+  const { orders } = useOrders({ params: { page }, enabled: true });
 
   if (orders.isPending) return <Spinner />;
   if (orders.isError) return <div>Something went wrong </div>;

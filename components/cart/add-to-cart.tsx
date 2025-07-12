@@ -1,7 +1,7 @@
 "use client";
 
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { useCart } from "app/api/client/cart";
+import { useCart } from "app/api/cart";
 import { ICartItem, IProduct } from "app/lib/types";
 import clsx from "clsx";
 import { useSession } from "next-auth/react";
@@ -17,7 +17,7 @@ function SubmitButton({
 }: {
   availableForSale: boolean;
   onClick: any;
-  disabled: boolean
+  disabled: boolean;
 }) {
   const buttonClasses =
     "relative flex w-full items-center justify-center rounded-full bg-blue-600 p-4 tracking-wide text-white";
@@ -49,16 +49,18 @@ function SubmitButton({
 }
 
 export function AddToCart({ product }: { product: IProduct }) {
-  const router = useRouter()
+  const router = useRouter();
   // const userToken = Cookies.get("user");
   const { data: session } = useSession();
-  const { addToCart, updateCartItem, cartItems } = useCart();
-  
-  const items = cartItems?.data?.items
-  const cartProduct = items?.find((item: ICartItem) => item.product?._id === product._id);
+  const { addToCart, updateCartItem, cartItems } = useCart({ enabled: true });
 
-    const availableForSale =
-      !!product.quantity || cartProduct.quantity < product.quantity;
+  const items = cartItems?.data?.items;
+  const cartProduct = items?.find(
+    (item: ICartItem) => item.product?._id === product._id
+  );
+
+  const availableForSale =
+    !!product.quantity || cartProduct.quantity < product.quantity;
 
   useEffect(() => {
     if (addToCart.isSuccess) {
@@ -81,7 +83,7 @@ export function AddToCart({ product }: { product: IProduct }) {
     } else {
       router.push("/login");
     }
-  }
+  };
 
   return (
     <SubmitButton
@@ -92,16 +94,15 @@ export function AddToCart({ product }: { product: IProduct }) {
   );
 }
 
-
 export function AddToCartButtonSkeleton({ className }: { className?: string }) {
   return (
     <div
       className={clsx(
         "animate-pulse",
         "h-12 w-full",
-        "bg-gray-300 dark:bg-neutral-700", 
+        "bg-gray-300 dark:bg-neutral-700",
         "rounded-md",
-        "relative overflow-hidden", 
+        "relative overflow-hidden",
         className
       )}
     >

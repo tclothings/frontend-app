@@ -54,7 +54,7 @@ export default function DeliveryAddress({ defaultAddress }: { defaultAddress: IA
       </div>
       <Drawer
         title={"Addresses"}
-        children={<Addresses onSuccess={() => setAddressDrawerOpen(false)} />}
+        children={<Addresses/>}
         isOpen={isAddressDrawerOpen}
         onClose={() => setAddressDrawerOpen(false)}
         onOpen={() => setAddressDrawerOpen(true)}

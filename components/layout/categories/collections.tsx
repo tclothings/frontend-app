@@ -4,16 +4,16 @@ import { Suspense, useEffect, useState } from 'react';
 
 // import { getCollections } from 'app/lib';
 import FilterList from './filter';
-import { useCategories } from 'app/api/client/categories';
 import { allCategory } from 'app/lib/constants';
 import { capitalizeWord } from 'app/lib/utils';
 import { ICategory } from 'app/lib/types';
+import { useCategories } from 'app/api/products';
 
 function CollectionList() {
    const [collections, setCollections] = useState([
      allCategory
    ]);
-  const { categories } = useCategories({ params: { isActive : true} });
+  const { categories } = useCategories({ params: { isActive : true}, enabled: true });
   
   useEffect(() => {
     if (categories.data) {

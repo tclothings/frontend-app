@@ -13,7 +13,7 @@ export default function NavClientSection() {
   const pathname = usePathname();
   const role = session?.user?.roles?.[0];
   const isAccountRoute =
-    pathname.startsWith("/my-account") || pathname.startsWith("/admin");
+    pathname.startsWith("/my-account")
   const isUser = session && role === "customer";
   const isNotCheckout = !pathname.startsWith("/checkout");
   const isPublicRoute = publicAuthRoutes.some((route) =>

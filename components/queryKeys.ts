@@ -6,4 +6,5 @@ export const KEYS = {
   ORDERS: "orders",
   SHIPPINGLIST: "orders.shippinglist",
   PAYMENT: "payment",
+  ADDRESS: "addresses"
 };

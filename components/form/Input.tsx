@@ -11,7 +11,14 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   schema?: any;
 }
 
-export default function Input({ methods, name, placeholder, type, schema, ...rest }: IProps) {
+export default function Input({
+  methods,
+  name,
+  placeholder,
+  type,
+  schema,
+  ...rest
+}: IProps) {
   const { formState, watch, register } = methods; // Destructure methods for cleaner access
   const { errors } = formState; // <--- This is the correct way
   const [isFocused, setIsFocused] = useState(false);
@@ -27,11 +34,9 @@ export default function Input({ methods, name, placeholder, type, schema, ...res
 
   const fieldValue = watch(name);
 
-  
   const isClick =
     isFocused ||
     (fieldValue !== undefined && fieldValue !== null && fieldValue !== "");
-  
 
   useEffect(() => {
     if (schema?.fields && name) {
@@ -45,7 +50,6 @@ export default function Input({ methods, name, placeholder, type, schema, ...res
       }
     }
   }, [schema, name]);
-
 
   // const isFieldRegistered = methods.watch(name);
   // const isClick = isFocused || isFieldRegistered;
@@ -75,7 +79,7 @@ export default function Input({ methods, name, placeholder, type, schema, ...res
           errors={errors}
           name={name}
           render={({ message }) => (
-            <p className="error-message mt-[12px]">{message}</p>
+            <p className="text-xs error-message mt-2">{message}</p>
           )}
         />
       </div>
