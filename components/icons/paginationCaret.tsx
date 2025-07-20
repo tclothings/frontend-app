@@ -1,4 +1,12 @@
-export default function PaginationCaret({ color = "#48505E" }) {
+import { useEffect, useState } from "react";
+
+export default function PaginationCaret() {
+   const [color, setColor] = useState("#48505E");
+
+   useEffect(() => {
+     const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+     setColor(isDark ? "#ffffff" : "#48505E");
+   }, []);
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

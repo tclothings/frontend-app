@@ -1,8 +1,14 @@
-import { AddToCart, AddToCartButtonSkeleton } from "app/components/cart/add-to-cart";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import {
+  AddToCart,
+  AddToCartButtonSkeleton,
+} from "app/components/cart/add-to-cart";
 import Price, { PriceSkeleton } from "app/components/price";
 import Prose, { ProseSkeleton } from "app/components/prose";
 import { IProduct } from "app/lib/types";
 import clsx from "clsx";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export function ProductDescription({ product }: { product: IProduct }) {
   return (
@@ -26,7 +32,7 @@ export function ProductDescription({ product }: { product: IProduct }) {
           html={product.description}
         />
       ) : null}
-      <AddToCart product={product} />
+      <ProductAddToCartButton product={product} />
     </>
   );
 }
@@ -96,3 +102,45 @@ export default function ProductImageGallerySkeleton({
     </div>
   );
 }
+
+export const ProductAddToCartButton = ({ product }: { product: IProduct }) => {
+  const router = useRouter();
+  const { data: session } = useSession();
+  const role = session?.user?.roles?.[0];
+  const isUser = session && role === "customer";
+  const availableForSale = !!product.quantity;
+  const buttonClasses =
+    "relative flex w-full items-center justify-center rounded-full bg-blue-600 p-4 tracking-wide text-white";
+  const disabledClasses = "cursor-not-allowed opacity-60 hover:opacity-60";
+
+  if (!availableForSale) {
+    return (
+      <button disabled className={clsx(buttonClasses, disabledClasses)}>
+        Out Of Stock
+      </button>
+    );
+  }
+  const handleUnauthenticatedAddToCart = () => {
+    router.push("/login");
+  };
+  return (
+    <>
+      {isUser ? (
+        <AddToCart product={product} />
+      ) : (
+        <button
+          aria-label="Add to cart"
+          className={clsx(buttonClasses, {
+            "hover:opacity-90 hover:cursor-pointer": true,
+          })}
+          onClick={handleUnauthenticatedAddToCart}
+        >
+          <div className="absolute left-0 ml-4">
+            <PlusIcon className="h-5" />
+          </div>
+          Add To Cart
+        </button>
+      )}
+    </>
+  );
+};

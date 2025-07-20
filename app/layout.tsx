@@ -44,7 +44,7 @@ export default async function RootLayout({
         <SessionProviderWrapper session={session}>
           <QueryProvider>
             <Navbar />
-            <main className="w-screen overflow-x-hidden">{children}</main>
+            <main className="w-full overflow-x-hidden">{children}</main>
             <Toaster
               richColors
               position="top-right"

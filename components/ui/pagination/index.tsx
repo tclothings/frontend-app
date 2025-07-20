@@ -110,9 +110,9 @@ function PaginationArrow({
   const className = clsx(
     "flex py-[10px] px-4 items-center justify-center rounded-lg border",
     {
-      "pointer-events-none border-[var(--grey-50)] opacity-[0.38]":
+      "pointer-events-none border-[var(--foregroumd)] dark:border-[var(--grey-50)] opacity-[0.38]":
         isDisabled,
-      "border-grey-300": !isDisabled,
+      "border-white dark:border-grey-300": !isDisabled,
       "": direction === "left",
       "": direction === "right",
     }
@@ -123,19 +123,16 @@ function PaginationArrow({
       <button className="flex gap-2 items-center">
         <span className="rotate-180">
           <PaginationCaret
-            color={"#D1D5DB"}
           />
         </span>
-        <span className="hidden md:flex">Previous</span>
+        <span className="hidden md:flex ">Previous</span>
       </button>
     ) : (
       // <ArrowLeftIcon className="w-4" />
       <button className="flex gap-2 items-center">
         <span className="hidden md:flex">Next</span>
         <span className="">
-          <PaginationCaret
-            color={"#D1D5DB"}
-          />
+          <PaginationCaret />
         </span>
       </button>
       // <ArrowRightIcon className="w-4" />

@@ -68,10 +68,10 @@ body {
   }
 
   &.focused {
-    border-left: 5px solid var(--grey-200);
-    border-right: 1px solid var(--grey-200);
-    border-top: 1px solid var(--grey-200);
-    border-bottom: 1px solid var(--grey-200);
+    border-left: 5px solid var(--foreground);
+    border-right: 1px solid var(--foreground);
+    border-top: 1px solid var(--foreground);
+    border-bottom: 1px solid var(--foreground);
   }
 
   &.error {
@@ -107,10 +107,10 @@ body {
   }
 
   &.focused {
-    border-left: 5px solid #211844;
-    border-right: 1px solid #211844;
-    border-top: 1px solid #211844;
-    border-bottom: 1px solid #211844;
+     border-left: 5px solid var(--foreground);
+    border-right: 1px solid var(--foreground);
+    border-top: 1px solid var(--foreground);
+    border-bottom: 1px solid var(--foreground);
   }
 
   &.error {
@@ -263,25 +263,6 @@ input:-webkit-autofill {
   scrollbar-width: none; /* Firefox */
 }
 
-/* Dark Mode Override */
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #171717;
-    --foreground: #ededed;
-    --brand-blue: #fbf9fa;
-  }
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background-color: #2c2c2c; /* nearly black, blends into the background */
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #9f9f9f; /* Light track color */
-    border-radius: 6px;
-    transition: background-color 0.3s ease; /* Smooth transition */
-  }
-}
-
 .sonner-toast-error {
   color: red;
 }
@@ -310,3 +291,41 @@ input:-webkit-autofill {
 button {
   outline: none !important;
 }
+
+/* Dark Mode Override */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #171717;
+    --foreground: #ededed;
+    --brand-blue: #fbf9fa;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background-color: #2c2c2c; /* nearly black, blends into the background */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #9f9f9f; /* Light track color */
+    border-radius: 6px;
+    transition: background-color 0.3s ease; /* Smooth transition */
+  }
+  .input {
+  &.focused {
+    border-left: 5px solid var(--grey-200);
+    border-right: 1px solid var(--grey-200);
+    border-top: 1px solid var(--grey-200);
+    border-bottom: 1px solid var(--grey-200);
+  }
+}
+
+.textarea {
+  &.focused {
+    border-left: 5px solid #211844;
+    border-right: 1px solid #211844;
+    border-top: 1px solid #211844;
+    border-bottom: 1px solid #211844;
+  }
+}
+  
+}
+

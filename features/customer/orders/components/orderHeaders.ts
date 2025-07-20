@@ -13,8 +13,5 @@ export const ordersHeaders = [
   },
   {
     label: "Order Status",
-  },
-  {
-    label: "Delivery Note",
-  },
+  }
 ];

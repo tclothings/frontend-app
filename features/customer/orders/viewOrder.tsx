@@ -1,4 +1,5 @@
 
+import StatusCard from "app/components/ui/statusCard";
 import StatusTag from "app/components/ui/statusTag";
 import { formatAmount, formatDate, roles } from "app/lib/utils";
 
@@ -56,21 +57,23 @@ const ViewOrder = ({ onSuccess, item }: ViewOrderProps) => {
           <h4 className="text-neutral-500 dark:text-neutral-400">
             Payment Status{" "}
           </h4>
-          <p className="font-medium">{item?.paymentStatus}</p>
+          <p className="font-medium">
+            {<StatusCard status={item?.paymentStatus} />}
+          </p>
         </div>
- 
+
         <div className="text-xs space-y-1">
           <h4 className="text-neutral-500 dark:text-neutral-400">
             Amount Paid
           </h4>
           <p className="font-medium">{formatAmount(item?.totalAmount)}</p>
         </div>
-  
+
         <div className="text-xs space-y-1">
           <h4 className="text-neutral-500 dark:text-neutral-400">
             Order Status
           </h4>
-          <p className="font-medium">{item?.status}</p>
+          <p className="font-medium">{<StatusCard status={item?.status}/>}</p>
         </div>
         <div className="text-xs space-y-1">
           <h4 className="text-neutral-500 dark:text-neutral-400">
