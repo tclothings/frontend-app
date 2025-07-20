@@ -1,6 +1,6 @@
 import { capitalizeWord } from "app/lib/utils";
 import clsx from "clsx";
-import CardStyle from "../icons/cardStyle"; // Assuming CardStyle takes a `color` prop
+import CardStyle from "../icons/cardStyle";
 
 export default function StatusCard({ status }: { status: string }) {
   let classObj;
@@ -9,69 +9,83 @@ export default function StatusCard({ status }: { status: string }) {
   switch (cardStatus) {
     case "pending":
       classObj = {
-        // Changed for better visibility on dark backgrounds
-        className: "bg-gray-700 text-gray-200", // Dark grey background, light grey text
-        circleColor: "#D1D5DB", // A light grey for the circle
+        className: "bg-yellow-100 text-yellow-800",
+        circleColor: "#D97706", // Amber
       };
       break;
     case "paid":
     case "successful":
       classObj = {
         className: "bg-green-50 text-green-700",
-        circleColor: "#02B04E", // Green
+        circleColor: "#10B981", // Emerald
       };
       break;
     case "failed":
+      classObj = {
+        className: "bg-red-100 text-red-700",
+        circleColor: "#DC2626", // Red
+      };
+      break;
     case "cancelled":
       classObj = {
-        className: "bg-error-50 text-error-700",
-        circleColor: "#F73502", // Red
+        className: "bg-red-50 text-red-600",
+        circleColor: "#EF4444", // Slightly lighter red
       };
       break;
     case "refunded":
-    case "partially_refunded":
-    case "returned":
       classObj = {
         className: "bg-purple-50 text-purple-700",
-        circleColor: "#800080", // Purple
+        circleColor: "#8B5CF6", // Purple
+      };
+      break;
+    case "partially_refunded":
+      classObj = {
+        className: "bg-violet-100 text-violet-700",
+        circleColor: "#7C3AED", // Violet
       };
       break;
     case "processing":
       classObj = {
         className: "bg-blue-50 text-blue-700",
-        circleColor: "#3366FF", // Blue
+        circleColor: "#3B82F6", // Blue
       };
       break;
     case "shipped":
       classObj = {
-        className: "bg-indigo-50 text-indigo-700",
-        circleColor: "#663399", // Darker indigo/violet
+        className: "bg-indigo-100 text-indigo-700",
+        circleColor: "#6366F1", // Indigo
       };
       break;
     case "delivered":
     case "completed":
     case "active":
       classObj = {
-        className: "bg-green-50 text-green-700",
-        circleColor: "#02B04E", // Green
+        className: "bg-green-100 text-green-700",
+        circleColor: "#22C55E", // Light green
+      };
+      break;
+    case "returned":
+      classObj = {
+        className: "bg-orange-100 text-orange-700",
+        circleColor: "#F97316", // Orange
       };
       break;
     case "initiated":
       classObj = {
-        className: "bg-primary-50 text-primary-700",
-        circleColor: "#096B9C",
+        className: "bg-sky-100 text-sky-700",
+        circleColor: "#0EA5E9", // Sky blue
       };
       break;
     case "dispute":
       classObj = {
-        className: "bg-warning-50 text-warning-700",
-        circleColor: "#F7B302", // Orange/Warning color
+        className: "bg-amber-100 text-amber-700",
+        circleColor: "#F59E0B", // Warning amber
       };
       break;
     default:
       classObj = {
-        className: "bg-neutral-100 text-neutral-600",
-        circleColor: "#9CA3AF", // Light gray
+        className: "bg-gray-100 text-gray-600",
+        circleColor: "#9CA3AF", // Neutral
       };
   }
 
@@ -83,7 +97,7 @@ export default function StatusCard({ status }: { status: string }) {
       )}
     >
       <CardStyle color={classObj.circleColor} />
-      {capitalizeWord(cardStatus)}
+      {capitalizeWord(cardStatus.replaceAll("_", " "))}
     </span>
   );
 }

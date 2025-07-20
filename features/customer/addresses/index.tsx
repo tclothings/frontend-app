@@ -23,7 +23,11 @@ export default function Addresses() {
     />
   );
 
-  if (addresses.isPending) return <Spinner />;
+  if (addresses.isPending) return (
+    <div className="mt-20">
+      <Spinner />
+    </div>
+  );
   const data = addresses?.data;
   const addressList = data?.data;
   const totalPages = data?.totalPages;

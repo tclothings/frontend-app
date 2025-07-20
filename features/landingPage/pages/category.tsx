@@ -28,7 +28,9 @@ const Category = () => {
     }
   }, [products.data]);
 
-  if (!products?.data) return <Spinner />;
+  if (!products?.data) return   <div className="mt-20">
+        <Spinner />
+      </div>;
   const data = products.data?.products;
 
   return (

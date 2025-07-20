@@ -113,7 +113,7 @@ export default function Biodata() {
         <div>
           <Button
             text="Change Photo"
-            className="text-grey-700 font-medium border border-[1.5px] border-grey-300 py-[10px] px-4 rounded-lg"
+            className="!text-[var(--foreground)] !dark:text-grey-700 font-medium border border-[1.5px]  border-[var(--foreground)] dark:border-grey-300 py-[10px] px-4 rounded-lg"
             icon={<ChangeProfileImg />}
             onClick={handleUploadClick}
             disabled={updateBioData.isPending}

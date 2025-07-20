@@ -8,6 +8,8 @@ import ViewOrder from "./viewOrder";
 import { IOrder } from "app/lib/types";
 import { useSearchParams } from "next/navigation";
 import { useOrders } from "app/api/cart";
+import { formatDate } from "app/lib/utils";
+import StatusCard from "app/components/ui/statusCard";
 
 export const metadata = {
   title: "Orders",
@@ -15,13 +17,18 @@ export const metadata = {
 };
 
 export default function OrderTable() {
-         const params = useSearchParams()
-          const page = params.get("page")
+  const params = useSearchParams();
+  const page = params.get("page");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const { orders } = useOrders({ params: { page }, enabled: true });
 
-  if (orders.isPending) return <Spinner />;
+  if (orders.isPending)
+    return (
+      <div className="mt-20">
+        <Spinner />
+      </div>
+    );
   if (orders.isError) return <div>Something went wrong </div>;
 
   const data = orders?.data?.data;
@@ -48,11 +55,17 @@ export default function OrderTable() {
             className="hover:cursor-pointer hover:bg-[var(--background)]"
           >
             <td className="px-6 py-4 min-w-[199px]">{order?.orderNumber}</td>
-            <td className="px-6 py-4 min-w-[118px]">{order?.createdAt}</td>
-            <td className="px-6 py-4 min-w-[118px]">{order?.paymentStatus}</td>
+            <td className="px-6 py-4 min-w-[118px]">
+              {formatDate(order?.createdAt)}
+            </td>
+            <td className="px-6 py-4 min-w-[118px]">
+              {<StatusCard status={order?.paymentStatus} />}
+            </td>
             <td className="px-6 py-4 min-w-[118px]">{order?.totalAmount}</td>
-            <td className="px-6 py-4 min-w-[118px]">{order?.status}</td>
-            <td className="px-6 py-4 min-w-[118px]">{order?.customerNotes}</td>
+            <td className="px-6 py-4 min-w-[118px]">
+              {<StatusCard status={order?.status} />}
+            </td>
+            {/* <td className="px-6 py-4 min-w-[118px]">{order?.customerNotes}</td> */}
           </tr>
         ))}
       </Table>

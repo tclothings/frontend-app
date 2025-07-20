@@ -28,7 +28,9 @@ export default function Addresses() {
       infiniteAddresses.fetchNextPage()
     }
   }
-  if (infiniteAddresses.isPending) return <Spinner />;
+  if (infiniteAddresses.isPending) return   <div className="mt-20">
+        <Spinner />
+      </div>;
   const addressList = infiniteAddresses.data?.pages?.flatMap((page)=> page) ?? []
     return (
       <div className="h-full">

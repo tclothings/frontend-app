@@ -87,7 +87,7 @@ const AddEditAddress = ({
     <div className="w-full pb-4 px-4">
       <div className="flex items-center gap-4 py-2 mb-10">
         <Button
-          icon={<ArrowLeftIcon width="24" />}
+          icon={<ArrowLeftIcon width="24" className="text-black dark:text-white" />}
           onClick={returnToAddressList}
         />
         <p>{item ? "Edit Address" : "Add a New Address"}</p>

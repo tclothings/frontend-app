@@ -69,7 +69,7 @@ const AddressCard = ({
           className={clsx(
             "p-2",
             { "!text-blue-600": !address?.isDefault },
-            // { "!text-[#313133]": address?.isDefault }
+            { "!text-[#313133] !dark:text-white": address?.isDefault }
           )}
         />
         <div className="flex item-center gap-2">
