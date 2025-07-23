@@ -8,7 +8,7 @@ import ProductImageGallerySkeleton, {
 } from "app/features/landingPage/components/product/product-description";
 import { IMedia, IProduct } from "app/lib/types";
 import Link from "next/link";
-import { useProducts } from "app/api/products";
+import { useProducts } from "app/apis/products";
 import { useEffect } from "react";
 import clsx from "clsx";
 import { MediaGallery } from "../../components/product/mediaGallery";

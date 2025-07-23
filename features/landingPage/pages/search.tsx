@@ -5,7 +5,7 @@ import { defaultSort, sorting } from "app/lib/constants";
 import Pagination from "app/components/ui/pagination";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useProducts } from "app/api/products";
+import { useProducts } from "app/apis/products";
 import ProductsGridSkeleton from "../components/productsGridSkeleton";
 
 export const metadata = {

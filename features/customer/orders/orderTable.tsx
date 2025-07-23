@@ -7,7 +7,7 @@ import { ordersHeaders } from "./components/orderHeaders";
 import ViewOrder from "./viewOrder";
 import { IOrder } from "app/lib/types";
 import { useSearchParams } from "next/navigation";
-import { useOrders } from "app/api/cart";
+import { useOrders } from "app/apis/cart";
 import { formatDate } from "app/lib/utils";
 import StatusCard from "app/components/ui/statusCard";
 

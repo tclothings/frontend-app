@@ -1,4 +1,4 @@
-import { usePayment } from "app/api/payment";
+import { usePayment } from "app/apis/payment";
 import Button from "app/components/form/button";
 import { ICartItem, IShipping } from "app/lib/types";
 import { formatAmount } from "app/lib/utils";
@@ -15,33 +15,36 @@ const OrderSummary = ({
   shippingAddress: IShipping | null;
   deliveryAddressId: string;
   customerNotes: string;
-  }) => {
-  const { initiatePayment } = usePayment()
+}) => {
+  const { initiatePayment } = usePayment();
   const subTotalAmount = cart?.totalAmount;
   const items = cart?.items;
   const deliveryAmount = shippingAddress?.cost || 0;
   const totalAmount = subTotalAmount + deliveryAmount;
 
   const confirmOrder = () => {
-    if (!deliveryAddressId) return
-      const data: any = { deliveryAddressId };
-    const cartItems = items?.map((item: ICartItem) => ({ product: item?.product?._id, quantity: item.quantity })) 
+    if (!deliveryAddressId) return;
+    const data: any = { deliveryAddressId };
+    const cartItems = items?.map((item: ICartItem) => ({
+      product: item?.product?._id,
+      quantity: item.quantity,
+    }));
     if (customerNotes) {
       data.customerNotes = customerNotes;
     }
-      if (shippingAddress) {
-        data.shippingCostId = shippingAddress?._id;
-      }
+    if (shippingAddress) {
+      data.shippingCostId = shippingAddress?._id;
+    }
     data.items = cartItems;
-    data.cartId = cart._id
+    data.cartId = cart._id;
     data.callbackUrl = "http://localhost:3000/checkout/confirm-payment";
     initiatePayment.mutate(data);
-  }
+  };
   useEffect(() => {
     if (initiatePayment.data) {
       const { authorizationUrl } = initiatePayment.data?.data;
       if (authorizationUrl) {
-        toast.success("You are now being rerouted to pasystack")
+        toast.success("You are now being rerouted to pasystack");
         window.location.href = authorizationUrl;
         // router.replace(authorizationUrl);
       }

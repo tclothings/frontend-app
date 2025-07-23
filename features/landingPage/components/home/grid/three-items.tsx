@@ -1,5 +1,5 @@
 "use client";
-import { useProducts } from "app/api/products";
+import { useProducts } from "app/apis/products";
 import { GridTileImage } from "app/components/layout/tile";
 import type { IProduct } from "app/lib/types";
 import clsx from "clsx";

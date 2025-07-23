@@ -10,7 +10,7 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import CustomCheck from "app/components/form/customCheck";
 import { toast } from "sonner";
 import { ControlledGoogleAddress } from "app/components/form/controlledGoogleAddress";
-import { useAddresses } from "app/api/payment";
+import { useAddresses } from "app/apis/payment";
 
 const emptyValue = "";
 const AddEditAddress = ({
@@ -87,7 +87,9 @@ const AddEditAddress = ({
     <div className="w-full pb-4 px-4">
       <div className="flex items-center gap-4 py-2 mb-10">
         <Button
-          icon={<ArrowLeftIcon width="24" className="text-black dark:text-white" />}
+          icon={
+            <ArrowLeftIcon width="24" className="text-black dark:text-white" />
+          }
           onClick={returnToAddressList}
         />
         <p>{item ? "Edit Address" : "Add a New Address"}</p>

@@ -14,9 +14,8 @@ import { S3Client } from "@aws-sdk/client-s3";
 import { uploadToS3 } from "app/lib/configs/s3Client";
 import User from "app/components/icons/user";
 import ChangeProfileImg from "app/components/icons/changeProfileImg";
-import { useProfile } from "app/api/useAuth";
+import { useProfile } from "app/apis/useAuth";
 // import { s3Client } from "app/lib/configs/s3Client";
-
 
 const REGION = process.env.NEXT_PUBLIC_REGION; // e.g., "us-east-1"
 
@@ -29,7 +28,6 @@ export const s3Client = new S3Client({
   },
 });
 export default function Biodata() {
-  
   const { userProfile, updateBioData } = useProfile();
 
   const imgInputRef = useRef<HTMLInputElement>(null);
@@ -61,7 +59,7 @@ export default function Biodata() {
       imgInputRef?.current.click();
     }
   }
-  
+
   async function handleImgUpload(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
 
@@ -76,7 +74,8 @@ export default function Biodata() {
     } catch (err) {
       console.error("Upload failed:", err);
       toast.error("Image upload failed");
-    }  }
+    }
+  }
 
   const onUpdateProfile = (data: any) => {
     const cleanedData = Object.fromEntries(

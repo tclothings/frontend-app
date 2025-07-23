@@ -6,7 +6,7 @@ import { useState } from "react";
 import AddEditAddress from "./addEditAddress";
 import AddressCard from "./addressCard";
 import Spinner from "app/components/form/spinner";
-import { useAddresses } from "app/api/payment";
+import { useAddresses } from "app/apis/payment";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Addresses() {
@@ -25,45 +25,40 @@ export default function Addresses() {
 
   const loadMoreAddresses = () => {
     if (infiniteAddresses.hasNextPage) {
-      infiniteAddresses.fetchNextPage()
+      infiniteAddresses.fetchNextPage();
     }
-  }
-  if (infiniteAddresses.isPending) return   <div className="mt-20">
-        <Spinner />
-      </div>;
-  const addressList = infiniteAddresses.data?.pages?.flatMap((page)=> page) ?? []
+  };
+  if (infiniteAddresses.isPending)
     return (
-      <div className="h-full">
-        {showAddEditAddress ? (
-          <AddEditAddress
-            item={selectedAddress}
-            setSelectedAddress={setSelectedAddress}
-            setShowAddEditAddress={setShowAddEditAddress}
-          />
-        ) : (
-          <>
-            <AccountPageHeader title="" btn={newAdressBtn} />
-            {!addressList?.length ? (
-              <p className="text-center">No Address</p>
-            ) : null}
-            <div className="py-2 grid grid-cols-2 items-stretch gap-4 px-4 overflow-y-auto">
-              <InfiniteScroll
-                dataLength={addressList.length} // Or posts.data.pages.flat().length
-                next={loadMoreAddresses}
-                hasMore={infiniteAddresses.hasNextPage ?? false}
-                loader={<AddressCardSkeleton />}
-                scrollThreshold={0.9}
-                scrollableTarget="scrollableDiv"
-              >
-                {addressList?.map((address: any) => (
-                  <AddressCard
-                    key={address._id}
-                    address={address}
-                    setSelectedAddress={setSelectedAddress}
-                    setShowAddEditAddress={setShowAddEditAddress}
-                  />
-                ))}
-              </InfiniteScroll>
+      <div className="mt-20">
+        <Spinner />
+      </div>
+    );
+  const addressList =
+    infiniteAddresses.data?.pages?.flatMap((page) => page) ?? [];
+  return (
+    <div className="h-full">
+      {showAddEditAddress ? (
+        <AddEditAddress
+          item={selectedAddress}
+          setSelectedAddress={setSelectedAddress}
+          setShowAddEditAddress={setShowAddEditAddress}
+        />
+      ) : (
+        <>
+          <AccountPageHeader title="" btn={newAdressBtn} />
+          {!addressList?.length ? (
+            <p className="text-center">No Address</p>
+          ) : null}
+          <div className="py-2 grid grid-cols-2 items-stretch gap-4 px-4 overflow-y-auto">
+            <InfiniteScroll
+              dataLength={addressList.length} // Or posts.data.pages.flat().length
+              next={loadMoreAddresses}
+              hasMore={infiniteAddresses.hasNextPage ?? false}
+              loader={<AddressCardSkeleton />}
+              scrollThreshold={0.9}
+              scrollableTarget="scrollableDiv"
+            >
               {addressList?.map((address: any) => (
                 <AddressCard
                   key={address._id}
@@ -72,14 +67,23 @@ export default function Addresses() {
                   setShowAddEditAddress={setShowAddEditAddress}
                 />
               ))}
-            </div>
-          </>
-        )}
-      </div>
-    );
+            </InfiniteScroll>
+            {addressList?.map((address: any) => (
+              <AddressCard
+                key={address._id}
+                address={address}
+                setSelectedAddress={setSelectedAddress}
+                setShowAddEditAddress={setShowAddEditAddress}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
 }
 
-const AddressCardSkeleton = ()  => {
+const AddressCardSkeleton = () => {
   return (
     <div className="w-full h-full flex flex-col animate-pulse">
       <div className="flex-1 space-y-2 p-4 border rounded-sm border-gray-300 dark:border-white">
@@ -96,4 +100,4 @@ const AddressCardSkeleton = ()  => {
       </div>
     </div>
   );
-}
+};
