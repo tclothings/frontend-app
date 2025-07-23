@@ -81,9 +81,9 @@ export default function Page() {
       toast.error(res?.error || "Login failed");
       setIsLoading(false);
     } else {
+      router.replace("/my-account/orders");
       setIsLoading(false);
       toast.success("Login successful");
-      router.push("/my-account/orders");
     }
   };
 
