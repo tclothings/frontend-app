@@ -3,7 +3,7 @@ import { PencilIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { toast } from "sonner";
-import { useAddresses } from "app/api/payment";
+import { useAddresses } from "app/apis/payment";
 
 const AddressCard = ({
   address,
@@ -13,8 +13,7 @@ const AddressCard = ({
   address: any;
   setSelectedAddress: Dispatch<SetStateAction<any>>;
   setShowAddEditAddress: Dispatch<SetStateAction<boolean>>;
-  }) => {
-  
+}) => {
   const handleEditAddress = () => {
     setSelectedAddress(address);
     setShowAddEditAddress(true);
@@ -46,7 +45,6 @@ const AddressCard = ({
           }
         )}
       >
-        
         <p>{address?.address}</p>
         <p>{address?.additionalDetails}</p>
 
@@ -70,7 +68,7 @@ const AddressCard = ({
           disabled={address?.isDefault || updateAddress.isPending}
           className={clsx(
             "p-2",
-            { "!text-blue-600": !address?.isDefault },
+            { "!text-blue-600": !address?.isDefault }
             // { "!text-[#313133]": address?.isDefault }
           )}
         />

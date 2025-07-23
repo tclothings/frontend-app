@@ -10,7 +10,7 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import CustomCheck from "app/components/form/customCheck";
 import { toast } from "sonner";
 import { ControlledGoogleAddress } from "app/components/form/controlledGoogleAddress";
-import { useAddresses } from "app/api/payment";
+import { useAddresses } from "app/apis/payment";
 
 const emptyValue = "";
 const AddEditAddress = ({

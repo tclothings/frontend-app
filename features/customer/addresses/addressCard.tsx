@@ -3,7 +3,7 @@ import { TrashIcon, PencilIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { toast } from "sonner";
-import { useAddresses } from "app/api/payment";
+import { useAddresses } from "app/apis/payment";
 
 const AddressCard = ({
   address,

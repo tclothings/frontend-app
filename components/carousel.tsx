@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { GridTileImage, GridTileImageSkeleton } from "./layout/tile";
-import { useProducts } from "app/api/products";
+import { useProducts } from "app/apis/products";
 import { IProduct } from "app/lib/types";
 
 export function Carousel() {

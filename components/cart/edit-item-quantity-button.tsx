@@ -2,7 +2,7 @@
 
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
-import { useCart } from "app/api/cart";
+import { useCart } from "app/apis/cart";
 import { toast } from "sonner";
 import { useEffect } from "react";
 

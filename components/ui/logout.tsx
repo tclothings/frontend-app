@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "app/api/useAuth";
+import { useAuth } from "app/apis/useAuth";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import ConfirmationModal from "./confirmationModal";
@@ -14,7 +14,7 @@ const Logout = () => {
 
   useEffect(() => {
     if (logout.isSuccess) {
-      signOut({callbackUrl: "/login", redirect: true})
+      signOut({ callbackUrl: "/login", redirect: true });
       toast.success(logout?.data?.message);
     }
   }, [logout.isSuccess]);
@@ -36,7 +36,6 @@ const Logout = () => {
         acceptAction={logoutUser}
         title="Logout"
       />
-
     </>
   );
 };

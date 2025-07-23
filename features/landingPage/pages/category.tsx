@@ -1,6 +1,6 @@
 "use client";
 
-import { useProducts } from "app/api/products";
+import { useProducts } from "app/apis/products";
 import Grid from "app/features/landingPage/components/home/grid";
 import ProductGridItems from "app/components/layout/product-grid-items";
 import Pagination from "app/components/ui/pagination";
@@ -28,9 +28,12 @@ const Category = () => {
     }
   }, [products.data]);
 
-  if (!products?.data) return   <div className="mt-20">
+  if (!products?.data)
+    return (
+      <div className="mt-20">
         <Spinner />
-      </div>;
+      </div>
+    );
   const data = products.data?.products;
 
   return (

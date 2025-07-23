@@ -14,7 +14,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { createUrl } from "app/lib/utils";
-import { useCart } from "app/api/cart";
+import { useCart } from "app/apis/cart";
 import { ICartItem } from "app/lib/types";
 
 import Button from "../form/button";

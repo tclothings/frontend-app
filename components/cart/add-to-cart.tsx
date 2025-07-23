@@ -1,7 +1,7 @@
 "use client";
 
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { useCart } from "app/api/cart";
+import { useCart } from "app/apis/cart";
 import { ICartItem, IProduct } from "app/lib/types";
 import clsx from "clsx";
 import { useSession } from "next-auth/react";

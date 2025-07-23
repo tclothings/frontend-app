@@ -2,13 +2,12 @@
 
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon, UserIcon } from "@heroicons/react/24/outline";
-import { useProfile } from "app/api/useAuth";
+import { useProfile } from "app/apis/useAuth";
 import Button from "app/components/form/button";
 import Logout from "app/components/ui/logout";
 import Image from "next/image";
 
 export default function ProfileAvatar() {
-
   const { userProfile } = useProfile();
   const avatar = userProfile?.data?.profilePicture ?? "";
   const email = userProfile?.data?.email ?? "";
@@ -31,10 +30,7 @@ export default function ProfileAvatar() {
                     className="rounded-full border border-[var(--foreground)]"
                   />
                 ) : (
-                  <UserIcon
-                    width={24}
-                    className="text-black dark:text-white"
-                  />
+                  <UserIcon width={24} className="text-black dark:text-white" />
                 )}
               </div>
               <p className="hidden md:flex text-[var(--foreground)]">

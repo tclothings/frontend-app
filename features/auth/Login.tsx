@@ -1,7 +1,7 @@
 "use client";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAuth } from "app/api/useAuth";
+import { useAuth } from "app/apis/useAuth";
 import Input from "app/components/form/Input";
 import PasswordInput from "app/components/form/passwordInput";
 import SubmitButton from "app/components/form/submitButton";
@@ -69,7 +69,7 @@ export default function Page() {
   });
 
   const { handleSubmit, setValue } = methods;
-  
+
   const onLogin = async (data: any) => {
     setIsLoading(true);
     const res = await signIn("credentials", {
@@ -78,7 +78,7 @@ export default function Page() {
       password: data.password,
     });
     if (res?.error) {
-      toast.error(res?.error || "Login failed")
+      toast.error(res?.error || "Login failed");
       setIsLoading(false);
     } else {
       setIsLoading(false);

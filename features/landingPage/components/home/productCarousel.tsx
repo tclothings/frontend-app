@@ -1,7 +1,7 @@
 "use client"; // Keep this at the top for client-side rendering
 
 import { Carousel } from "app/components/layout/carousel";
-import { useProducts } from "app/api/products";
+import { useProducts } from "app/apis/products";
 import { GridTileImageSkeleton } from "app/components/layout/tile";
 
 export function ProductCarousel() {

@@ -1,5 +1,5 @@
 "use client";
-import { useCart, useCheckout } from "app/api/cart";
+import { useCart, useCheckout } from "app/apis/cart";
 import OrderSummary from "app/features/landingPage/components/checkout/orderSummary";
 import CustomerNote from "app/features/landingPage/components/checkout/customerNote";
 import { useForm } from "react-hook-form";
@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { IAddress, IShipping } from "app/lib/types";
 import Spinner from "app/components/form/spinner";
 import DeliveryAddress from "../../components/checkout/delivery-address";
-import { useAddresses } from "app/api/payment";
+import { useAddresses } from "app/apis/payment";
 
 export default function ShippingOptions() {
   const [shippingAddress, setShippingAddress] = useState<IShipping | null>(

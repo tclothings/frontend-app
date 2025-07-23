@@ -1,7 +1,7 @@
 "use client";
 
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useCart } from "app/api/cart";
+import { useCart } from "app/apis/cart";
 import type { ICartItem } from "app/lib/types";
 import { useEffect } from "react";
 import { toast } from "sonner";

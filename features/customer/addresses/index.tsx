@@ -7,7 +7,7 @@ import AddEditAddress from "./addEditAddress";
 import AddressCard from "./addressCard";
 import Spinner from "app/components/form/spinner";
 import Pagination from "app/components/ui/pagination";
-import { useAddresses } from "app/api/payment";
+import { useAddresses } from "app/apis/payment";
 
 export default function Addresses() {
   const [showAddEditAddress, setShowAddEditAddress] = useState(false);
@@ -23,11 +23,12 @@ export default function Addresses() {
     />
   );
 
-  if (addresses.isPending) return (
-    <div className="mt-20">
-      <Spinner />
-    </div>
-  );
+  if (addresses.isPending)
+    return (
+      <div className="mt-20">
+        <Spinner />
+      </div>
+    );
   const data = addresses?.data;
   const addressList = data?.data;
   const totalPages = data?.totalPages;

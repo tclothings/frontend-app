@@ -1,20 +1,21 @@
-"use client"
-import clsx from 'clsx';
-import { Suspense, useEffect, useState } from 'react';
+"use client";
+import clsx from "clsx";
+import { Suspense, useEffect, useState } from "react";
 
 // import { getCollections } from 'app/lib';
-import FilterList from './filter';
-import { allCategory } from 'app/lib/constants';
-import { capitalizeWord } from 'app/lib/utils';
-import { ICategory } from 'app/lib/types';
-import { useCategories } from 'app/api/products';
+import FilterList from "./filter";
+import { allCategory } from "app/lib/constants";
+import { capitalizeWord } from "app/lib/utils";
+import { ICategory } from "app/lib/types";
+import { useCategories } from "app/apis/products";
 
 function CollectionList() {
-   const [collections, setCollections] = useState([
-     allCategory
-   ]);
-  const { categories } = useCategories({ params: { isActive : true}, enabled: true });
-  
+  const [collections, setCollections] = useState([allCategory]);
+  const { categories } = useCategories({
+    params: { isActive: true },
+    enabled: true,
+  });
+
   useEffect(() => {
     if (categories.data) {
       if (categories.data?.categories?.length) {
@@ -33,19 +34,17 @@ function CollectionList() {
         ];
         setCollections(categoryList);
       }
-     
     }
   }, [categories.data]);
-   
+
   return <FilterList list={collections} title="Collections" />;
 }
 
-const skeleton = 'mb-3 h-4 w-5/6 animate-pulse rounded-sm';
-const activeAndTitles = 'bg-neutral-800 dark:bg-neutral-300';
-const items = 'bg-neutral-400 dark:bg-neutral-700';
+const skeleton = "mb-3 h-4 w-5/6 animate-pulse rounded-sm";
+const activeAndTitles = "bg-neutral-800 dark:bg-neutral-300";
+const items = "bg-neutral-400 dark:bg-neutral-700";
 
-export default function
-  Collections() {
+export default function Collections() {
   return (
     <Suspense
       fallback={

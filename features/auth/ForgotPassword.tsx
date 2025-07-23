@@ -1,7 +1,7 @@
 "use client";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAuth } from "app/api/useAuth";
+import { useAuth } from "app/apis/useAuth";
 import Input from "app/components/form/Input";
 import SubmitButton from "app/components/form/submitButton";
 import { emailSchema } from "app/lib/schemas/auth";
