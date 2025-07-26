@@ -27,7 +27,7 @@ export default function ProfileAvatar() {
                     alt={"avatar"}
                     width={24}
                     height={24}
-                    className="rounded-full border border-[var(--foreground)]"
+                    className="rounded-full w-6 h-6 border border-[var(--foreground)]"
                   />
                 ) : (
                   <UserIcon width={24} className="text-black dark:text-white" />

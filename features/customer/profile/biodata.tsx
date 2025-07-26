@@ -6,29 +6,18 @@ import NumberInput from "app/components/form/numberInput";
 import SubmitButton from "app/components/form/submitButton";
 import { userInfoSchema } from "app/lib/schemas/biodata";
 import { useForm } from "react-hook-form";
-import { ChangeEvent, useEffect, useRef } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Button from "app/components/form/button";
 import Image from "next/image";
 import { toast } from "sonner";
-import { S3Client } from "@aws-sdk/client-s3";
 import { uploadToS3 } from "app/lib/configs/s3Client";
 import User from "app/components/icons/user";
 import ChangeProfileImg from "app/components/icons/changeProfileImg";
 import { useProfile } from "app/apis/useAuth";
-// import { s3Client } from "app/lib/configs/s3Client";
 
-const REGION = process.env.NEXT_PUBLIC_REGION; // e.g., "us-east-1"
-
-export const s3Client = new S3Client({
-  region: REGION,
-  requestChecksumCalculation: "WHEN_REQUIRED",
-  credentials: {
-    accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY!,
-    secretAccessKey: process.env.NEXT_PUBLIC_SECRET_KEY!,
-  },
-});
 export default function Biodata() {
   const { userProfile, updateBioData } = useProfile();
+  const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
 
   const imgInputRef = useRef<HTMLInputElement>(null);
   const methods = useForm({
@@ -38,13 +27,18 @@ export default function Biodata() {
   const { setValue, handleSubmit, watch } = methods;
 
   const profilePicture = watch("profilePicture");
+
   useEffect(() => {
     if (updateBioData.isSuccess) {
       toast.success(updateBioData.data?.message);
       updateBioData.reset();
+      setProfileImageFile(null);
+      // Clean up temporary URL if it exists
+      if (profilePicture && profilePicture.startsWith("blob:")) {
+        URL.revokeObjectURL(profilePicture);
+      }
     }
-  }, [updateBioData.isSuccess]);
-
+  }, [updateBioData.isSuccess, profilePicture]);
   useEffect(() => {
     if (userProfile.isSuccess) {
       setValue("firstName", userProfile?.data?.firstName);
@@ -54,13 +48,22 @@ export default function Biodata() {
     }
   }, [userProfile.isSuccess]);
 
+  // Cleanup temporary URLs on component unmount
+  useEffect(() => {
+    return () => {
+      if (profilePicture && profilePicture.startsWith('blob:')) {
+        URL.revokeObjectURL(profilePicture);
+      }
+    };
+  }, [profilePicture]);
+
   function handleUploadClick() {
     if (imgInputRef.current) {
       imgInputRef?.current.click();
     }
   }
 
-  async function handleImgUpload(e: ChangeEvent<HTMLInputElement>) {
+  function handleImgUpload(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
 
     if (!file) return;
@@ -68,24 +71,44 @@ export default function Biodata() {
     if (file?.size > maxSize) {
       return alert("file is too large");
     }
-    try {
-      const url = await uploadToS3(file, "profile");
-      setValue("profilePicture", url);
-    } catch (err) {
-      console.error("Upload failed:", err);
-      toast.error("Image upload failed");
-    }
+    // Store the file instead of uploading immediately
+    setProfileImageFile(file);
+    // Create a temporary URL for immediate display
+    const tempUrl = URL.createObjectURL(file);
+    setValue("profilePicture", tempUrl, { shouldValidate: true });
+    e.target.value = ""; // Reset input
   }
 
-  const onUpdateProfile = (data: any) => {
-    const cleanedData = Object.fromEntries(
-      Object.entries(data).filter(
-        ([_, value]) => value !== "" && value !== null && value !== undefined
-      )
-    );
+  const onUpdateProfile = async (data: any) => {
+    try {
+      let cleanedData = { ...data };
+      cleanedData.profilePicture = undefined;
+      if (profileImageFile) {
+        try {
+          const profileImageUrl = await uploadToS3(profileImageFile, "profile");
+          cleanedData.profilePicture = profileImageUrl;
+        } catch (error) {
+          console.error("Error uploading profile image:", error);
+          toast.error("Failed to upload profile image. Please try again.");
+          return;
+        }
+      } else if (userProfile?.data?.profilePicture) {
+        cleanedData.profilePicture = userProfile.data.profilePicture;
+      }
 
-    updateBioData.mutate(cleanedData as any);
+      const finalData = Object.fromEntries(
+        Object.entries(cleanedData).filter(
+          ([_, value]) => value !== "" && value !== null && value !== undefined
+        )
+      );
+
+      updateBioData.mutate(finalData as any);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      toast.error("Failed to update profile. Please try again.");
+    }
   };
+
   return (
     <>
       <div className="flex flex-col md:flex-row md:items-center justify-center md:justify-start gap-4 py-6">
@@ -153,13 +176,6 @@ export default function Biodata() {
           schema={userInfoSchema}
           disabled={updateBioData.isPending}
         />
-        {/* <Input
-                type="date"
-                name="dateOfBirth"
-                methods={methods}
-                placeholder="D.O.B"
-                schema={userInfoSchema}
-              /> */}
         <div className="px-0 md:px-6 flex justify-end">
           <SubmitButton
             isSmallBtn={true}

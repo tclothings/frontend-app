@@ -3,7 +3,7 @@ import Button from "app/components/form/button";
 import ChangeProfileImg from "app/components/icons/changeProfileImg";
 import User from "app/components/icons/user";
 import Image from "next/image";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState, useEffect } from "react";
 
 export default function ProfileImage({ profileImg }: { profileImg: string }) {
   const imgInputRef = useRef<HTMLInputElement>(null);
@@ -21,8 +21,21 @@ export default function ProfileImage({ profileImg }: { profileImg: string }) {
       alert("file is too large");
       return;
     }
+    // Clean up previous blob URL if it exists
+    if (imgFile && imgFile.startsWith("blob:")) {
+      URL.revokeObjectURL(imgFile);
+    }
     setImgFile(URL.createObjectURL(e.target.files[0]));
   }
+
+  // Cleanup blob URL on component unmount
+  useEffect(() => {
+    return () => {
+      if (imgFile && imgFile.startsWith("blob:")) {
+        URL.revokeObjectURL(imgFile);
+      }
+    };
+  }, [imgFile]);
 
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-center md:justify-start gap-4 py-6">
